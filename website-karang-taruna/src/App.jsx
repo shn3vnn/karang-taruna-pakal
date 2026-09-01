@@ -57,7 +57,7 @@ export default function App() {
   const [isDaftarUmkmOpen, setIsDaftarUmkmOpen] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  const noPengurus = "6281234567890";
+  const noPengurus = "6285739439137";
 
   const handleSubmitAspirasi = (e) => {
     e.preventDefault();
