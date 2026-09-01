@@ -1,0 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+  --color-brand-teal: #039088;
+  --color-brand-teal-light: #E6F4F3;
+  --color-brand-teal-dark: #02756D;
+}
+
+body {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background-color: #F8FAFC;
+  color: #0F172A;
+}
+
+.wavy-underline {
+  text-decoration: underline;
+  text-decoration-color: #039088;
+  text-underline-offset: 6px;
+}
