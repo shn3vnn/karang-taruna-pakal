@@ -6,7 +6,7 @@ import Umkm from './components/Umkm';
 import TransparansiGaleri from './components/TransparansiGaleri';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
-import { ArrowRight, CheckCircle, Heart, MapPin, Send, Calendar, UserPlus, X, Info, UserCheck, ChevronDown, Bell, Store } from 'lucide-react';
+import { ArrowRight, CheckCircle, MapPin, Send, Calendar, UserPlus, X, Info, UserCheck, ChevronDown, Bell, Store, ShieldCheck } from 'lucide-react';
 
 const heroImage = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1000";
 
@@ -64,10 +64,9 @@ export default function App() {
     const nama = e.target.nama.value;
     const wa = e.target.wa.value;
     const pesan = e.target.pesan.value;
-    const textPesan = `Halo Admin Karang Taruna,%0A%0ASaya ingin menyampaikan aspirasi:%0A- *Nama / Blok:* ${nama}%0A- *No. WA:* ${wa || '-' }%0A- *Pesan:* ${pesan}`;
-    window.open(`https://wa.me/${noPengurus}?text=${textPesan}`, '_blank');
+    const textPesan = encodeURIComponent(`Halo Admin Karang Taruna,\n\nSaya ingin menyampaikan aspirasi:\n- Nama / Blok: ${nama}\n- No. WA: ${wa || '-'}\n- Pesan: ${pesan}`);
+    window.location.href = `whatsapp://send?phone=${noPengurus}&text=${textPesan}`;
   };
-
 
   const handleSubmitDaftar = async (e) => {
     e.preventDefault();
@@ -87,6 +86,7 @@ export default function App() {
       setIsDaftarOpen(false);
     }
   };
+
   const handleSubmitDaftarUmkm = (e) => {
     e.preventDefault();
     const nama = e.target.nama.value;
@@ -112,11 +112,10 @@ export default function App() {
       setIsDaftarUmkmOpen(false);
     };
 
-    // Jika warga memilih file foto dari HP/laptop
     if (fileFoto) {
       const reader = new FileReader();
       reader.onloadend = () => {
-        processSave(reader.result); // Mengubah file menjadi Base64 string
+        processSave(reader.result);
       };
       reader.readAsDataURL(fileFoto);
     } else {
@@ -125,8 +124,8 @@ export default function App() {
   };
 
   const handleDaftarKegiatan = (agenda) => {
-    const textKegiatan = `Halo Kak ${agenda.panitia[0].nama}, saya berminat untuk *mendaftar / berpartisipasi* dalam kegiatan: %0A%0A📌 *${agenda.judul}*%0A🗓 Tanggal: ${agenda.tanggal}%0A📍 Lokasi: ${agenda.lokasi}%0A%0AMohon informasi petunjuk selanjutnya. Terima kasih!`;
-    window.open(`https://wa.me/${agenda.waPJ}?text=${textKegiatan}`, '_blank');
+    const textKegiatan = encodeURIComponent(`Halo Kak ${agenda.panitia[0].nama}, saya berminat untuk mendaftar / berpartisipasi dalam kegiatan:\n\n📌 *${agenda.judul}*\n🗓 Tanggal: ${agenda.tanggal}\n📍 Lokasi: ${agenda.lokasi}\n\nMohon informasi petunjuk selanjutnya. Terima kasih!`);
+    window.location.href = `whatsapp://send?phone=${agenda.waPJ}&text=${textKegiatan}`;
   };
 
   return (
@@ -258,35 +257,35 @@ export default function App() {
       </section>
 
       {/* MAPS & LOKASI SEKRETARIAT */}
-<section id="lokasi" className="py-20 bg-slate-50 border-t border-slate-200">
-  <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div className="grid md:grid-cols-12 gap-8 items-center">
-      <div className="md:col-span-5 space-y-4">
-        <span className="text-[#039088] font-semibold text-sm uppercase tracking-wider">Peta Lokasi</span>
-        <h2 className="text-3xl font-extrabold text-slate-900">Sekretariat Karang Taruna</h2>
-        <p className="text-slate-600 leading-relaxed">
-          Pusat kegiatan dan balai serbaguna warga perumahan Pakal Residence. Terbuka untuk diskusi, kegiatan rutin, atau koordinasi antarwarga.
-        </p>
-        <div className="pt-2 text-sm text-slate-700 space-y-2">
-          <p className="flex items-center gap-2 font-semibold"><MapPin size={18} className="text-[#039088]" /> Pakal Residence, Pakal, Surabaya</p>
-          <p className="flex items-center gap-2 font-semibold"><Calendar size={18} className="text-[#039088]" /> Buka Setiap Sabtu & Minggu (16:00 - 21:00 WIB)</p>
+      <section id="lokasi" className="py-20 bg-slate-50 border-t border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-5 space-y-4">
+              <span className="text-[#039088] font-semibold text-sm uppercase tracking-wider">Peta Lokasi</span>
+              <h2 className="text-3xl font-extrabold text-slate-900">Sekretariat Karang Taruna</h2>
+              <p className="text-slate-600 leading-relaxed">
+                Pusat kegiatan dan balai serbaguna warga perumahan Pakal Residence. Terbuka untuk diskusi, kegiatan rutin, atau koordinasi antarwarga.
+              </p>
+              <div className="pt-2 text-sm text-slate-700 space-y-2">
+                <p className="flex items-center gap-2 font-semibold"><MapPin size={18} className="text-[#039088]" /> Pakal Residence, Pakal, Surabaya</p>
+                <p className="flex items-center gap-2 font-semibold"><Calendar size={18} className="text-[#039088]" /> Buka Setiap Sabtu & Minggu (16:00 - 21:00 WIB)</p>
+              </div>
+            </div>
+            
+            <div className="md:col-span-7 h-80 rounded-3xl overflow-hidden border border-slate-200 shadow-md">
+              <iframe 
+                title="Peta Lokasi Karang Taruna Pakal Residence"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15832.062823055416!2d112.6080!3d-7.2380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f3f1e1a2b3c4%3A0x123456789abcdef!2sPakal%20Residence!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy"
+              ></iframe>
+            </div>
+          </div>
         </div>
-      </div>
-      
-      <div className="md:col-span-7 h-80 rounded-3xl overflow-hidden border border-slate-200 shadow-md">
-        <iframe 
-          title="Peta Lokasi Karang Taruna Pakal Residence"
-          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15832.062823055416!2d112.6080!3d-7.2380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f3f1e1a2b3c4%3A0x123456789abcdef!2sPakal%20Residence!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
-          width="100%" 
-          height="100%" 
-          style={{ border: 0 }} 
-          allowFullScreen="" 
-          loading="lazy"
-        ></iframe>
-      </div>
-    </div>
-  </div>
-</section>
+      </section>
 
       {/* FORM ASPIRASI */}
       <section id="kontak" className="py-20 bg-slate-900 text-white">
@@ -309,10 +308,20 @@ export default function App() {
 
       {/* FOOTER */}
       <footer className="bg-slate-950 text-slate-500 py-8 text-center text-sm border-t border-slate-900 flex flex-col items-center justify-center gap-2">
-        <p>© 2026 Karang Taruna Perumahan.</p>
-        <a href="/admin" className="text-xs text-slate-600 hover:text-slate-400 transition underline">
-          Akses Panel Admin
-        </a>
+        <p>© 2026 Karang Taruna Pakal Residence.</p>
+        <button 
+          onClick={() => {
+            const pass = prompt('Masukkan Kata Sandi Admin:');
+            if (pass === 'adminperumahan') {
+              window.location.href = '/admin';
+            } else if (pass) {
+              alert('Kata sandi salah!');
+            }
+          }} 
+          className="text-xs text-slate-500 hover:text-slate-300 transition underline flex items-center gap-1"
+        >
+          <ShieldCheck size={14} /> Akses Panel Admin
+        </button>
       </footer>
 
       {/* MODAL DETAIL AGENDA */}
@@ -383,7 +392,7 @@ export default function App() {
                   <option value="Lingkungan & Sosial">Divisi Lingkungan & Sosial</option>
                   <option value="Relawan Acara">Relawan Acara</option>
                 </select>
-                <button type="submit" className="w-full bg-[#039088] hover:bg-[#02756D] text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-md mt-2">
+                <button type="submit" className="w-full bg-[#039088] hover:bg-[#02756D] text-[#FFFFFF] font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-md mt-2">
                   Kirim Pendaftaran <UserPlus size={16} />
                 </button>
               </form>
@@ -411,9 +420,13 @@ export default function App() {
                 </select>
                 <input name="wa" type="text" required placeholder="No. WA Penjual (Contoh: 6281234...)" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#039088]" />
                 <textarea name="deskripsi" required rows="3" placeholder="Deskripsi singkat produk/jasa..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#039088]"></textarea>
-                <input name="foto" type="text" placeholder="URL Foto Produk (Opsional)" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-sm focus:outline-none focus:border-[#039088]" />
                 
-                <button type="submit" className="w-full bg-[#039088] hover:bg-[#02756D] text-white font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-md mt-2">
+                <div className="space-y-1">
+                  <label className="text-xs font-semibold text-slate-600">Foto Produk / Usaha (Opsional):</label>
+                  <input name="fotoFile" type="file" accept="image/*" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs focus:outline-none focus:border-[#039088]" />
+                </div>
+                
+                <button type="submit" className="w-full bg-[#039088] hover:bg-[#02756D] text-[#FFFFFF] font-bold py-3.5 rounded-xl transition flex items-center justify-center gap-2 text-sm shadow-md mt-2">
                   Daftarkan Usaha <Store size={16} />
                 </button>
               </form>
