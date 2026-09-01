@@ -6,7 +6,7 @@ import Umkm from './components/Umkm';
 import TransparansiGaleri from './components/TransparansiGaleri';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
-import { ArrowRight, CheckCircle, MapPin, Send, Calendar, UserPlus, X, Info, UserCheck, ChevronDown, Bell, Store, ShieldCheck } from 'lucide-react';
+import { ArrowRight, CheckCircle, MapPin, Send, Calendar, UserPlus, X, Info, UserCheck, ChevronDown, Bell, Store, ShieldCheck, LogOut } from 'lucide-react';
 
 const heroImage = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1000";
 
@@ -55,6 +55,7 @@ export default function App() {
   const [selectedAgenda, setSelectedAgenda] = useState(null);
   const [isDaftarOpen, setIsDaftarOpen] = useState(false);
   const [isDaftarUmkmOpen, setIsDaftarUmkmOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
   const noPengurus = "6285739439137";
@@ -313,7 +314,7 @@ export default function App() {
           onClick={() => {
             const pass = prompt('Masukkan Kata Sandi Admin:');
             if (pass === 'adminperumahan') {
-              window.location.href = '/admin';
+              setIsAdminLoggedIn(true);
             } else if (pass) {
               alert('Kata sandi salah!');
             }
@@ -323,6 +324,43 @@ export default function App() {
           <ShieldCheck size={14} /> Akses Panel Admin
         </button>
       </footer>
+
+      {/* MODAL PANEL ADMIN */}
+      <AnimatePresence>
+        {isAdminLoggedIn && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md overflow-y-auto">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full shadow-2xl relative my-8">
+              <button onClick={() => setIsAdminLoggedIn(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600"><X size={24}/></button>
+              
+              <div className="flex items-center gap-2 text-[#039088] font-bold text-sm mb-1">
+                <ShieldCheck size={18} /> Panel Kontrol Pengurus
+              </div>
+              <h3 className="text-2xl font-extrabold text-slate-900 mb-6">Dashboard Admin</h3>
+
+              <div className="space-y-6">
+                <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                  <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><UserCheck size={18} className="text-[#039088]" /> Pendaftaran Anggota</h4>
+                  <p className="text-xs text-slate-600 mb-3">Data calon anggota terintegrasi secara langsung dengan tabel Supabase Anda.</p>
+                  <span className="inline-block bg-[#E6F4F3] text-[#039088] text-xs font-bold px-3 py-1 rounded-full">Sistem Aktif (Supabase)</span>
+                </div>
+
+                <div className="p-5 bg-slate-50 border border-slate-200 rounded-2xl">
+                  <h4 className="font-bold text-slate-900 mb-2 flex items-center gap-2"><Store size={18} className="text-[#039088]" /> Verifikasi UMKM Warga</h4>
+                  <p className="text-xs text-slate-600 mb-3">Data UMKM tersimpan di penyimpanan lokal / database untuk ditinjau sebelum dipublikasikan ke Katalog UMKM.</p>
+                  <span className="inline-block bg-emerald-100 text-emerald-800 text-xs font-bold px-3 py-1 rounded-full">Lokal Storage Aktif</span>
+                </div>
+              </div>
+
+              <button 
+                onClick={() => setIsAdminLoggedIn(false)} 
+                className="w-full mt-6 bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-xl text-sm transition flex items-center justify-center gap-2"
+              >
+                <LogOut size={16} /> Keluar dari Admin
+              </button>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
       {/* MODAL DETAIL AGENDA */}
       <AnimatePresence>
