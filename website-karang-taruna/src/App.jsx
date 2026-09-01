@@ -4,9 +4,10 @@ import Pengurus from './components/Pengurus';
 import FiturWarga from './components/FiturWarga';
 import Umkm from './components/Umkm';
 import TransparansiGaleri from './components/TransparansiGaleri';
-import Admin from './pages/Admin'; // Import halaman Admin kamu dari folder pages
+import Admin from './pages/Admin';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
+import { BrowserRouter } from 'react-router-dom';
 import { ArrowRight, CheckCircle, MapPin, Send, Calendar, UserPlus, X, Info, UserCheck, ChevronDown, Bell, Store, ShieldCheck } from 'lucide-react';
 
 const heroImage = "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1000";
@@ -61,9 +62,13 @@ export default function App() {
 
   const noPengurus = "6285739439137";
 
-  // JIKA LOGGED IN, TAMPILKAN HALAMAN ADMIN DARI pages/Admin.jsx
+  // JIKA LOGGED IN, TAMPILKAN HALAMAN ADMIN DENGAN CONTEXT BROWSERROUTER
   if (isAdminLoggedIn) {
-    return <Admin onLogout={() => setIsAdminLoggedIn(false)} />;
+    return (
+      <BrowserRouter>
+        <Admin onLogout={() => setIsAdminLoggedIn(false)} />
+      </BrowserRouter>
+    );
   }
 
   const handleSubmitAspirasi = (e) => {
