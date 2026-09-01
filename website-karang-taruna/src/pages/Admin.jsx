@@ -1,5 +1,4 @@
 import { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
 import { Users, Store, Calendar, CheckCircle, XCircle, ArrowLeft, Trash2, Plus, Lock, LogOut, Wallet } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
@@ -50,21 +49,15 @@ export default function Admin({ onLogout }) {
     }
   };
 
-  const handleLogout = () => {
-    setIsAuthenticated(false);
+  // FUNGSI KELUAR & NAVIGASI KEMBALI KE WEB UTAMA
+  const handleExitAdmin = () => {
     sessionStorage.removeItem('admin_authenticated');
+    setIsAuthenticated(false);
     setPasswordInput('');
     if (onLogout) {
-      onLogout(); // Kembali ke tampilan App.jsx
-    }
-  };
-
-  const handleGoHome = (e) => {
-    e.preventDefault();
-    if (onLogout) {
-      onLogout(); // Kembali ke tampilan App.jsx
+      onLogout();
     } else {
-      window.location.href = '/';
+      window.location.reload();
     }
   };
 
@@ -151,7 +144,7 @@ export default function Admin({ onLogout }) {
           </form>
 
           <div className="mt-6 pt-6 border-t border-slate-100">
-            <button onClick={handleGoHome} className="w-full text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1">
+            <button onClick={handleExitAdmin} className="w-full text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center justify-center gap-1">
               <ArrowLeft size={14} /> Kembali ke Website Utama
             </button>
           </div>
@@ -173,10 +166,10 @@ export default function Admin({ onLogout }) {
         </div>
         
         <div className="flex items-center gap-3">
-          <button onClick={handleGoHome} className="flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white bg-slate-800 px-4 py-2 rounded-xl transition">
+          <button onClick={handleExitAdmin} className="flex items-center gap-2 text-xs font-bold text-slate-300 hover:text-white bg-slate-800 px-4 py-2 rounded-xl transition">
             <ArrowLeft size={16} /> Ke Web Utama
           </button>
-          <button onClick={handleLogout} className="flex items-center gap-1.5 text-xs font-bold text-rose-400 hover:text-white bg-rose-500/10 hover:bg-rose-600 px-4 py-2 rounded-xl transition border border-rose-500/20">
+          <button onClick={handleExitAdmin} className="flex items-center gap-1.5 text-xs font-bold text-rose-400 hover:text-white bg-rose-500/10 hover:bg-rose-600 px-4 py-2 rounded-xl transition border border-rose-500/20">
             <LogOut size={16} /> Keluar
           </button>
         </div>
