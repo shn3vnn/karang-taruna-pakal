@@ -41,7 +41,7 @@ const agendaList = [
       { peran: "Wasit & Pertandingan", nama: "Rizky Pratama" },
       { peran: "Pendaftaran & Bantuan", nama: "Dewi Lestari" }
     ],
-    waPJ: "6281234567890"
+    waPJ: "6285739439137"
   }
 ];
 
