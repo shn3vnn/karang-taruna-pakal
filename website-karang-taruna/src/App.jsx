@@ -8,7 +8,7 @@ import Admin from './pages/Admin';
 import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
 import { BrowserRouter } from 'react-router-dom';
-import { ArrowUpRight, MapPin, Send, UserPlus, X, Info, UserCheck, ChevronDown, Bell, Store, ShieldCheck, Clock } from 'lucide-react';
+import { ArrowUpRight, MapPin, Send, UserPlus, X, ChevronDown, ShieldCheck, Target, Compass } from 'lucide-react';
 
 const heroPhotos = [
   "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=800",
@@ -146,7 +146,7 @@ export default function App() {
   return (
     <div className="min-h-screen bg-[#FAFAFA] text-[#171717] font-sans antialiased">
       
-      {/* ANNOUNCEMENT BAR - NOTION STYLE */}
+      {/* ANNOUNCEMENT BAR */}
       <div className="border-b border-[#E5E5E5] bg-[#F5F5F5] py-2 px-4 text-xs text-[#525252]">
         <div className="max-w-6xl mx-auto flex items-center justify-between">
           <div className="flex items-center gap-2">
@@ -161,54 +161,124 @@ export default function App() {
       {/* NAVBAR */}
       <Navbar onOpenDaftar={() => setIsDaftarOpen(true)} />
 
-      {/* HERO SECTION - CRAFTSMAN EDITORIAL */}
+      {/* HERO SECTION */}
       <section id="beranda" className="pt-12 pb-16 border-b border-[#E5E5E5]">
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           
           <div className="mb-8">
-            <span className="text-xs font-mono uppercase tracking-wider text-[#737373] block mb-3">
-              [ 01 ] — Platform Komunitas Pemuda
+            <span className="text-xs font-mono uppercase tracking-widest text-[#737373] block mb-3">
+              [ 01 ] — PLATFORM KOMUNITAS PEMUDA
             </span>
-            <h1 className="text-3xl sm:text-5xl font-medium tracking-tight text-[#171717] max-w-3xl leading-[1.15]">
+            <h1 className="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#171717] max-w-3xl leading-[1.12]">
               Ruang gerak pemuda untuk perumahan yang aktif, transparan, dan saling bantu.
             </h1>
           </div>
 
-          <p className="text-[#525252] text-sm sm:text-base max-w-2xl mb-8 leading-relaxed">
+          <p className="text-[#525252] text-sm sm:text-base max-w-2xl mb-8 leading-relaxed font-normal">
             Karang Taruna Pakal Residence adalah wadah kolaborasi generasi muda untuk mengelola kegiatan sosial, mempublikasikan kas terbuka, serta mempromosikan usaha warga lokal.
           </p>
 
           <div className="flex flex-wrap gap-3 mb-12">
             <a 
               href="#agenda" 
-              className="bg-[#171717] hover:bg-[#262626] text-white px-5 py-2.5 rounded text-xs font-medium transition flex items-center gap-2"
+              className="bg-[#171717] hover:bg-[#262626] text-white px-5 py-2.5 rounded text-xs font-semibold tracking-wide transition flex items-center gap-2"
             >
               Lihat Agenda Kegiatan <ArrowUpRight size={14} />
             </a>
             <button 
               onClick={() => setIsDaftarOpen(true)} 
-              className="bg-white hover:bg-[#F5F5F5] border border-[#D4D4D4] text-[#171717] px-5 py-2.5 rounded text-xs font-medium transition flex items-center gap-2"
+              className="bg-white hover:bg-[#F5F5F5] border border-[#D4D4D4] text-[#171717] px-5 py-2.5 rounded text-xs font-semibold tracking-wide transition flex items-center gap-2"
             >
               Gabung Pemuda <UserPlus size={14} />
             </button>
           </div>
 
-          {/* Photo Grid Grid Minimalis */}
+          {/* Photo Grid Minimalis */}
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="border border-[#E5E5E5] bg-white p-2 rounded">
-              <img src={heroPhotos[0]} alt="Kegiatan Pemuda 1" className="w-full h-56 sm:h-64 object-cover rounded-[#2px]" />
+              <img src={heroPhotos[0]} alt="Kegiatan Pemuda 1" className="w-full h-56 sm:h-64 object-cover rounded-[2px]" />
               <div className="p-2 pt-3 flex justify-between items-center text-xs text-[#737373]">
-                <span>Dokumentasi Kerja Bakti</span>
-                <span>2026</span>
+                <span className="font-medium">Dokumentasi Kerja Bakti</span>
+                <span className="font-mono">2026</span>
               </div>
             </div>
             <div className="border border-[#E5E5E5] bg-white p-2 rounded hidden sm:block">
-              <img src={heroPhotos[1]} alt="Kegiatan Pemuda 2" className="w-full h-56 sm:h-64 object-cover rounded-[#2px]" />
+              <img src={heroPhotos[1]} alt="Kegiatan Pemuda 2" className="w-full h-56 sm:h-64 object-cover rounded-[2px]" />
               <div className="p-2 pt-3 flex justify-between items-center text-xs text-[#737373]">
-                <span>Kebersamaan Warga</span>
-                <span>Pakal Residence</span>
+                <span className="font-medium">Kebersamaan Warga</span>
+                <span className="font-mono">Pakal Residence</span>
               </div>
             </div>
+          </div>
+
+        </div>
+      </section>
+
+      {/* SECTION VISI & MISI */}
+      <section id="visi-misi" className="py-16 border-b border-[#E5E5E5] bg-white">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6">
+          
+          <div className="mb-10">
+            <span className="text-xs font-mono uppercase tracking-wider text-[#737373] block mb-1">
+              [ 02 ] — FONDASI ORGANISASI
+            </span>
+            <h2 className="text-2xl font-bold text-[#171717]">Visi & Misi Karang Taruna</h2>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-6 items-start">
+            
+            {/* Box Visi */}
+            <div className="md:col-span-5 bg-[#FAFAFA] border border-[#E5E5E5] p-6 rounded relative">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#737373] uppercase mb-3">
+                <Target size={15} className="text-[#171717]" />
+                <span>Visi Utama</span>
+              </div>
+              <h3 className="text-lg font-bold text-[#171717] leading-snug mb-3">
+                Mewujudkan Generasi Muda Pakal Residence yang Mandiri, Kreatif, Berkarakter, dan Kepedulian Sosial Tinggi.
+              </h3>
+              <p className="text-xs text-[#525252] leading-relaxed">
+                Menjadi penggerak utama dalam menciptakan lingkungan perumahan yang aman, harmonis, serta mendukung kemajuan potensi seluruh pemuda dan warga.
+              </p>
+            </div>
+
+            {/* List Misi */}
+            <div className="md:col-span-7 bg-[#FAFAFA] border border-[#E5E5E5] p-6 rounded space-y-4">
+              <div className="flex items-center gap-2 text-xs font-mono text-[#737373] uppercase mb-1">
+                <Compass size={15} className="text-[#171717]" />
+                <span>Misi Pertumbuhan</span>
+              </div>
+
+              <div className="space-y-3">
+                <div className="flex gap-3 text-xs leading-relaxed border-b border-[#E5E5E5] pb-3">
+                  <span className="font-mono font-bold text-[#171717]">01.</span>
+                  <p className="text-[#525252]">
+                    <strong className="text-[#171717]">Mempererat Silaturahmi:</strong> Menyelenggarakan kegiatan kebersamaan, keolahragaan, dan seni secara berkala antarwarga dan antar-RT.
+                  </p>
+                </div>
+
+                <div className="flex gap-3 text-xs leading-relaxed border-b border-[#E5E5E5] pb-3">
+                  <span className="font-mono font-bold text-[#171717]">02.</span>
+                  <p className="text-[#525252]">
+                    <strong className="text-[#171717]">Pemberdayaan Ekonomi Warga:</strong> Mendorong dan mempromosikan potensi UMKM lokal milik warga perumahan agar saling bertumbuh.
+                  </p>
+                </div>
+
+                <div className="flex gap-3 text-xs leading-relaxed border-b border-[#E5E5E5] pb-3">
+                  <span className="font-mono font-bold text-[#171717]">03.</span>
+                  <p className="text-[#525252]">
+                    <strong className="text-[#171717]">Aksi Lingkungan & Sosial:</strong> Aktif menjaga kebersihan, kelestarian lingkungan, serta tanggap bantuan sosial untuk warga yang membutuhkan.
+                  </p>
+                </div>
+
+                <div className="flex gap-3 text-xs leading-relaxed">
+                  <span className="font-mono font-bold text-[#171717]">04.</span>
+                  <p className="text-[#525252]">
+                    <strong className="text-[#171717]">Transparansi & Akuntabilitas:</strong> Mengelola kas dan informasi kegiatan secara terbuka yang dapat diakses oleh seluruh masyarakat perumahan.
+                  </p>
+                </div>
+              </div>
+            </div>
+
           </div>
 
         </div>
@@ -224,9 +294,9 @@ export default function App() {
           <div className="flex justify-between items-end mb-8 border-b border-[#E5E5E5] pb-4">
             <div>
               <span className="text-xs font-mono uppercase tracking-wider text-[#737373] block mb-1">
-                [ 02 ] — Jadwal Rutin
+                [ 03 ] — JADWAL RUTIN
               </span>
-              <h2 className="text-2xl font-medium text-[#171717]">Agenda Mendatang</h2>
+              <h2 className="text-2xl font-bold text-[#171717]">Agenda Mendatang</h2>
             </div>
           </div>
 
@@ -243,7 +313,7 @@ export default function App() {
                     </span>
                   </div>
 
-                  <h3 className="text-lg font-medium text-[#171717] mb-2">{item.judul}</h3>
+                  <h3 className="text-lg font-bold text-[#171717] mb-2">{item.judul}</h3>
                   <p className="text-xs text-[#525252] leading-relaxed mb-6">{item.deskripsiRingkas}</p>
                 </div>
 
@@ -253,7 +323,7 @@ export default function App() {
                   </span>
                   <button 
                     onClick={() => setSelectedAgenda(item)}
-                    className="font-medium text-[#171717] hover:underline flex items-center gap-1"
+                    className="font-semibold text-[#171717] hover:underline flex items-center gap-1"
                   >
                     Rincian & Ikut <ArrowUpRight size={13} />
                   </button>
@@ -279,9 +349,9 @@ export default function App() {
         <div className="max-w-3xl mx-auto px-4 sm:px-6">
           <div className="mb-8 text-center">
             <span className="text-xs font-mono uppercase tracking-wider text-[#737373] block mb-1">
-              [ 03 ] — Informasi Umum
+              [ 04 ] — INFORMASI UMUM
             </span>
-            <h2 className="text-2xl font-medium text-[#171717]">Pertanyaan Sering Diajukan</h2>
+            <h2 className="text-2xl font-bold text-[#171717]">Pertanyaan Sering Diajukan</h2>
           </div>
 
           <div className="space-y-2">
@@ -289,7 +359,7 @@ export default function App() {
               <div key={idx} className="border border-[#E5E5E5] rounded bg-[#FAFAFA]">
                 <button 
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-4 text-left text-xs sm:text-sm font-medium text-[#171717] flex justify-between items-center"
+                  className="w-full p-4 text-left text-xs sm:text-sm font-semibold text-[#171717] flex justify-between items-center"
                 >
                   <span>{faq.q}</span>
                   <ChevronDown size={16} className={`text-[#737373] transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
@@ -310,8 +380,8 @@ export default function App() {
         <div className="max-w-6xl mx-auto px-4 sm:px-6">
           <div className="grid md:grid-cols-12 gap-8 items-center">
             <div className="md:col-span-5 space-y-3">
-              <span className="text-xs font-mono uppercase tracking-wider text-[#737373]">Peta Sekretariat</span>
-              <h2 className="text-2xl font-medium text-[#171717]">Balai Warga Pakal</h2>
+              <span className="text-xs font-mono uppercase tracking-wider text-[#737373]">PETA SEKRETARIAT</span>
+              <h2 className="text-2xl font-bold text-[#171717]">Balai Warga Pakal</h2>
               <p className="text-xs text-[#525252] leading-relaxed">
                 Pusat kegiatan dan balai serbaguna perumahan Pakal Residence, Surabaya.
               </p>
@@ -340,7 +410,7 @@ export default function App() {
         <div className="max-w-2xl mx-auto px-4">
           <div className="text-center mb-8">
             <span className="text-xs font-mono text-[#A3A3A3] block mb-1">[ ASPIRASI WARGA ]</span>
-            <h2 className="text-2xl font-medium">Suara & Masukan Warga</h2>
+            <h2 className="text-2xl font-bold">Suara & Masukan Warga</h2>
           </div>
 
           <form className="space-y-3" onSubmit={handleSubmitAspirasi}>
@@ -349,7 +419,7 @@ export default function App() {
               <input name="wa" type="text" placeholder="No. WhatsApp (Opsional)" className="bg-[#262626] border border-[#404040] rounded px-3 py-2 text-xs text-white placeholder-[#A3A3A3] focus:outline-none focus:border-white" />
             </div>
             <textarea name="pesan" required rows="3" placeholder="Tuliskan pesan atau saranmu..." className="w-full bg-[#262626] border border-[#404040] rounded px-3 py-2 text-xs text-white placeholder-[#A3A3A3] focus:outline-none focus:border-white"></textarea>
-            <button type="submit" className="w-full bg-white hover:bg-[#E5E5E5] text-[#171717] font-medium text-xs py-2.5 rounded transition flex items-center justify-center gap-2">
+            <button type="submit" className="w-full bg-white hover:bg-[#E5E5E5] text-[#171717] font-semibold text-xs py-2.5 rounded transition flex items-center justify-center gap-2">
               Kirim Pesan <Send size={14} />
             </button>
           </form>
@@ -378,7 +448,7 @@ export default function App() {
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="bg-white rounded border border-[#E5E5E5] p-6 max-w-lg w-full relative">
               <button onClick={() => setSelectedAgenda(null)} className="absolute top-4 right-4 text-[#737373] hover:text-[#171717]"><X size={18}/></button>
               <span className="text-xs font-mono text-[#737373]">{selectedAgenda.kategori}</span>
-              <h3 className="text-xl font-medium text-[#171717] mt-1 mb-2">{selectedAgenda.judul}</h3>
+              <h3 className="text-xl font-bold text-[#171717] mt-1 mb-2">{selectedAgenda.judul}</h3>
               <p className="text-xs text-[#525252] leading-relaxed mb-4">{selectedAgenda.deskripsiLengkap}</p>
               
               <div className="text-xs text-[#171717] bg-[#FAFAFA] p-3 rounded border border-[#E5E5E5] mb-4 space-y-1">
@@ -386,10 +456,10 @@ export default function App() {
                 <p>📍 {selectedAgenda.lokasi}</p>
               </div>
 
-              <button onClick={() => handleDaftarKegiatan(selectedAgenda)} className="w-full bg-[#171717] hover:bg-[#262626] text-white font-medium py-2 rounded text-xs transition mb-2">
+              <button onClick={() => handleDaftarKegiatan(selectedAgenda)} className="w-full bg-[#171717] hover:bg-[#262626] text-white font-semibold py-2 rounded text-xs transition mb-2">
                 Daftar / Konfirmasi Kehadiran
               </button>
-              <button onClick={() => setSelectedAgenda(null)} className="w-full bg-[#F5F5F5] text-[#525252] font-medium py-2 rounded text-xs">
+              <button onClick={() => setSelectedAgenda(null)} className="w-full bg-[#F5F5F5] text-[#525252] font-semibold py-2 rounded text-xs">
                 Tutup
               </button>
             </motion.div>
@@ -403,7 +473,7 @@ export default function App() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="bg-white rounded border border-[#E5E5E5] p-6 max-w-md w-full relative">
               <button onClick={() => setIsDaftarOpen(false)} className="absolute top-4 right-4 text-[#737373] hover:text-[#171717]"><X size={18}/></button>
-              <h3 className="text-lg font-medium text-[#171717] mb-1">Form Pendaftaran Anggota</h3>
+              <h3 className="text-lg font-bold text-[#171717] mb-1">Form Pendaftaran Anggota</h3>
               <p className="text-xs text-[#737373] mb-4">Khusus pemuda/i perumahan usia 15-30 tahun.</p>
 
               <form className="space-y-3" onSubmit={handleSubmitDaftar}>
@@ -415,7 +485,7 @@ export default function App() {
                   <option value="Olahraga & Seni">Divisi Olahraga & Seni</option>
                   <option value="Lingkungan & Sosial">Divisi Lingkungan & Sosial</option>
                 </select>
-                <button type="submit" className="w-full bg-[#171717] text-white font-medium py-2 rounded text-xs transition">
+                <button type="submit" className="w-full bg-[#171717] text-white font-semibold py-2 rounded text-xs transition">
                   Kirim Pendaftaran
                 </button>
               </form>
@@ -430,7 +500,7 @@ export default function App() {
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/50 backdrop-blur-xs">
             <motion.div initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: 10 }} className="bg-white rounded border border-[#E5E5E5] p-6 max-w-md w-full relative">
               <button onClick={() => setIsDaftarUmkmOpen(false)} className="absolute top-4 right-4 text-[#737373] hover:text-[#171717]"><X size={18}/></button>
-              <h3 className="text-lg font-medium text-[#171717] mb-1">Daftarkan Usaha UMKM</h3>
+              <h3 className="text-lg font-bold text-[#171717] mb-1">Daftarkan Usaha UMKM</h3>
               <p className="text-xs text-[#737373] mb-4">Promosikan produk/jasa ke warga perumahan secara gratis.</p>
 
               <form className="space-y-3" onSubmit={handleSubmitDaftarUmkm}>
@@ -443,7 +513,7 @@ export default function App() {
                 <input name="wa" type="text" required placeholder="No. WA Penjual (628...)" className="w-full bg-[#FAFAFA] border border-[#E5E5E5] rounded px-3 py-2 text-xs focus:outline-none focus:border-[#171717]" />
                 <textarea name="deskripsi" required rows="3" placeholder="Deskripsi singkat produk..." className="w-full bg-[#FAFAFA] border border-[#E5E5E5] rounded px-3 py-2 text-xs focus:outline-none focus:border-[#171717]"></textarea>
                 <input name="fotoFile" type="file" accept="image/*" className="w-full text-xs" />
-                <button type="submit" className="w-full bg-[#171717] text-white font-medium py-2 rounded text-xs transition">
+                <button type="submit" className="w-full bg-[#171717] text-white font-semibold py-2 rounded text-xs transition">
                   Daftarkan Usaha
                 </button>
               </form>
