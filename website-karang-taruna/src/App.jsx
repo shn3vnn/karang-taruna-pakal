@@ -140,14 +140,14 @@ export default function App() {
   };
 
   const handleDaftarKegiatan = (agenda) => {
-    const textKegiatan = encodeURIComponent(`Halo Kak ${agenda.panitia[0].nama}, saya mau mendaftar ikut kegiatan:\n\n📌 *${agenda.judul}*\n🗓 Tanggal: ${agenda.tglHari} ${agenda.tglBulan} ${agenda.tahun}\n📍 Lokasi: ${agenda.lokasi}\n\nMohon arahan selanjutnya. Terima kasih!`);
+    const textKegiatan = encodeURIComponent(`Halo Kak ${agenda.panitia[0].nama}, saya mau mendaftar ikut kegiatan:\n\nNama Kegiatan: ${agenda.judul}\nTanggal: ${agenda.tglHari} ${agenda.tglBulan} ${agenda.tahun}\nLokasi: ${agenda.lokasi}\n\nMohon arahan selanjutnya. Terima kasih!`);
     window.location.href = `whatsapp://send?phone=${agenda.waPJ}&text=${textKegiatan}`;
   };
 
   return (
     <div className="min-h-screen bg-[#F8FAFC] text-slate-900 font-sans">
       
-      {/* RUNNING BANNER - UNIFORM EMERALD */}
+      {/* RUNNING BANNER */}
       <div className="bg-[#039088] text-white text-xs font-semibold py-2.5 px-4 flex items-center justify-center gap-2">
         <Bell size={14} className="shrink-0 animate-bounce" />
         <span><strong>Kabar Warga:</strong> Kerja Bakti Masal diadakan Minggu, 10 September 2026 jam 07.00 WIB. Mari hadir bersama!</span>
