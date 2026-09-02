@@ -7,23 +7,22 @@ const pengurusList = [
 
 export default function Pengurus() {
   return (
-    <section id="pengurus" className="py-16 sm:py-20 bg-[#FAF8F5] border-b border-[#E6E4DF]">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <section id="pengurus" className="py-16 border-b border-[#E5E5E5]">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6">
         
-        <div className="text-center max-w-2xl mx-auto mb-12">
-          <span className="text-[#0F766E] font-bold text-xs uppercase tracking-wider bg-[#E8F5F3] px-2.5 py-1 rounded-md">
-            Struktur Organisasi
+        <div className="mb-8">
+          <span className="text-xs font-mono uppercase tracking-wider text-[#737373] block mb-1">
+            [ 06 ] — Pengurus
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-[#1C1F1D] mt-2">Pengurus & Anggota Resmi</h2>
-          <p className="text-[#737A75] text-sm mt-1">Pemuda-pemudi aktif yang mengabdi untuk lingkungan Pakal Residence.</p>
+          <h2 className="text-2xl font-medium text-[#171717]">Struktur Organisasi</h2>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
           {pengurusList.map((p, idx) => (
-            <div key={idx} className="bg-white p-4 rounded-xl border border-[#E6E4DF] text-center hover:border-[#0F766E] transition">
-              <img src={p.foto} alt={p.nama} className="w-24 h-24 sm:w-28 sm:h-28 rounded-xl object-cover mx-auto mb-3" />
-              <h4 className="font-bold text-[#1C1F1D] text-sm sm:text-base">{p.nama}</h4>
-              <p className="text-xs text-[#0F766E] font-semibold mt-0.5">{p.jabatan}</p>
+            <div key={idx} className="bg-white p-3 border border-[#E5E5E5] rounded text-center">
+              <img src={p.foto} alt={p.nama} className="w-20 h-20 rounded-full object-cover mx-auto mb-2" />
+              <h4 className="font-medium text-xs text-[#171717]">{p.nama}</h4>
+              <p className="text-[11px] text-[#737373]">{p.jabatan}</p>
             </div>
           ))}
         </div>
