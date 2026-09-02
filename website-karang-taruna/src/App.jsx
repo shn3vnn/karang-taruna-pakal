@@ -167,14 +167,14 @@ export default function App() {
   };
 
   return (
-    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-sans antialiased selection:bg-[#0F766E] selection:text-white">
+    <div className="min-h-screen bg-[#F8FAFC] text-[#0F172A] font-['Plus_Jakarta_Sans',_sans-serif] antialiased selection:bg-[#0F766E] selection:text-white">
       
       {/* 1. RUNNING BANNER ANNOUNCEMENT */}
       <div className="bg-[#0F766E] text-white text-xs sm:text-sm font-medium py-2.5 px-4">
-        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2 text-center">
-          <Bell size={15} className="shrink-0 text-[#F59E0B] animate-pulse" />
-          <span>
-            <strong className="font-bold text-[#CCFBF1]">Pengumuman:</strong> Kerja Bakti Masal akan dilaksanakan Minggu, 10 September 2026 jam 07:00 WIB. Mari hadir bersama!
+        <div className="max-w-7xl mx-auto flex items-center justify-center gap-2.5 text-center">
+          <Bell size={15} className="shrink-0 text-[#F59E0B]" />
+          <span className="leading-snug">
+            <span className="font-bold text-[#CCFBF1]">Pengumuman —</span> Kerja Bakti Masal dilaksanakan Minggu, 10 September 2026 pukul 07:00 WIB. Mari hadir bersama.
           </span>
         </div>
       </div>
@@ -183,57 +183,57 @@ export default function App() {
       <Navbar onOpenDaftar={() => setIsDaftarOpen(true)} />
 
       {/* 3. HERO SECTION */}
-      <section id="beranda" className="relative pt-8 pb-16 md:pt-16 md:pb-24 overflow-hidden border-b border-[#E2E8F0]">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-12 gap-10 lg:gap-12 items-center">
+      <section id="beranda" className="relative pt-10 pb-20 md:pt-20 md:pb-28 overflow-hidden">
+        {/* Soft ambient accent, kept subtle per no-overdesign rule */}
+        <div className="pointer-events-none absolute -top-24 -right-24 w-[420px] h-[420px] rounded-full bg-[#CCFBF1] opacity-40 blur-3xl" />
+
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative">
+          <div className="grid md:grid-cols-12 gap-10 lg:gap-16 items-center">
             
             {/* Teks Hero */}
-            <div className="md:col-span-7 space-y-6 text-left">
-              <div className="inline-flex items-center gap-2.5 px-4 py-2 bg-[#CCFBF1] text-[#0F766E] rounded-full text-xs sm:text-sm font-semibold border border-[#0F766E]/10">
-                <Sparkles size={16} className="text-[#0F766E]" />
+            <div className="md:col-span-7 space-y-7 text-left">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 bg-white text-[#0F766E] rounded-full text-xs sm:text-sm font-semibold border border-[#0F766E]/15 shadow-sm">
+                <Sparkles size={15} />
                 <span>Komunitas Pemuda Resmi Pakal Residence</span>
               </div>
 
-              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-extrabold text-[#0F172A] tracking-tight leading-[1.18]">
-                Bersama Membangun Lingkungan yang <span className="text-[#0F766E]">Aktif, Solid,</span> & <span className="relative inline-block">
-                  Harmonis
-                  <span className="absolute bottom-1 left-0 w-full h-2 bg-[#F59E0B]/30 rounded-full -z-10"></span>
-                </span>
+              <h1 className="text-4xl sm:text-5xl lg:text-[3.4rem] font-extrabold text-[#0F172A] tracking-tight leading-[1.12]">
+                Membangun lingkungan yang aktif, solid, dan harmonis — bersama.
               </h1>
 
-              <p className="text-[#475569] text-base sm:text-lg leading-relaxed max-w-2xl">
+              <p className="text-[#475569] text-base sm:text-lg leading-relaxed max-w-xl">
                 Karang Taruna hadir sebagai wadah generasi muda Pakal Residence untuk berkolaborasi, berkarya, memajukan UMKM warga, dan menjaga keharmonisan lingkungan secara transparan.
               </p>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap gap-4 pt-2">
+              <div className="flex flex-wrap gap-3 pt-1">
                 <a 
                   href="#agenda" 
-                  className="inline-flex items-center gap-2 bg-[#0F766E] hover:bg-[#115E59] text-white px-6 py-3.5 rounded-[14px] font-semibold text-sm sm:text-base transition-all duration-200 shadow-md hover:shadow-lg hover:-translate-y-0.5"
+                  className="inline-flex items-center gap-2 bg-[#0F766E] hover:bg-[#115E59] text-white px-6 py-3.5 rounded-[14px] font-semibold text-sm sm:text-base transition-colors duration-200 shadow-sm"
                 >
                   Lihat Kegiatan <ArrowRight size={18} />
                 </a>
                 <button 
                   onClick={() => setIsDaftarOpen(true)} 
-                  className="inline-flex items-center gap-2 bg-white hover:bg-[#F1F5F9] border border-[#E2E8F0] text-[#0F172A] px-6 py-3.5 rounded-[14px] font-semibold text-sm sm:text-base transition-all duration-200 hover:-translate-y-0.5 shadow-sm"
+                  className="inline-flex items-center gap-2 bg-white hover:bg-[#F1F5F9] border border-[#E2E8F0] text-[#0F172A] px-6 py-3.5 rounded-[14px] font-semibold text-sm sm:text-base transition-colors duration-200"
                 >
                   <UserPlus size={18} className="text-[#0F766E]" /> Gabung Pemuda
                 </button>
               </div>
 
-              {/* Badges / Value Props */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 pt-6 border-t border-[#E2E8F0] text-xs sm:text-sm font-medium text-[#475569]">
+              {/* Value Props */}
+              <div className="flex flex-wrap gap-x-8 gap-y-3 pt-6 border-t border-[#E2E8F0] text-sm font-medium text-[#475569]">
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-[#0F766E] shrink-0" />
-                  <span>Transparansi Kas Digital</span>
+                  <CheckCircle2 size={17} className="text-[#0F766E] shrink-0" />
+                  <span>Transparansi kas digital</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-[#0F766E] shrink-0" />
-                  <span>Katalog UMKM Warga</span>
+                  <CheckCircle2 size={17} className="text-[#0F766E] shrink-0" />
+                  <span>Katalog UMKM warga</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <CheckCircle2 size={18} className="text-[#0F766E] shrink-0" />
-                  <span>Terbuka Untuk Pemuda</span>
+                  <CheckCircle2 size={17} className="text-[#0F766E] shrink-0" />
+                  <span>Terbuka untuk pemuda</span>
                 </div>
               </div>
             </div>
@@ -241,13 +241,13 @@ export default function App() {
             {/* Gambar Hero Presentation */}
             <div className="md:col-span-5 relative order-first md:order-last">
               <div className="relative mx-auto max-w-md md:max-w-none">
-                <div className="bg-white p-3 sm:p-4 rounded-[24px] border border-[#E2E8F0] shadow-xl relative z-10">
+                <div className="bg-white p-3 rounded-[28px] border border-[#E2E8F0] shadow-lg relative z-10">
                   <img 
                     src={heroPhotos[0]} 
                     alt="Kegiatan Karang Taruna" 
-                    className="w-full h-64 sm:h-80 object-cover rounded-[18px]" 
+                    className="w-full h-64 sm:h-[22rem] object-cover rounded-[20px]" 
                   />
-                  <div className="mt-3 flex items-center justify-between px-2">
+                  <div className="mt-3 flex items-center justify-between px-2 pb-1">
                     <div>
                       <h4 className="font-bold text-[#0F172A] text-sm sm:text-base">Kegiatan Rutin Pemuda</h4>
                       <p className="text-xs text-[#64748B]">Pakal Residence, Surabaya</p>
@@ -259,13 +259,13 @@ export default function App() {
                 </div>
 
                 {/* Accent Floating Badge */}
-                <div className="absolute -bottom-5 -left-4 sm:-left-6 bg-white p-3 sm:p-4 rounded-[18px] border border-[#E2E8F0] shadow-lg flex items-center gap-3 z-20">
+                <div className="absolute -bottom-6 -left-4 sm:-left-7 bg-white p-3.5 rounded-[18px] border border-[#E2E8F0] shadow-md flex items-center gap-3 z-20">
                   <div className="w-10 h-10 rounded-xl bg-[#F59E0B]/10 flex items-center justify-center text-[#F59E0B]">
-                    <HeartHandshake size={22} />
+                    <HeartHandshake size={20} />
                   </div>
                   <div>
-                    <div className="text-xs text-[#64748B] font-medium">Semangat Warga</div>
-                    <div className="text-sm font-extrabold text-[#0F172A]">Guyub & Rukun</div>
+                    <div className="text-[11px] text-[#64748B] font-medium">Semangat warga</div>
+                    <div className="text-sm font-extrabold text-[#0F172A]">Guyub & rukun</div>
                   </div>
                 </div>
               </div>
@@ -279,37 +279,37 @@ export default function App() {
       <FiturWarga />
 
       {/* 5. SECTION AGENDA & KEGIATAN */}
-      <section id="agenda" className="py-16 sm:py-24 bg-white border-b border-[#E2E8F0]">
+      <section id="agenda" className="py-20 sm:py-28 bg-white border-t border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12">
-            <div>
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-14">
+            <div className="space-y-3">
               <span className="text-[#0F766E] font-bold text-xs uppercase tracking-wider bg-[#CCFBF1] px-3 py-1 rounded-full">
-                Jadwal Mendatang
+                Jadwal mendatang
               </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A] mt-3">Agenda & Kegiatan Warga</h2>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A]">Agenda & kegiatan warga</h2>
             </div>
-            <p className="text-[#64748B] text-sm sm:text-base max-w-md mt-2 md:mt-0">
+            <p className="text-[#64748B] text-sm sm:text-base max-w-md">
               Ikuti berbagai kegiatan sosial, kebersihan, dan olahraga rutin di lingkungan perumahan kita.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 lg:gap-8">
             {agendaList.map((item) => (
               <div 
                 key={item.id} 
-                className="bg-[#F8FAFC] rounded-[24px] border border-[#E2E8F0] p-6 sm:p-8 shadow-sm hover:shadow-md transition-all duration-300 flex flex-col justify-between hover:border-[#0F766E]/40"
+                className="group bg-white rounded-[22px] border border-[#E2E8F0] p-6 sm:p-7 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col justify-between"
               >
                 <div>
-                  <div className="flex items-start gap-4 mb-4">
+                  <div className="flex items-start gap-4 mb-5">
                     {/* Date Card Presentation */}
-                    <div className="bg-[#0F766E] text-white rounded-[16px] p-3 text-center min-w-[70px] shrink-0 shadow-sm">
-                      <span className="block text-2xl font-black leading-none">{item.tglHari}</span>
+                    <div className="bg-[#0F172A] text-white rounded-[14px] p-3 text-center min-w-[64px] shrink-0">
+                      <span className="block text-xl font-black leading-none">{item.tglHari}</span>
                       <span className="block text-[10px] font-bold uppercase tracking-wider mt-1 text-[#CCFBF1]">{item.tglBulan}</span>
                     </div>
 
-                    <div>
-                      <span className="inline-block text-xs font-bold px-3 py-1 bg-[#CCFBF1] text-[#0F766E] rounded-full mb-1">
+                    <div className="pt-0.5">
+                      <span className="inline-block text-[11px] font-bold px-2.5 py-1 bg-[#CCFBF1] text-[#0F766E] rounded-full mb-2">
                         {item.kategori}
                       </span>
                       <h3 className="text-lg sm:text-xl font-bold text-[#0F172A] leading-snug">{item.judul}</h3>
@@ -321,15 +321,15 @@ export default function App() {
                   </p>
                 </div>
 
-                <div className="pt-4 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
-                  <div className="flex items-center gap-2 text-xs sm:text-sm font-semibold text-[#64748B]">
-                    <MapPin size={16} className="text-[#0F766E]" />
+                <div className="pt-5 border-t border-[#E2E8F0] flex flex-wrap items-center justify-between gap-3">
+                  <div className="flex items-center gap-2 text-sm font-medium text-[#64748B]">
+                    <MapPin size={16} className="text-[#0F766E] shrink-0" />
                     <span>{item.lokasi}</span>
                   </div>
                   
                   <button 
                     onClick={() => setSelectedAgenda(item)}
-                    className="inline-flex items-center gap-1.5 bg-[#0F766E] hover:bg-[#115E59] text-white px-4 py-2.5 rounded-[12px] text-xs font-bold transition shadow-sm"
+                    className="inline-flex items-center gap-1.5 bg-[#0F766E] group-hover:bg-[#115E59] text-white px-4 py-2.5 rounded-[12px] text-xs font-bold transition-colors"
                   >
                     Detail & Daftar <Info size={14} />
                   </button>
@@ -351,27 +351,27 @@ export default function App() {
       <Pengurus />
 
       {/* 9. SECTION FAQ - TANYA JAWAB */}
-      <section className="py-16 sm:py-24 bg-white border-t border-[#E2E8F0]">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
+      <section className="py-20 sm:py-28 bg-white border-t border-[#E2E8F0]">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12 space-y-3">
             <span className="text-[#0F766E] font-bold text-xs uppercase tracking-wider bg-[#CCFBF1] px-3 py-1 rounded-full">
-              Tanya Jawab
+              Tanya jawab
             </span>
-            <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A] mt-3">Pertanyaan Sering Diajukan</h2>
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A]">Pertanyaan yang sering diajukan</h2>
           </div>
 
-          <div className="space-y-4">
+          <div className="space-y-3">
             {faqList.map((faq, idx) => (
-              <div key={idx} className="border border-[#E2E8F0] rounded-[18px] overflow-hidden bg-[#F8FAFC]">
+              <div key={idx} className="border border-[#E2E8F0] rounded-[16px] overflow-hidden bg-[#F8FAFC]">
                 <button 
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-5 text-left font-bold text-[#0F172A] flex justify-between items-center text-sm sm:text-base hover:bg-[#F1F5F9] transition"
+                  className="w-full p-5 text-left font-bold text-[#0F172A] flex justify-between items-center gap-4 text-sm sm:text-base hover:bg-[#F1F5F9] transition-colors"
                 >
                   <span>{faq.q}</span>
-                  <ChevronDown size={20} className={`text-[#0F766E] transition-transform duration-200 ${openFaq === idx ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-[#0F766E] shrink-0 transition-transform duration-200 ${openFaq === idx ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === idx && (
-                  <div className="px-5 pb-5 text-xs sm:text-sm text-[#475569] border-t border-[#E2E8F0]/60 pt-3 leading-relaxed bg-white">
+                  <div className="px-5 pb-5 text-sm text-[#475569] border-t border-[#E2E8F0] pt-4 leading-relaxed bg-white">
                     {faq.a}
                   </div>
                 )}
@@ -382,39 +382,39 @@ export default function App() {
       </section>
 
       {/* 10. SECTION MAP / PETA SEKRETARIAT */}
-      <section id="lokasi" className="py-16 sm:py-24 bg-[#F8FAFC] border-t border-[#E2E8F0]">
+      <section id="lokasi" className="py-20 sm:py-28 bg-[#F8FAFC] border-t border-[#E2E8F0]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-12 gap-8 items-center">
+          <div className="grid md:grid-cols-12 gap-10 items-center">
             
-            <div className="md:col-span-5 space-y-4">
+            <div className="md:col-span-5 space-y-5">
               <span className="text-[#0F766E] font-bold text-xs uppercase tracking-wider bg-[#CCFBF1] px-3 py-1 rounded-full">
-                Peta Lokasi
+                Peta lokasi
               </span>
-              <h2 className="text-2xl sm:text-4xl font-extrabold text-[#0F172A]">Sekretariat Karang Taruna</h2>
+              <h2 className="text-3xl sm:text-4xl font-extrabold text-[#0F172A]">Sekretariat Karang Taruna</h2>
               <p className="text-[#475569] text-sm sm:text-base leading-relaxed">
                 Pusat kegiatan dan balai serbaguna warga perumahan Pakal Residence. Terbuka untuk diskusi, kegiatan rutin, atau koordinasi antarwarga.
               </p>
               
-              <div className="pt-2 text-xs sm:text-sm text-[#0F172A] space-y-3">
-                <div className="flex items-center gap-3 font-semibold p-3 bg-white rounded-[14px] border border-[#E2E8F0]">
-                  <MapPin size={20} className="text-[#0F766E] shrink-0" />
+              <div className="pt-2 text-sm text-[#0F172A] space-y-3">
+                <div className="flex items-center gap-3 font-semibold p-3.5 bg-white rounded-[14px] border border-[#E2E8F0]">
+                  <MapPin size={18} className="text-[#0F766E] shrink-0" />
                   <span>Pakal Residence, Pakal, Surabaya</span>
                 </div>
-                <div className="flex items-center gap-3 font-semibold p-3 bg-white rounded-[14px] border border-[#E2E8F0]">
-                  <Clock size={20} className="text-[#0F766E] shrink-0" />
-                  <span>Buka Setiap Sabtu & Minggu (16:00 - 21:00 WIB)</span>
+                <div className="flex items-center gap-3 font-semibold p-3.5 bg-white rounded-[14px] border border-[#E2E8F0]">
+                  <Clock size={18} className="text-[#0F766E] shrink-0" />
+                  <span>Buka setiap Sabtu & Minggu, 16.00–21.00 WIB</span>
                 </div>
               </div>
             </div>
 
             {/* Container Map Redesign */}
-            <div className="md:col-span-7 h-80 sm:h-96 rounded-[24px] overflow-hidden border border-[#E2E8F0] shadow-md bg-white p-2">
+            <div className="md:col-span-7 h-80 sm:h-[26rem] rounded-[24px] overflow-hidden border border-[#E2E8F0] shadow-sm bg-white p-2">
               <iframe 
                 title="Peta Lokasi Karang Taruna Pakal Residence"
                 src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15832.062823055416!2d112.6080!3d-7.2380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f3f1e1a2b3c4%3A0x123456789abcdef!2sPakal%20Residence!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
                 width="100%" 
                 height="100%" 
-                className="rounded-[18px]"
+                className="rounded-[16px]"
                 style={{ border: 0 }} 
                 allowFullScreen="" 
                 loading="lazy"
@@ -426,17 +426,17 @@ export default function App() {
       </section>
 
       {/* 11. SECTION ASPIRASI WARGA */}
-      <section id="kontak" className="py-16 sm:py-24 bg-[#0F172A] text-white">
+      <section id="kontak" className="py-20 sm:py-28 bg-[#0F172A] text-white">
         <div className="max-w-3xl mx-auto px-4 text-center">
           <span className="text-[#F59E0B] font-bold text-xs uppercase tracking-wider bg-[#F59E0B]/10 px-3 py-1 rounded-full border border-[#F59E0B]/20">
-            Ruang Komunikasi
+            Ruang komunikasi
           </span>
-          <h2 className="text-2xl sm:text-4xl font-extrabold mb-4 mt-3">Suara & Aspirasi Warga</h2>
-          <p className="text-[#64748B] text-sm sm:text-base mb-8">
+          <h2 className="text-3xl sm:text-4xl font-extrabold mb-4 mt-4">Suara & aspirasi warga</h2>
+          <p className="text-[#94A3B8] text-sm sm:text-base mb-10">
             Punya saran, aduan, atau ide kegiatan untuk Karang Taruna? Tuliskan pesanmu di bawah ini.
           </p>
 
-          <form className="space-y-4 text-left bg-slate-800/50 p-6 sm:p-8 rounded-[24px] border border-slate-700/60" onSubmit={handleSubmitAspirasi}>
+          <form className="space-y-4 text-left bg-white/[0.04] p-6 sm:p-8 rounded-[22px] border border-white/10" onSubmit={handleSubmitAspirasi}>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-semibold text-slate-300 mb-1.5">Nama Lengkap / Blok *</label>
@@ -445,7 +445,7 @@ export default function App() {
                   type="text" 
                   required 
                   placeholder="Contoh: Budi (Blok A-12)" 
-                  className="w-full bg-slate-900 border border-slate-700 rounded-[12px] px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#0F766E]" 
+                  className="w-full bg-slate-900/60 border border-slate-700 rounded-[12px] px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/30 transition-colors" 
                 />
               </div>
               <div>
@@ -454,7 +454,7 @@ export default function App() {
                   name="wa" 
                   type="text" 
                   placeholder="08123456789" 
-                  className="w-full bg-slate-900 border border-slate-700 rounded-[12px] px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#0F766E]" 
+                  className="w-full bg-slate-900/60 border border-slate-700 rounded-[12px] px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/30 transition-colors" 
                 />
               </div>
             </div>
@@ -466,13 +466,13 @@ export default function App() {
                 required 
                 rows="4" 
                 placeholder="Tuliskan saran atau ide kegiatanmu di sini..." 
-                className="w-full bg-slate-900 border border-slate-700 rounded-[12px] px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#0F766E]"
+                className="w-full bg-slate-900/60 border border-slate-700 rounded-[12px] px-4 py-3 text-sm text-white placeholder-slate-500 focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/30 transition-colors"
               ></textarea>
             </div>
 
             <button 
               type="submit" 
-              className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold text-base py-3.5 rounded-[12px] transition duration-200 flex items-center justify-center gap-2 shadow-md hover:shadow-lg"
+              className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold text-base py-3.5 rounded-[12px] transition-colors duration-200 flex items-center justify-center gap-2"
             >
               Kirim Pesan Warga <Send size={18} />
             </button>
@@ -481,7 +481,7 @@ export default function App() {
       </section>
 
       {/* 12. FOOTER */}
-      <footer className="bg-slate-950 text-[#64748B] py-8 text-center text-xs sm:text-sm border-t border-slate-900 flex flex-col items-center justify-center gap-2">
+      <footer className="bg-slate-950 text-[#64748B] py-9 text-center text-sm border-t border-slate-900 flex flex-col items-center justify-center gap-2.5">
         <p>© 2026 Karang Taruna Pakal Residence • Surabaya.</p>
         <button 
           onClick={() => {
@@ -492,7 +492,7 @@ export default function App() {
               alert('Kata sandi salah!');
             }
           }} 
-          className="text-xs text-[#64748B] hover:text-slate-300 transition underline flex items-center gap-1 mt-1"
+          className="text-xs text-[#64748B] hover:text-slate-300 transition-colors underline underline-offset-2 flex items-center gap-1.5"
         >
           <ShieldCheck size={14} /> Akses Panel Admin Pengurus
         </button>
@@ -501,31 +501,32 @@ export default function App() {
       {/* MODAL DETAIL AGENDA */}
       <AnimatePresence>
         {selectedAgenda && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/60 backdrop-blur-sm overflow-y-auto">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              exit={{ opacity: 0, scale: 0.95 }} 
+              initial={{ opacity: 0, scale: 0.96, y: 8 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.96, y: 8 }} 
+              transition={{ duration: 0.2 }}
               className="bg-white rounded-[24px] p-6 sm:p-8 max-w-lg w-full shadow-2xl relative my-8"
             >
-              <button onClick={() => setSelectedAgenda(null)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+              <button onClick={() => setSelectedAgenda(null)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 transition-colors">
                 <X size={20}/>
               </button>
               
-              <span className="text-xs font-bold px-3 py-1 bg-[#CCFBF1] text-[#0F766E] rounded-full">{selectedAgenda.kategori}</span>
-              <h3 className="text-2xl font-extrabold text-[#0F172A] mt-3 mb-2">{selectedAgenda.judul}</h3>
-              <p className="text-[#475569] text-sm leading-relaxed mb-4">{selectedAgenda.deskripsiLengkap}</p>
+              <span className="text-xs font-bold px-2.5 py-1 bg-[#CCFBF1] text-[#0F766E] rounded-full">{selectedAgenda.kategori}</span>
+              <h3 className="text-2xl font-extrabold text-[#0F172A] mt-3 mb-2 pr-8">{selectedAgenda.judul}</h3>
+              <p className="text-[#475569] text-sm leading-relaxed mb-5">{selectedAgenda.deskripsiLengkap}</p>
               
-              <div className="space-y-2 text-xs sm:text-sm text-[#0F172A] bg-[#F8FAFC] p-4 rounded-[16px] border border-[#E2E8F0] mb-4">
-                <p><strong>📅 Waktu:</strong> {selectedAgenda.tglHari} {selectedAgenda.tglBulan} {selectedAgenda.tahun} ({selectedAgenda.jam})</p>
-                <p><strong>📍 Lokasi:</strong> {selectedAgenda.lokasi}</p>
+              <div className="space-y-2.5 text-sm text-[#0F172A] bg-[#F8FAFC] p-4 rounded-[16px] border border-[#E2E8F0] mb-5">
+                <p className="flex items-start gap-2"><CalendarIcon size={16} className="text-[#0F766E] shrink-0 mt-0.5" /><span><strong>{selectedAgenda.tglHari} {selectedAgenda.tglBulan} {selectedAgenda.tahun}</strong> · {selectedAgenda.jam}</span></p>
+                <p className="flex items-start gap-2"><MapPin size={16} className="text-[#0F766E] shrink-0 mt-0.5" /><span>{selectedAgenda.lokasi}</span></p>
               </div>
 
               <div className="mb-6">
-                <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-2">Susunan Panitia Acara</h4>
+                <h4 className="text-xs font-bold text-[#64748B] uppercase tracking-wider mb-2.5">Susunan panitia acara</h4>
                 <div className="grid grid-cols-1 gap-2">
                   {selectedAgenda.panitia.map((p, idx) => (
-                    <div key={idx} className="flex justify-between items-center bg-[#F1F5F9] px-3.5 py-2 rounded-[10px] text-xs sm:text-sm">
+                    <div key={idx} className="flex justify-between items-center bg-[#F1F5F9] px-4 py-2.5 rounded-[10px] text-sm">
                       <span className="text-[#64748B] font-medium">{p.peran}</span>
                       <span className="text-[#0F172A] font-bold">{p.nama}</span>
                     </div>
@@ -536,13 +537,13 @@ export default function App() {
               <div className="space-y-2">
                 <button 
                   onClick={() => handleDaftarKegiatan(selectedAgenda)}
-                  className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3.5 rounded-[12px] transition flex items-center justify-center gap-2 text-sm shadow-md"
+                  className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3.5 rounded-[12px] transition-colors flex items-center justify-center gap-2 text-sm"
                 >
                   <UserCheck size={18} /> Daftar Peserta / Voluntir Acara Ini
                 </button>
                 <button 
                   onClick={() => setSelectedAgenda(null)} 
-                  className="w-full bg-[#F1F5F9] text-[#475569] font-bold py-2.5 rounded-[12px] text-xs hover:bg-[#E2E8F0] transition"
+                  className="w-full bg-[#F1F5F9] text-[#475569] font-bold py-2.5 rounded-[12px] text-xs hover:bg-[#E2E8F0] transition-colors"
                 >
                   Tutup
                 </button>
@@ -556,31 +557,32 @@ export default function App() {
       {/* MODAL DAFTAR ANGGOTA */}
       <AnimatePresence>
         {isDaftarOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/60 backdrop-blur-sm">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              exit={{ opacity: 0, scale: 0.95 }} 
+              initial={{ opacity: 0, scale: 0.96, y: 8 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.96, y: 8 }} 
+              transition={{ duration: 0.2 }}
               className="bg-white rounded-[24px] p-6 sm:p-8 max-w-md w-full shadow-2xl relative"
             >
-              <button onClick={() => setIsDaftarOpen(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+              <button onClick={() => setIsDaftarOpen(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 transition-colors">
                 <X size={20}/>
               </button>
-              <span className="text-[#0F766E] font-semibold text-xs uppercase tracking-wider">Gabung Pemuda</span>
-              <h3 className="text-2xl font-extrabold text-[#0F172A] mt-1 mb-2">Form Pendaftaran Anggota</h3>
-              <p className="text-[#64748B] text-xs mb-6">Khusus pemuda/i perumahan usia 15-30 tahun.</p>
+              <span className="text-[#0F766E] font-semibold text-xs uppercase tracking-wider">Gabung pemuda</span>
+              <h3 className="text-2xl font-extrabold text-[#0F172A] mt-1 mb-2 pr-8">Form pendaftaran anggota</h3>
+              <p className="text-[#64748B] text-xs mb-6">Khusus pemuda/i perumahan usia 15–30 tahun.</p>
 
               <form className="space-y-3" onSubmit={handleSubmitDaftar}>
-                <input name="nama" type="text" required placeholder="Nama Lengkap" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]" />
-                <input name="blok" type="text" required placeholder="Blok / Nomor Rumah" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]" />
-                <input name="umur" type="number" required placeholder="Usia (Tahun)" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]" />
-                <select name="minat" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]">
+                <input name="nama" type="text" required placeholder="Nama Lengkap" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors" />
+                <input name="blok" type="text" required placeholder="Blok / Nomor Rumah" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors" />
+                <input name="umur" type="number" required placeholder="Usia (Tahun)" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors" />
+                <select name="minat" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors">
                   <option value="Humas & Medsos">Divisi Humas & Medsos</option>
                   <option value="Olahraga & Seni">Divisi Olahraga & Seni</option>
                   <option value="Lingkungan & Sosial">Divisi Lingkungan & Sosial</option>
                   <option value="Relawan Acara">Relawan Acara</option>
                 </select>
-                <button type="submit" className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3.5 rounded-[12px] transition flex items-center justify-center gap-2 text-sm shadow-md mt-2">
+                <button type="submit" className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3.5 rounded-[12px] transition-colors flex items-center justify-center gap-2 text-sm mt-2">
                   Kirim Pendaftaran <UserPlus size={16} />
                 </button>
               </form>
@@ -592,36 +594,37 @@ export default function App() {
       {/* MODAL DAFTAR UMKM WARGA */}
       <AnimatePresence>
         {isDaftarUmkmOpen && (
-          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-xs">
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[#0F172A]/60 backdrop-blur-sm">
             <motion.div 
-              initial={{ opacity: 0, scale: 0.95 }} 
-              animate={{ opacity: 1, scale: 1 }} 
-              exit={{ opacity: 0, scale: 0.95 }} 
+              initial={{ opacity: 0, scale: 0.96, y: 8 }} 
+              animate={{ opacity: 1, scale: 1, y: 0 }} 
+              exit={{ opacity: 0, scale: 0.96, y: 8 }} 
+              transition={{ duration: 0.2 }}
               className="bg-white rounded-[24px] p-6 sm:p-8 max-w-md w-full shadow-2xl relative"
             >
-              <button onClick={() => setIsDaftarUmkmOpen(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600">
+              <button onClick={() => setIsDaftarUmkmOpen(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600 transition-colors">
                 <X size={20}/>
               </button>
-              <span className="text-[#0F766E] font-semibold text-xs uppercase tracking-wider">Ekonomi Warga</span>
-              <h3 className="text-2xl font-extrabold text-[#0F172A] mt-1 mb-2">Form Pendaftaran UMKM</h3>
-              <p className="text-[#64748B] text-xs mb-6">Promosikan produk / jasa kamu ke seluruh warga perumahan gratis.</p>
+              <span className="text-[#0F766E] font-semibold text-xs uppercase tracking-wider">Ekonomi warga</span>
+              <h3 className="text-2xl font-extrabold text-[#0F172A] mt-1 mb-2 pr-8">Form pendaftaran UMKM</h3>
+              <p className="text-[#64748B] text-xs mb-6">Promosikan produk / jasa kamu ke seluruh warga perumahan, gratis.</p>
 
               <form className="space-y-3" onSubmit={handleSubmitDaftarUmkm}>
-                <input name="nama" type="text" required placeholder="Nama Toko / Usaha" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]" />
-                <select name="kategori" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]">
+                <input name="nama" type="text" required placeholder="Nama Toko / Usaha" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors" />
+                <select name="kategori" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors">
                   <option value="Kuliner">Kuliner</option>
                   <option value="Minuman">Minuman</option>
                   <option value="Jasa">Jasa</option>
                 </select>
-                <input name="wa" type="text" required placeholder="No. WA Penjual (Contoh: 6281234...)" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]" />
-                <textarea name="deskripsi" required rows="3" placeholder="Deskripsi singkat produk/jasa..." className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E]"></textarea>
+                <input name="wa" type="text" required placeholder="No. WA Penjual (Contoh: 6281234...)" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors" />
+                <textarea name="deskripsi" required rows="3" placeholder="Deskripsi singkat produk/jasa..." className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-4 py-3 text-sm focus:outline-none focus:border-[#0F766E] focus:ring-2 focus:ring-[#0F766E]/20 transition-colors"></textarea>
                 
-                <div className="space-y-1">
+                <div className="space-y-1.5">
                   <label className="text-xs font-semibold text-[#64748B]">Foto Produk / Usaha (Opsional):</label>
-                  <input name="fotoFile" type="file" accept="image/*" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-3 py-2 text-xs focus:outline-none focus:border-[#0F766E]" />
+                  <input name="fotoFile" type="file" accept="image/*" className="w-full bg-[#F8FAFC] border border-[#E2E8F0] rounded-[12px] px-3 py-2.5 text-xs focus:outline-none focus:border-[#0F766E] transition-colors" />
                 </div>
                 
-                <button type="submit" className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3.5 rounded-[12px] transition flex items-center justify-center gap-2 text-sm shadow-md mt-2">
+                <button type="submit" className="w-full bg-[#0F766E] hover:bg-[#115E59] text-white font-bold py-3.5 rounded-[12px] transition-colors flex items-center justify-center gap-2 text-sm mt-2">
                   Daftarkan Usaha <Store size={16} />
                 </button>
               </form>
