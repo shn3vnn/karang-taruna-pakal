@@ -4,62 +4,89 @@ import { Menu, X, UserPlus } from 'lucide-react';
 export default function Navbar({ onOpenDaftar }) {
   const [isOpen, setIsOpen] = useState(false);
 
+  const navLinks = [
+    { name: 'Beranda', href: '#beranda' },
+    { name: 'Agenda', href: '#agenda' },
+    { name: 'UMKM Warga', href: '#umkm' },
+    { name: 'Transparansi', href: '#transparansi' },
+    { name: 'Pengurus', href: '#pengurus' },
+    { name: 'Lokasi', href: '#lokasi' },
+  ];
+
   return (
-    <nav className="sticky top-0 z-40 bg-white/90 backdrop-blur-md border-b border-slate-200 shadow-sm">
+    <nav className="sticky top-0 z-40 bg-[#FAF8F5]/90 backdrop-blur-md border-b border-[#E6E4DF]">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between h-20 items-center">
-          {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-[#039088] rounded-xl flex items-center justify-center text-white font-bold text-xl shadow-md">
+        <div className="flex items-center justify-between h-16">
+          
+          {/* Logo Brand */}
+          <a href="#beranda" className="flex items-center gap-3 group">
+            <div className="w-9 h-9 rounded-lg bg-[#0F766E] text-white flex items-center justify-center font-bold text-sm shadow-xs">
               K
             </div>
             <div>
-              <span className="text-lg font-bold text-slate-900 block leading-tight">KARANG TARUNA</span>
-              <span className="text-xs text-[#039088] font-semibold tracking-wider uppercase">Pakal Residence</span>
+              <span className="block text-sm font-extrabold text-[#1C1F1D] tracking-tight leading-none group-hover:text-[#0F766E] transition">
+                KARANG TARUNA
+              </span>
+              <span className="block text-[10px] font-bold text-[#737A75] tracking-wider uppercase mt-0.5">
+                PAKAL RESIDENCE
+              </span>
             </div>
+          </a>
+
+          {/* Desktop Links */}
+          <div className="hidden md:flex items-center gap-8 text-xs font-semibold text-[#525854]">
+            {navLinks.map((link) => (
+              <a 
+                key={link.name} 
+                href={link.href} 
+                className="hover:text-[#0F766E] transition-colors py-1"
+              >
+                {link.name}
+              </a>
+            ))}
           </div>
 
-          {/* Desktop Menu */}
-          <div className="hidden md:flex space-x-8 font-medium text-slate-600">
-            <a href="#beranda" className="hover:text-[#039088] transition">Beranda</a>
-            <a href="#agenda" className="hover:text-[#039088] transition">Agenda</a>
-            <a href="#umkm" className="hover:text-[#039088] transition">UMKM Warga</a>
-            <a href="#transparansi" className="hover:text-[#039088] transition">Transparansi</a>
-            <a href="#profil" className="hover:text-[#039088] transition">Pengurus</a>
-            <a href="#lokasi" className="hover:text-[#039088] transition">Lokasi</a>
-          </div>
-
-          {/* Tombol Bergabung Header */}
-          <div className="hidden md:block">
-            <button 
+          {/* Action Button */}
+          <div className="hidden md:flex items-center">
+            <button
               onClick={onOpenDaftar}
-              className="flex items-center gap-2 bg-[#039088] hover:bg-[#02756D] text-white px-5 py-2.5 rounded-full font-bold text-sm transition shadow-lg shadow-[#039088]/20"
+              className="inline-flex items-center gap-2 bg-[#0F766E] hover:bg-[#0D645D] text-white px-4 py-2 rounded-lg text-xs font-bold transition shadow-xs"
             >
-              <UserPlus size={16} /> Bergabung
+              <UserPlus size={14} /> Bergabung
             </button>
           </div>
 
           {/* Mobile Menu Button */}
-          <button onClick={() => setIsOpen(!isOpen)} className="md:hidden text-slate-700">
-            {isOpen ? <X size={28} /> : <Menu size={28} />}
-          </button>
+          <div className="md:hidden">
+            <button
+              onClick={() => setIsOpen(!isOpen)}
+              className="p-2 rounded-md text-[#525854] hover:bg-[#F2EFEA]"
+            >
+              {isOpen ? <X size={20} /> : <Menu size={20} />}
+            </button>
+          </div>
+
         </div>
       </div>
 
-      {/* Mobile Dropdown */}
+      {/* Mobile Drawer */}
       {isOpen && (
-        <div className="md:hidden bg-white border-b border-slate-200 px-4 pt-2 pb-6 space-y-3">
-          <a href="#beranda" onClick={() => setIsOpen(false)} className="block text-slate-600 font-medium py-2">Beranda</a>
-          <a href="#agenda" onClick={() => setIsOpen(false)} className="block text-slate-600 font-medium py-2">Agenda</a>
-          <a href="#umkm" onClick={() => setIsOpen(false)} className="block text-slate-600 font-medium py-2">UMKM Warga</a>
-          <a href="#transparansi" onClick={() => setIsOpen(false)} className="block text-slate-600 font-medium py-2">Transparansi</a>
-          <a href="#profil" onClick={() => setIsOpen(false)} className="block text-slate-600 font-medium py-2">Pengurus</a>
-          <a href="#lokasi" onClick={() => setIsOpen(false)} className="block text-slate-600 font-medium py-2">Lokasi</a>
-          <button 
+        <div className="md:hidden bg-white border-b border-[#E6E4DF] px-4 pt-2 pb-4 space-y-2">
+          {navLinks.map((link) => (
+            <a
+              key={link.name}
+              href={link.href}
+              onClick={() => setIsOpen(false)}
+              className="block px-3 py-2 rounded-md text-sm font-medium text-[#2D312E] hover:bg-[#FAF8F5]"
+            >
+              {link.name}
+            </a>
+          ))}
+          <button
             onClick={() => { setIsOpen(false); onOpenDaftar(); }}
-            className="w-full flex items-center justify-center gap-2 bg-[#039088] text-white py-3 rounded-xl font-bold"
+            className="w-full mt-2 bg-[#0F766E] text-white font-bold py-2.5 rounded-lg text-xs flex items-center justify-center gap-2"
           >
-            <UserPlus size={18} /> Bergabung Pemuda
+            <UserPlus size={14} /> Bergabung Pemuda
           </button>
         </div>
       )}
