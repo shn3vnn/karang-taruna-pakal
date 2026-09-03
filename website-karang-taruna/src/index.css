@@ -1,5 +1,10 @@
 @import "tailwindcss";
 
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 5rem; /* Memberikan jarak offset setinggi Navbar */
+}
+
 @layer base {
   body {
     background-color: #FAFAFA;
