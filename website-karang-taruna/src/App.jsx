@@ -119,7 +119,7 @@ export default function App() {
     }
   };
 
-  const handleSubmitDaftarUmkm = (e) => {
+ const handleSubmitDaftarUmkm = async (e) => {
     e.preventDefault();
     const nama = e.target.nama.value;
     const kategori = e.target.kategori.value;
@@ -127,10 +127,8 @@ export default function App() {
     const deskripsi = e.target.deskripsi.value;
     const fileFoto = e.target.fotoFile.files[0];
 
-    const processSave = (fotoUrl) => {
-      const currentUmkm = JSON.parse(localStorage.getItem('umkm_karta')) || [];
+    const saveToSupabase = async (fotoUrl) => {
       const newUmkm = {
-        id: Date.now(),
         nama,
         kategori,
         wa,
@@ -139,17 +137,23 @@ export default function App() {
         status: 'Pending'
       };
 
-      localStorage.setItem('umkm_karta', JSON.stringify([...currentUmkm, newUmkm]));
-      alert('Pendaftaran UMKM berhasil dikirim! Menunggu verifikasi admin.');
-      setIsDaftarUmkmOpen(false);
+      // Kirim data langsung ke Supabase
+      const { error } = await supabase.from('umkm').insert([newUmkm]);
+
+      if (error) {
+        alert('Gagal mengirim pendaftaran UMKM: ' + error.message);
+      } else {
+        alert('Pendaftaran UMKM berhasil dikirim! Menunggu verifikasi admin.');
+        setIsDaftarUmkmOpen(false);
+      }
     };
 
     if (fileFoto) {
       const reader = new FileReader();
-      reader.onloadend = () => processSave(reader.result);
+      reader.onloadend = () => saveToSupabase(reader.result);
       reader.readAsDataURL(fileFoto);
     } else {
-      processSave(null);
+      await saveToSupabase(null);
     }
   };
 
