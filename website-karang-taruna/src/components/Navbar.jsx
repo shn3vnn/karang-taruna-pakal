@@ -19,11 +19,13 @@ export default function Navbar({ onOpenDaftar }) {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-20">
           
-          {/* Logo */}
+          {/* Logo Kanji Monogram Baru */}
           <a href="#beranda" className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-bold text-sm">
-              K
-            </div>
+            <img 
+              src="/logo-karangtaruna.png" 
+              alt="Logo Karang Taruna Pakal Residence" 
+              className="w-10 h-10 object-contain"
+            />
             <div>
               <span className="block text-sm font-bold text-slate-900 tracking-tight leading-none">
                 KARANG TARUNA
