@@ -292,62 +292,81 @@ export default function App() {
       {/* TRANSPARANSI KAS & GALERI */}
       <TransparansiGaleri />
 
-      {/* ALUR PROGRAM & PELAYANAN (MODEL HOW WE WORK BARIS IV GAMBAR) */}
-      <section className="py-16 bg-white border-b border-slate-200">
+      {/* SEKSI VISI & MISI (MENGGANTIKAN ALUR LAYANAN WARGA) */}
+      <section id="visi-misi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="mb-10">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Alur Layanan Warga</h2>
-            <p className="text-slate-500 text-sm mt-1">Proses berpartisipasi dan memanfaatkan layanan Karang Taruna.</p>
+            <span className="text-xs font-bold tracking-widest text-slate-400 uppercase block mb-1">Pilar Organisasi</span>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Visi & Misi Kami</h2>
+            <p className="text-slate-500 text-sm mt-1">Arah gerak dan komitmen Karang Taruna Pakal Residence untuk kemajuan perumahan.</p>
           </div>
 
-          <div className="grid md:grid-cols-12 gap-10 items-center">
+          <div className="grid md:grid-cols-12 gap-10 items-stretch">
             
-            {/* Foto Kiri Melengkung */}
-            <div className="md:col-span-5 h-[400px] rounded-3xl overflow-hidden bg-slate-100 border border-slate-200">
-              <img src={heroPhotos[1]} alt="Kegiatan Karang Taruna" className="w-full h-full object-cover" />
+            {/* Foto Kiri Melengkung (Gaya Modern Corporate) */}
+            <div className="md:col-span-5 min-h-[380px] rounded-3xl overflow-hidden bg-slate-900 relative border border-slate-200">
+              <img 
+                src={heroPhotos[1]} 
+                alt="Kebersamaan Karang Taruna Pakal Residence" 
+                className="w-full h-full object-cover opacity-80" 
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-8 flex flex-col justify-end text-white">
+                <span className="text-[10px] font-bold tracking-wider uppercase text-emerald-400 mb-1">Visi Utama</span>
+                <p className="text-lg font-bold leading-snug">
+                  "Mewujudkan Generasi Muda Pakal Residence yang Mandiri, Solid, Kreatif, dan Bermanfaat bagi Lingkungan Warga."
+                </p>
+              </div>
             </div>
 
-            {/* List Kanan Berikon Lingkaran Hitam */}
-            <div className="md:col-span-7 space-y-6">
+            {/* List Kanan Berikon Lingkaran Hitam (Misi Organisasi) */}
+            <div className="md:col-span-7 flex flex-col justify-center space-y-6">
               
               <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
-                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <UserPlus size={18} />
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  01
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-base">Pendaftaran Anggota Pemuda</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-1">Warga usia 15-30 tahun mengisi form pendaftaran online untuk bergabung dalam kegiatan rutin.</p>
+                  <h4 className="font-bold text-slate-900 text-base">Mempererat Silaturahmi & Solidaritas Pemuda</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Membangun wadah komunikasi yang positif dan inklusif bagi seluruh pemuda/i di setiap blok perumahan Pakal Residence.
+                  </p>
                 </div>
               </div>
 
               <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
-                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <Search size={18} />
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  02
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-base">Pendaftaran Katalog UMKM</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-1">Pemilik usaha lokal mendaftarkan produk secara gratis untuk dipromosikan ke seluruh warga perumahan.</p>
+                  <h4 className="font-bold text-slate-900 text-base">Pemberdayaan Ekonomi & UMKM Lokal</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Mendukung perkembangan usaha mikro milik warga perumahan melalui media promosi digital yang terintegrasi dan gratis.
+                  </p>
                 </div>
               </div>
 
               <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
-                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <FileText size={18} />
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  03
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-base">Akses Laporan Kas Terbuka</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-1">Warga dapat memantau mutasi kas masuk dan keluar secara online setiap bulan demi transparansi.</p>
+                  <h4 className="font-bold text-slate-900 text-base">Transparansi Keuangan & Tata Kelola Organisasi</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Menjaga kepercayaan warga dengan menyajikan laporan mutasi kas secara terbuka, akuntabel, dan dapat diakses kapan saja.
+                  </p>
                 </div>
               </div>
 
               <div className="flex gap-4 items-start">
-                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0">
-                  <MessageSquare size={18} />
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  04
                 </div>
                 <div>
-                  <h4 className="font-bold text-slate-900 text-base">Penyampaian Aspirasi Warga</h4>
-                  <p className="text-xs text-slate-500 leading-relaxed mt-1">Kirimkan saran, usulan acara, atau masukan lingkungan langsung ke pengurus Karang Taruna.</p>
+                  <h4 className="font-bold text-slate-900 text-base">Kepedulian Sosial & Tanggap Lingkungan</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Menggalakkan aksi gotong royong rutin, kegiatan olahraga warga, serta penanganan masalah sosial di lingkungan perumahan.
+                  </p>
                 </div>
               </div>
 
@@ -357,7 +376,7 @@ export default function App() {
 
         </div>
       </section>
-
+      
       {/* STRUKTUR PENGURUS */}
       <Pengurus />
 
