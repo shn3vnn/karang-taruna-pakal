@@ -1,90 +1,124 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Navbar from './components/Navbar';
+import Pengurus from './components/Pengurus';
 import FiturWarga from './components/FiturWarga';
 import Umkm from './components/Umkm';
 import TransparansiGaleri from './components/TransparansiGaleri';
-import Pengurus from './components/Pengurus';
 import Admin from './pages/Admin';
+import { motion, AnimatePresence } from 'framer-motion';
 import { supabase } from './supabaseClient';
+import { BrowserRouter } from 'react-router-dom';
 import { 
-  Users, 
-  MapPin, 
-  Calendar, 
-  X, 
-  Send, 
-  ChevronDown, 
   ArrowRight, 
+  MapPin, 
+  Send, 
+  UserPlus, 
+  X, 
+  ChevronDown, 
+  ShieldCheck, 
+  MessageSquare, 
+  Search, 
   CheckCircle, 
-  MessageCircle, 
-  HelpCircle,
-  Sparkles
+  FileText, 
+  Users 
 } from 'lucide-react';
 
 const heroPhotos = [
   "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=1200",
-  "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=1200",
-  "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=1200"
+  "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=800"
 ];
 
-const stats = [
-  { angka: "150+", label: "Pemuda Terdaftar" },
-  { angka: "12+", label: "Program / Tahun" },
-  { angka: "100%", label: "Kas Transparan" },
-  { angka: "20+", label: "UMKM Terdaftar" }
+const agendaList = [
+  {
+    id: 1,
+    judul: "Kerja Bakti Masal & Penghijauan",
+    kategori: "Sosial & Lingkungan",
+    tglHari: "10",
+    tglBulan: "SEPT",
+    tahun: "2026",
+    jam: "07:00 WIB - Selesai",
+    lokasi: "Lapangan Utama & Taman Blok A",
+    deskripsiRingkas: "Pembersihan saluran air, penataan taman blok A, dan penanaman bibit pohon.",
+    deskripsiLengkap: "Kegiatan gotong royong rutin untuk seluruh warga perumahan Pakal Residence. Diharapkan setiap rumah mengirimkan perwakilannya. Karang Taruna menyediakan konsumsi dan peralatan kebersihan pendukung.",
+    panitia: [
+      { peran: "Ketua Pelaksana", nama: "Budi Santoso" },
+      { peran: "Koordinator Lapangan", nama: "Ahmad Rifai" },
+      { peran: "Konsumsi & Logistik", nama: "Dina Mariana" }
+    ],
+    waPJ: "6285739439137",
+    foto: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600"
+  },
+  {
+    id: 2,
+    judul: "Turnamen Bulutangkis Antar RT",
+    kategori: "Olahraga Warga",
+    tglHari: "20",
+    tglBulan: "SEPT",
+    tahun: "2026",
+    jam: "18:30 WIB - Selesai",
+    lokasi: "Lapangan Serbaguna Perumahan",
+    deskripsiRingkas: "Ajang silaturahmi ganda putra & putri memperebutkan Piala Bergilir.",
+    deskripsiLengkap: "Turnamen ramah terbuka untuk warga usia 15 tahun ke atas. Sistem kompetisi santai untuk mempererat keakraban antar blok.",
+    panitia: [
+      { peran: "Ketua Pelaksana", nama: "Siti Rahma" },
+      { peran: "Wasit Utama", nama: "Rizky Pratama" }
+    ],
+    waPJ: "6285739439137",
+    foto: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=600"
+  }
 ];
 
-const agenda = [
-  { id: 1, judul: "Kerja Bakti Masal & Penghijauan", tgl: "10 SEPT 2026", lokasi: "Lapangan Utama & Taman Blok A", img: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=800" },
-  { id: 2, judul: "Turnamen Bulutangkis Antar RT", tgl: "20 SEPT 2026", lokasi: "Lapangan Serbaguna Perumahan", img: "https://images.unsplash.com/photo-1626224583764-f87db24ac4ea?auto=format&fit=crop&q=80&w=800" }
-];
-
-const faqs = [
-  { q: "Siapa saja yang boleh bergabung dengan Karang Taruna?", a: "Seluruh pemuda dan pemudi warga Pakal Residence berusia 15 hingga 30 tahun." },
-  { q: "Apakah mendaftarkan UMKM di website ini dipungut biaya?", a: "Sama sekali tidak (100% Gratis). Ini adalah program pemberdayaan ekonomi dari pengurus untuk warga." },
-  { q: "Bagaimana cara mengecek laporan saldo kas keuangan?", a: "Laporan kas dapat dilihat secara terbuka pada seksi Transparansi Kas di website ini, diupdate secara berkala oleh Bendahara." },
-  { q: "Bagaimana jika saya ingin mengajukan usulan acara baru?", a: "Kamu bisa menghubungi pengurus via tombol WhatsApp Aspirasi di bagian paling bawah website." }
+const faqList = [
+  { q: "Siapa saja yang boleh bergabung menjadi anggota Karang Taruna?", a: "Seluruh pemuda dan pemudi warga perumahan Pakal Residence berusia 15 hingga 30 tahun dapat bergabung menjadi anggota aktif Karang Taruna." },
+  { q: "Bagaimana cara mendaftarkan usaha saya ke Katalog UMKM Tetangga?", a: "Kamu bisa mendaftarkan usaha melalui tombol '+ Daftarkan Usaha' pada bagian Katalog UMKM secara gratis." },
+  { q: "Apakah laporan keuangan kas Karang Taruna diupdate berkala?", a: "Ya, pencatatan kas masuk dan keluar selalu di-update setiap bulan dan terbuka secara transparan untuk seluruh warga." }
 ];
 
 export default function App() {
-  const [isAdminPage, setIsAdminPage] = useState(false);
+  const [selectedAgenda, setSelectedAgenda] = useState(null);
   const [isDaftarOpen, setIsDaftarOpen] = useState(false);
   const [isDaftarUmkmOpen, setIsDaftarUmkmOpen] = useState(false);
+  const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
 
-  useEffect(() => {
-    const handleHash = () => {
-      if (window.location.hash === '#adminperumahan') {
-        setIsAdminPage(true);
-      } else {
-        setIsAdminPage(false);
-      }
-    };
-    handleHash();
-    window.addEventListener('hashchange', handleHash);
-    return () => window.removeEventListener('hashchange', handleHash);
-  }, []);
+  const noPengurus = "6285739439137";
 
-  // Submit Pendaftaran Anggota Baru ke Supabase
-  const handleSubmitDaftarAnggota = async (e) => {
+  if (isAdminLoggedIn) {
+    return (
+      <BrowserRouter>
+        <Admin onLogout={() => setIsAdminLoggedIn(false)} />
+      </BrowserRouter>
+    );
+  }
+
+  const handleSubmitAspirasi = (e) => {
+    e.preventDefault();
+    const nama = e.target.nama.value;
+    const wa = e.target.wa.value;
+    const pesan = e.target.pesan.value;
+    const textPesan = encodeURIComponent(`Halo Admin Karang Taruna,\n\nSaya ingin menyampaikan aspirasi:\n- Nama / Blok: ${nama}\n- No. WA: ${wa || '-'}\n- Pesan: ${pesan}`);
+    window.location.href = `whatsapp://send?phone=${noPengurus}&text=${textPesan}`;
+  };
+
+  const handleSubmitDaftar = async (e) => {
     e.preventDefault();
     const nama = e.target.nama.value;
     const blok = e.target.blok.value;
     const umur = Number(e.target.umur.value);
     const minat = e.target.minat.value;
 
-    const { error } = await supabase.from('pendaftar').insert([
-      { nama, blok, umur, minat, status: 'Pending' }
-    ]);
+    const { error } = await supabase
+      .from('pendaftar')
+      .insert([{ nama, blok, umur, minat, status: 'Pending' }]);
 
     if (error) {
       alert('Gagal mengirim pendaftaran: ' + error.message);
     } else {
-      alert('Pendaftaran berhasil terkirim! Silakan tunggu verifikasi admin.');
+      alert('Pendaftaran berhasil dikirim! Menunggu verifikasi admin.');
       setIsDaftarOpen(false);
     }
   };
 
-  // Submit Pendaftaran UMKM ke Supabase
   const handleSubmitDaftarUmkm = async (e) => {
     e.preventDefault();
     const nama = e.target.nama.value;
@@ -122,75 +156,138 @@ export default function App() {
     }
   };
 
-  if (isAdminPage) {
-    return <Admin onLogout={() => { window.location.hash = ''; setIsAdminPage(false); }} />;
-  }
+  const handleDaftarKegiatan = (agenda) => {
+    const textKegiatan = encodeURIComponent(`Halo Kak ${agenda.panitia[0].nama}, saya berminat untuk mendaftar / berpartisipasi dalam kegiatan:\n\nNama Kegiatan: ${agenda.judul}\nTanggal: ${agenda.tglHari} ${agenda.tglBulan} ${agenda.tahun}\nLokasi: ${agenda.lokasi}\n\nMohon informasi petunjuk selanjutnya. Terima kasih!`);
+    window.location.href = `whatsapp://send?phone=${agenda.waPJ}&text=${textKegiatan}`;
+  };
 
   return (
-    <div className="min-h-screen bg-[#F4F4F5] text-slate-900 font-sans selection:bg-slate-900 selection:text-white">
+    <div className="min-h-screen bg-[#F4F4F5] text-[#18181B] font-sans antialiased">
       
       {/* NAVBAR */}
       <Navbar onOpenDaftar={() => setIsDaftarOpen(true)} />
 
-      {/* HERO BANNER - MODERN CORPORATE OVERLAY */}
-      <section id="beranda" className="pt-6 pb-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
-        <div className="relative min-h-[480px] sm:min-h-[520px] rounded-3xl overflow-hidden bg-slate-900 flex items-center p-8 sm:p-14 border border-slate-200 shadow-xs">
-          <img 
-            src={heroPhotos[0]} 
-            alt="Pemuda Pakal Residence" 
-            className="absolute inset-0 w-full h-full object-cover opacity-35" 
-          />
-          <div className="relative z-10 max-w-2xl text-white">
-            <span className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold mb-6">
-              <Sparkles size={14} className="text-amber-400" /> Official Website Warga
-            </span>
-            <h1 className="text-4xl sm:text-6xl font-extrabold tracking-tight leading-[1.1] mb-6">
-              Gerakan Pemuda Pakal Residence
-            </h1>
-            <p className="text-sm sm:text-base text-slate-200 leading-relaxed mb-8 max-w-xl font-normal">
-              Wadahnya generasi muda untuk berkolaborasi, mengelola kegiatan sosial, mempublikasikan kas terbuka, serta memberdayakan ekonomi warga perumahan.
-            </p>
-            <div className="flex flex-wrap gap-4">
-              <button 
-                onClick={() => setIsDaftarOpen(true)}
-                className="bg-white hover:bg-slate-100 text-slate-900 px-7 py-3.5 rounded-full text-xs font-bold transition flex items-center gap-2 shadow-sm"
-              >
-                Gabung Anggota <ArrowRight size={15} />
-              </button>
+      {/* HERO SECTION */}
+      <section id="beranda" className="pt-6 pb-12">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="relative rounded-3xl overflow-hidden min-h-[420px] sm:min-h-[500px] flex items-end p-8 sm:p-14 bg-slate-900 border border-slate-200">
+            <img 
+              src={heroPhotos[0]} 
+              alt="Karang Taruna Pakal Residence" 
+              className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity" 
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+
+            <div className="relative z-10 max-w-2xl text-white space-y-6">
+              <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.12]">
+                Gerakan Pemuda Pakal Residence
+              </h1>
+              <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
+                Wadahnya generasi muda untuk berkolaborasi, mengelola kegiatan sosial, mempublikasikan kas terbuka, serta memberdayakan ekonomi warga perumahan.
+              </p>
+              <div className="pt-2">
+                <button 
+                  onClick={() => setIsDaftarOpen(true)}
+                  className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-900 px-7 py-3.5 rounded-full font-bold text-sm transition shadow-sm"
+                >
+                  Gabung Anggota <ArrowRight size={16} />
+                </button>
+              </div>
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* TENTANG & STATS */}
+      {/* ABOUT US & STATS SECTION (ID DIPERBAIKI MENJADI id="tentang") */}
       <section id="tentang" className="py-12 bg-[#F4F4F5] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
           <div className="grid md:grid-cols-12 gap-10 items-start">
+            
             <div className="md:col-span-6 space-y-4">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900">
                 Tentang Karang Taruna
               </h2>
-              <p className="text-xs sm:text-sm text-slate-600 leading-relaxed">
+              <p className="text-slate-600 text-sm leading-relaxed max-w-lg">
                 Karang Taruna Pakal Residence berdiri sebagai sarana pengembangan generasi muda yang berkarakter, mandiri, dan berjiwa sosial. Kami secara aktif menyelenggarakan kegiatan gotong royong, olahraga, keagamaan, serta menjadi wadah promosi UMKM lokal perumahan.
               </p>
             </div>
-            
-            <div className="md:col-span-6 grid grid-cols-2 gap-4">
-              {stats.map((st, i) => (
-                <div key={i} className="bg-white p-6 rounded-2xl border border-slate-200">
-                  <div className="text-3xl font-extrabold text-slate-900 tracking-tight">{st.angka}</div>
-                  <div className="text-xs font-semibold text-slate-500 mt-1">{st.label}</div>
-                </div>
-              ))}
+
+            <div className="md:col-span-6 grid grid-cols-2 gap-8">
+              <div>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">150+</div>
+                <p className="text-xs text-slate-500 font-medium mt-1">Pemuda Terdaftar</p>
+              </div>
+              <div>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">12+</div>
+                <p className="text-xs text-slate-500 font-medium mt-1">Program / Tahun</p>
+              </div>
+              <div>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">100%</div>
+                <p className="text-xs text-slate-500 font-medium mt-1">Kas Transparan</p>
+              </div>
+              <div>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">20+</div>
+                <p className="text-xs text-slate-500 font-medium mt-1">UMKM Terdaftar</p>
+              </div>
             </div>
+
           </div>
+
         </div>
       </section>
 
-      {/* DUA KARTU PILAR LAYANAN WARGA */}
+      {/* FITUR KAS & SUMMARY */}
       <FiturWarga />
 
-      {/* SEKSI VISI & MISI */}
+      {/* AGENDA KEGIATAN */}
+      <section id="agenda" className="py-16 bg-white border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          
+          <div className="mb-10">
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Agenda & Kegiatan</h2>
+            <p className="text-slate-500 text-sm mt-1">Jadwal program kerja dan kegiatan rutin warga mendatang.</p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            {agendaList.map((item) => (
+              <div key={item.id} className="group">
+                <div className="relative h-64 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 mb-4">
+                  <img src={item.foto} alt={item.judul} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-xs text-slate-900 text-xs font-bold rounded-full border border-slate-200">
+                    {item.tglHari} {item.tglBulan} {item.tahun}
+                  </span>
+                </div>
+                <div className="flex justify-between items-start">
+                  <div>
+                    <h3 className="text-xl font-bold text-slate-900">{item.judul}</h3>
+                    <p className="text-xs text-slate-500 mt-1 flex items-center gap-1">
+                      <MapPin size={13} /> {item.lokasi}
+                    </p>
+                  </div>
+                  <button 
+                    onClick={() => setSelectedAgenda(item)}
+                    className="p-2.5 bg-slate-900 text-white rounded-full hover:bg-slate-800 transition"
+                  >
+                    <ArrowRight size={16} />
+                  </button>
+                </div>
+              </div>
+            ))}
+          </div>
+
+        </div>
+      </section>
+
+      {/* KATALOG UMKM TETANGGA */}
+      <Umkm onOpenDaftarUmkm={() => setIsDaftarUmkmOpen(true)} />
+
+      {/* TRANSPARANSI KAS & GALERI */}
+      <TransparansiGaleri />
+
+      {/* SEKSI VISI & MISI (ID DIPERBAIKI MENJADI id="visi-misi") */}
       <section id="visi-misi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -202,14 +299,13 @@ export default function App() {
 
           <div className="grid md:grid-cols-12 gap-10 items-stretch">
             
-            {/* Foto Kiri Melengkung (Teks Rata Tengah / Perfectly Centered) */}
+            {/* Foto Kiri Melengkung */}
             <div className="md:col-span-5 min-h-[380px] rounded-3xl overflow-hidden bg-slate-900 relative border border-slate-200">
               <img 
                 src={heroPhotos[1]} 
                 alt="Kebersamaan Karang Taruna Pakal Residence" 
                 className="w-full h-full object-cover opacity-60" 
               />
-              {/* Overlay Gelap Rata Tengah */}
               <div className="absolute inset-0 bg-slate-950/40 p-8 flex flex-col justify-center items-center text-center text-white">
                 <span className="text-[11px] font-bold tracking-widest uppercase text-emerald-400 mb-2 px-3 py-1 bg-emerald-950/50 rounded-full border border-emerald-500/30">
                   Visi Utama
@@ -220,7 +316,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* List Kanan Berikon Lingkaran Hitam (Misi Organisasi) */}
+            {/* List Kanan (Misi Organisasi) */}
             <div className="md:col-span-7 flex flex-col justify-center space-y-6">
               
               <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
@@ -278,69 +374,28 @@ export default function App() {
         </div>
       </section>
 
-      {/* AGENDA & KEGIATAN */}
-      <section id="agenda" className="py-16 bg-[#F4F4F5] border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="mb-10">
-            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Agenda & Kegiatan</h2>
-            <p className="text-slate-500 text-sm mt-1">Jadwal program kerja dan kegiatan rutin warga mendatang.</p>
-          </div>
-
-          <div className="grid md:grid-cols-2 gap-6">
-            {agenda.map((ag) => (
-              <div key={ag.id} className="bg-white rounded-3xl border border-slate-200 overflow-hidden flex flex-col justify-between hover:border-slate-400 transition">
-                <div className="relative h-56 bg-slate-100 overflow-hidden">
-                  <img src={ag.img} alt={ag.judul} className="w-full h-full object-cover" />
-                  <span className="absolute top-4 left-4 px-3 py-1 bg-white/90 backdrop-blur-xs text-slate-900 text-[10px] font-bold rounded-full">
-                    {ag.tgl}
-                  </span>
-                </div>
-                <div className="p-6 flex justify-between items-end">
-                  <div>
-                    <h3 className="font-bold text-slate-900 text-lg mb-1">{ag.judul}</h3>
-                    <p className="text-xs text-slate-500 flex items-center gap-1">
-                      <MapPin size={13} /> {ag.lokasi}
-                    </p>
-                  </div>
-                  <button className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center shrink-0 hover:bg-slate-800 transition">
-                    <ArrowRight size={16} />
-                  </button>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* KATALOG UMKM TETANGGA */}
-      <Umkm onOpenDaftarUmkm={() => setIsDaftarUmkmOpen(true)} />
-
-      {/* TRANSPARANSI KAS & GALERI */}
-      <TransparansiGaleri />
-
-      {/* PENGURUS & ANGGOTA TERVERIFIKASI */}
+      {/* STRUKTUR PENGURUS */}
       <Pengurus />
 
-      {/* FAQ / PERTANYAAN UMUM */}
-      <section className="py-16 bg-white border-b border-slate-200">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      {/* FAQ */}
+      <section className="py-16 bg-[#F4F4F5] border-b border-slate-200">
+        <div className="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-10">
             <h2 className="text-3xl font-bold tracking-tight text-slate-900">Pertanyaan Umum</h2>
-            <p className="text-slate-500 text-sm mt-1">Informasi penting seputar partisipasi warga dan karang taruna.</p>
           </div>
 
           <div className="space-y-3">
-            {faqs.map((faq, idx) => (
-              <div key={idx} className="bg-[#F4F4F5] rounded-2xl border border-slate-200 overflow-hidden">
+            {faqList.map((faq, idx) => (
+              <div key={idx} className="bg-white border border-slate-200 rounded-2xl overflow-hidden">
                 <button 
                   onClick={() => setOpenFaq(openFaq === idx ? null : idx)}
-                  className="w-full p-5 text-left font-bold text-slate-900 text-sm flex justify-between items-center gap-4"
+                  className="w-full p-5 text-left font-bold text-slate-900 flex justify-between items-center text-sm"
                 >
                   <span>{faq.q}</span>
-                  <ChevronDown size={16} className={`transition-transform duration-200 ${openFaq === idx ? 'rotate-180' : ''}`} />
+                  <ChevronDown size={18} className={`text-slate-500 transition-transform ${openFaq === idx ? 'rotate-180' : ''}`} />
                 </button>
                 {openFaq === idx && (
-                  <div className="px-5 pb-5 text-xs text-slate-600 leading-relaxed border-t border-slate-200/60 pt-3">
+                  <div className="px-5 pb-5 text-xs text-slate-600 border-t border-slate-100 pt-3 leading-relaxed">
                     {faq.a}
                   </div>
                 )}
@@ -350,160 +405,151 @@ export default function App() {
         </div>
       </section>
 
-      {/* LOKASI & FOOTER */}
-      <footer id="lokasi" className="bg-slate-900 text-white pt-16 pb-12">
+      {/* MAP SEKRETARIAT */}
+      <section id="lokasi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid md:grid-cols-12 gap-10 pb-12 border-b border-slate-800">
-            
-            <div className="md:col-span-5 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-white text-slate-900 flex items-center justify-center font-bold text-sm">
-                  K
-                </div>
-                <div>
-                  <span className="block text-sm font-bold tracking-tight">KARANG TARUNA</span>
-                  <span className="block text-[10px] text-slate-400 uppercase tracking-wider">PAKAL RESIDENCE</span>
-                </div>
+          <div className="grid md:grid-cols-12 gap-8 items-center">
+            <div className="md:col-span-5 space-y-3">
+              <h2 className="text-3xl font-bold text-slate-900">Sekretariat Karang Taruna</h2>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Pusat kegiatan, koordinasi, dan balai serbaguna warga perumahan Pakal Residence, Surabaya.
+              </p>
+              <div className="text-xs text-slate-800 space-y-1 pt-2 font-medium">
+                <p>📍 Pakal Residence, Pakal, Surabaya</p>
+                <p>🕒 Sabtu & Minggu (16:00 - 21:00 WIB)</p>
               </div>
-              <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
-                Wadah resmi pemuda perumahan Pakal Residence untuk memajukan lingkungan, transparan dalam keuangan, dan saling mendukung UMKM tetangga.
-              </p>
             </div>
-
-            <div className="md:col-span-3 space-y-2 text-xs text-slate-400">
-              <h4 className="font-bold text-white text-sm mb-3">Navigasi Cepat</h4>
-              <a href="#beranda" className="block hover:text-white">Beranda</a>
-              <a href="#visi-misi" className="block hover:text-white">Visi & Misi</a>
-              <a href="#agenda" className="block hover:text-white">Agenda Kegiatan</a>
-              <a href="#umkm" className="block hover:text-white">Katalog UMKM</a>
-              <a href="#transparansi" className="block hover:text-white">Laporan Kas</a>
+            <div className="md:col-span-7 h-72 border border-slate-200 rounded-3xl overflow-hidden bg-slate-100">
+              <iframe 
+                title="Peta Lokasi Sekretariat"
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15832.062823055416!2d112.6080!3d-7.2380!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7f3f1e1a2b3c4%3A0x123456789abcdef!2sPakal%20Residence!5e0!3m2!1sid!2sid!4v1700000000000!5m2!1sid!2sid" 
+                width="100%" 
+                height="100%" 
+                style={{ border: 0 }} 
+                allowFullScreen="" 
+                loading="lazy"
+              ></iframe>
             </div>
-
-            <div className="md:col-span-4 space-y-3">
-              <h4 className="font-bold text-white text-sm mb-3">Aspirasi & Sekretariat</h4>
-              <p className="text-xs text-slate-400 flex items-center gap-2">
-                <MapPin size={14} className="shrink-0" /> Balai RW Pakal Residence, Surabaya, Jawa Timur
-              </p>
-              <a 
-                href="https://wa.me/6285739439137?text=Halo%20Pengurus%20Karang%20Taruna%20Pakal%20Residence,%20saya%20ingin%20menyampaikan%20aspirasi."
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-emerald-600 hover:bg-emerald-500 text-white text-xs font-bold transition mt-2"
-              >
-                <MessageCircle size={15} /> Kirim WhatsApp Aspirasi
-              </a>
-            </div>
-
-          </div>
-
-          <div className="pt-8 flex flex-col sm:flex-row justify-between items-center text-[11px] text-slate-500 gap-4">
-            <p>© 2026 Karang Taruna Pakal Residence. All rights reserved.</p>
-            <a href="#adminperumahan" className="hover:text-slate-300 transition">
-              Portal Khusus Admin
-            </a>
           </div>
         </div>
+      </section>
+
+      {/* FORM ASPIRASI WARGA */}
+      <section id="kontak" className="py-16 bg-slate-950 text-white">
+        <div className="max-w-2xl mx-auto px-4">
+          <div className="text-center mb-8">
+            <h2 className="text-3xl font-bold">Suara & Masukan Warga</h2>
+            <p className="text-slate-400 text-xs mt-2">Punya ide acara atau saran kebersihan? Tuliskan pesanmu di bawah ini.</p>
+          </div>
+
+          <form className="space-y-3" onSubmit={handleSubmitAspirasi}>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              <input name="nama" type="text" required placeholder="Nama / Blok Rumah" className="bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-white" />
+              <input name="wa" type="text" placeholder="No. WhatsApp (Opsional)" className="bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-white" />
+            </div>
+            <textarea name="pesan" required rows="3" placeholder="Tuliskan saran atau masukanmu..." className="w-full bg-slate-900 border border-slate-800 rounded-xl px-4 py-3 text-xs text-white placeholder-slate-500 focus:outline-none focus:border-white"></textarea>
+            <button type="submit" className="w-full bg-white hover:bg-slate-100 text-slate-950 font-bold text-xs py-3.5 rounded-full transition flex items-center justify-center gap-2">
+              Kirim Pesan Warga <Send size={15} />
+            </button>
+          </form>
+        </div>
+      </section>
+
+      {/* FOOTER */}
+      <footer className="bg-slate-950 text-slate-500 py-8 text-center text-xs border-t border-slate-900">
+        <p>© 2026 Karang Taruna Pakal Residence • Surabaya.</p>
+        <button 
+          onClick={() => {
+            const pass = prompt('Masukkan Kata Sandi Admin:');
+            if (pass === 'adminperumahan') setIsAdminLoggedIn(true);
+            else if (pass) alert('Kata sandi salah!');
+          }} 
+          className="text-slate-500 hover:text-slate-300 transition underline mt-2 flex items-center gap-1 mx-auto"
+        >
+          <ShieldCheck size={14} /> Akses Panel Admin
+        </button>
       </footer>
 
-      {/* MODAL 1: DAFTAR ANGGOTA PEMUDA */}
-      {isDaftarOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
-            <button 
-              onClick={() => setIsDaftarOpen(false)}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-700 rounded-full"
-            >
-              <X size={18} />
-            </button>
-
-            <h3 className="text-xl font-bold text-slate-900 mb-1">Gabung Pemuda Karang Taruna</h3>
-            <p className="text-xs text-slate-500 mb-6">Isi formulir untuk mendaftar sebagai anggota resmi.</p>
-
-            <form onSubmit={handleSubmitDaftarAnggota} className="space-y-4 text-xs font-medium">
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Nama Lengkap</label>
-                <input name="nama" required type="text" placeholder="Contoh: Ahmad Rizky" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900" />
+      {/* MODAL AGENDA */}
+      <AnimatePresence>
+        {selectedAgenda && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full relative">
+              <button onClick={() => setSelectedAgenda(null)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600"><X size={20}/></button>
+              <span className="text-xs font-bold text-slate-500">{selectedAgenda.kategori}</span>
+              <h3 className="text-2xl font-bold text-slate-900 mt-1 mb-2">{selectedAgenda.judul}</h3>
+              <p className="text-slate-600 text-xs leading-relaxed mb-4">{selectedAgenda.deskripsiLengkap}</p>
+              
+              <div className="text-xs text-slate-800 bg-slate-50 p-4 rounded-2xl border border-slate-200 mb-6 space-y-1 font-medium">
+                <p>📅 {selectedAgenda.tglHari} {selectedAgenda.tglBulan} {selectedAgenda.tahun} ({selectedAgenda.jam})</p>
+                <p>📍 {selectedAgenda.lokasi}</p>
               </div>
 
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Blok Rumah</label>
-                <input name="blok" required type="text" placeholder="Contoh: Blok C No 12" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900" />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Usia (Tahun)</label>
-                <input name="umur" required type="number" placeholder="Contoh: 19" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900" />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Minat / Keahlian</label>
-                <select name="minat" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900">
-                  <option value="Humas & Medsos">Humas & Medsos</option>
-                  <option value="Olahraga & Seni">Olahraga & Seni</option>
-                  <option value="Kewirausahaan">Kewirausahaan</option>
-                  <option value="Keagamaan & Sosial">Keagamaan & Sosial</option>
-                </select>
-              </div>
-
-              <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-full text-xs transition flex items-center justify-center gap-2 mt-2">
-                <Send size={14} /> Kirim Pendaftaran Anggota
+              <button onClick={() => handleDaftarKegiatan(selectedAgenda)} className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-full text-xs transition mb-2">
+                Daftar Peserta Acara
               </button>
-            </form>
+              <button onClick={() => setSelectedAgenda(null)} className="w-full bg-slate-100 text-slate-600 font-bold py-3 rounded-full text-xs">
+                Tutup
+              </button>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
-      {/* MODAL 2: DAFTAR KATALOG UMKM */}
-      {isDaftarUmkmOpen && (
-        <div className="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full shadow-2xl relative">
-            <button 
-              onClick={() => setIsDaftarUmkmOpen(false)}
-              className="absolute top-5 right-5 p-2 text-slate-400 hover:text-slate-700 rounded-full"
-            >
-              <X size={18} />
-            </button>
+      {/* MODAL ANGGOTA */}
+      <AnimatePresence>
+        {isDaftarOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full relative">
+              <button onClick={() => setIsDaftarOpen(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600"><X size={20}/></button>
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">Form Pendaftaran Anggota</h3>
+              <p className="text-xs text-slate-500 mb-5">Khusus pemuda/i perumahan usia 15-30 tahun.</p>
 
-            <h3 className="text-xl font-bold text-slate-900 mb-1">Daftarkan Usaha Tetangga</h3>
-            <p className="text-xs text-slate-500 mb-6">Promosi gratis untuk UMKM milik warga perumahan.</p>
+              <form className="space-y-3" onSubmit={handleSubmitDaftar}>
+                <input name="nama" type="text" required placeholder="Nama Lengkap" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
+                <input name="blok" type="text" required placeholder="Blok / Nomor Rumah" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
+                <input name="umur" type="number" required placeholder="Usia (Tahun)" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
+                <select name="minat" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900">
+                  <option value="Humas & Medsos">Divisi Humas & Medsos</option>
+                  <option value="Olahraga & Seni">Divisi Olahraga & Seni</option>
+                  <option value="Lingkungan & Sosial">Divisi Lingkungan & Sosial</option>
+                </select>
+                <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-full text-xs transition mt-2">
+                  Kirim Pendaftaran
+                </button>
+              </form>
+            </motion.div>
+          </div>
+        )}
+      </AnimatePresence>
 
-            <form onSubmit={handleSubmitDaftarUmkm} className="space-y-4 text-xs font-medium">
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Nama Usaha / Produk</label>
-                <input name="nama" required type="text" placeholder="Contoh: Dapur Mbak Ani" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900" />
-              </div>
+      {/* MODAL UMKM */}
+      <AnimatePresence>
+        {isDaftarUmkmOpen && (
+          <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
+            <motion.div initial={{ opacity: 0, scale: 0.95 }} animate={{ opacity: 1, scale: 1 }} exit={{ opacity: 0, scale: 0.95 }} className="bg-white rounded-3xl p-6 sm:p-8 max-w-md w-full relative">
+              <button onClick={() => setIsDaftarUmkmOpen(false)} className="absolute top-5 right-5 text-slate-400 hover:text-slate-600"><X size={20}/></button>
+              <h3 className="text-2xl font-bold text-slate-900 mb-1">Daftarkan Usaha UMKM</h3>
+              <p className="text-xs text-slate-500 mb-5">Promosikan produk/jasa ke warga perumahan secara gratis.</p>
 
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Kategori</label>
-                <select name="kategori" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900">
+              <form className="space-y-3" onSubmit={handleSubmitDaftarUmkm}>
+                <input name="nama" type="text" required placeholder="Nama Toko / Usaha" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
+                <select name="kategori" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900">
                   <option value="Kuliner">Kuliner</option>
                   <option value="Minuman">Minuman</option>
                   <option value="Jasa">Jasa</option>
                 </select>
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Nomor WhatsApp (Aktif)</label>
-                <input name="wa" required type="text" placeholder="Contoh: 628123456789" className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900" />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Deskripsi Singkat</label>
-                <textarea name="deskripsi" required rows={2} placeholder="Jelaskan produk atau jasa yang ditawarkan..." className="w-full bg-slate-50 border border-slate-200 rounded-xl p-3 focus:outline-none focus:border-slate-900" />
-              </div>
-
-              <div>
-                <label className="block text-slate-700 font-bold mb-1">Foto Produk / Banner (Opsional)</label>
-                <input name="fotoFile" type="file" accept="image/*" className="w-full text-xs text-slate-500 file:mr-3 file:py-2 file:px-4 file:rounded-full file:border-0 file:bg-slate-100 file:text-slate-900 file:font-bold hover:file:bg-slate-200 cursor-pointer" />
-              </div>
-
-              <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-full text-xs transition flex items-center justify-center gap-2 mt-2">
-                <Send size={14} /> Kirimkan Usaha ke Supabase
-              </button>
-            </form>
+                <input name="wa" type="text" required placeholder="No. WA Penjual (628...)" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
+                <textarea name="deskripsi" required rows="3" placeholder="Deskripsi singkat produk..." className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900"></textarea>
+                <input name="fotoFile" type="file" accept="image/*" className="w-full text-xs" />
+                <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-full text-xs transition mt-2">
+                  Daftarkan Usaha
+                </button>
+              </form>
+            </motion.div>
           </div>
-        </div>
-      )}
+        )}
+      </AnimatePresence>
 
     </div>
   );
