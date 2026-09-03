@@ -304,16 +304,19 @@ export default function App() {
 
           <div className="grid md:grid-cols-12 gap-10 items-stretch">
             
-            {/* Foto Kiri Melengkung (Gaya Modern Corporate) */}
+            {/* Foto Kiri Melengkung (Teks Rata Tengah / Perfectly Centered) */}
             <div className="md:col-span-5 min-h-[380px] rounded-3xl overflow-hidden bg-slate-900 relative border border-slate-200">
               <img 
                 src={heroPhotos[1]} 
                 alt="Kebersamaan Karang Taruna Pakal Residence" 
-                className="w-full h-full object-cover opacity-80" 
+                className="w-full h-full object-cover opacity-60" 
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/20 to-transparent p-8 flex flex-col justify-end text-white">
-                <span className="text-[10px] font-bold tracking-wider uppercase text-emerald-400 mb-1">Visi Utama</span>
-                <p className="text-lg font-bold leading-snug">
+              {/* Overlay Gelap Rata Tengah */}
+              <div className="absolute inset-0 bg-slate-950/40 p-8 flex flex-col justify-center items-center text-center text-white">
+                <span className="text-[11px] font-bold tracking-widest uppercase text-emerald-400 mb-2 px-3 py-1 bg-emerald-950/50 rounded-full border border-emerald-500/30">
+                  Visi Utama
+                </span>
+                <p className="text-lg sm:text-xl font-bold leading-relaxed max-w-sm">
                   "Mewujudkan Generasi Muda Pakal Residence yang Mandiri, Solid, Kreatif, dan Bermanfaat bagi Lingkungan Warga."
                 </p>
               </div>
@@ -376,7 +379,7 @@ export default function App() {
 
         </div>
       </section>
-      
+
       {/* STRUKTUR PENGURUS */}
       <Pengurus />
 
