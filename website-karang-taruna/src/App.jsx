@@ -254,7 +254,7 @@ export default function App() {
 
             <div className="md:col-span-6 grid grid-cols-2 gap-8">
               <div>
-                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">150+</div>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">20+</div>
                 <p className="text-xs text-slate-500 font-medium mt-1">Pemuda Terdaftar</p>
               </div>
               <div>
