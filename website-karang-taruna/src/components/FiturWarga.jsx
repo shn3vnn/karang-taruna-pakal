@@ -1,34 +1,38 @@
-import { ArrowUpRight } from 'lucide-react';
+import { ArrowUpRight, Store, Wallet } from 'lucide-react';
 
 export default function FiturWarga() {
   return (
-    <section className="py-12 border-b border-[#E5E5E5]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
-        <div className="grid md:grid-cols-2 gap-4">
+    <section className="py-12 bg-[#F4F4F5] border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="grid md:grid-cols-2 gap-6">
           
-          <div className="bg-white p-6 border border-[#E5E5E5] rounded flex flex-col justify-between hover:border-[#171717] transition">
+          <div className="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:border-slate-400 transition">
             <div>
-              <span className="text-[11px] font-mono text-[#737373] uppercase block mb-2">[ EKONOMI LOKAL ]</span>
-              <h3 className="text-lg font-medium text-[#171717] mb-2">Dukungan UMKM Tetangga</h3>
-              <p className="text-xs text-[#525252] leading-relaxed mb-6">
-                Promosi gratis untuk usaha mikro warga perumahan. Mari berbelanja dan saling mendukung tetangga sendiri.
+              <div className="w-10 h-10 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center mb-5">
+                <Store size={20} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Dukungan UMKM Tetangga</h3>
+              <p className="text-xs text-slate-500 leading-relaxed mb-8">
+                Promosi gratis untuk usaha mikro warga perumahan. Mari berbelanja dan saling mendukung perekonomian tetangga sendiri.
               </p>
             </div>
-            <a href="#umkm" className="text-xs font-medium text-[#171717] hover:underline flex items-center gap-1">
-              Lihat Katalog UMKM <ArrowUpRight size={13} />
+            <a href="#umkm" className="inline-flex items-center gap-1 text-xs font-bold text-slate-900 hover:underline">
+              Lihat Katalog UMKM <ArrowUpRight size={14} />
             </a>
           </div>
 
-          <div className="bg-white p-6 border border-[#E5E5E5] rounded flex flex-col justify-between hover:border-[#171717] transition">
+          <div className="bg-white p-8 rounded-3xl border border-slate-200 flex flex-col justify-between hover:border-slate-400 transition">
             <div>
-              <span className="text-[11px] font-mono text-[#737373] uppercase block mb-2">[ KETERBUKAAN ]</span>
-              <h3 className="text-lg font-medium text-[#171717] mb-2">Transparansi Kas Digital</h3>
-              <p className="text-xs text-[#525252] leading-relaxed mb-6">
-                Catatan mutasi kas masuk dan keluar di-update setiap bulan secara terbuka untuk seluruh warga.
+              <div className="w-10 h-10 rounded-2xl bg-slate-100 text-slate-900 flex items-center justify-center mb-5">
+                <Wallet size={20} />
+              </div>
+              <h3 className="text-xl font-bold text-slate-900 mb-2">Transparansi Kas Digital</h3>
+              <p className="text-xs text-slate-500 leading-relaxed mb-8">
+                Catatan mutasi kas masuk dan keluar di-update secara berkala dan transparan untuk menjaga kejelasan keuangan organisasi.
               </p>
             </div>
-            <a href="#transparansi" className="text-xs font-medium text-[#171717] hover:underline flex items-center gap-1">
-              Cek Laporan Keuangan <ArrowUpRight size={13} />
+            <a href="#transparansi" className="inline-flex items-center gap-1 text-xs font-bold text-slate-900 hover:underline">
+              Cek Laporan Keuangan <ArrowUpRight size={14} />
             </a>
           </div>
 

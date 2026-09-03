@@ -7,22 +7,20 @@ const pengurusList = [
 
 export default function Pengurus() {
   return (
-    <section id="pengurus" className="py-16 border-b border-[#E5E5E5]">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6">
+    <section id="pengurus" className="py-16 bg-[#F4F4F5] border-b border-slate-200">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
-        <div className="mb-8">
-          <span className="text-xs font-mono uppercase tracking-wider text-[#737373] block mb-1">
-            [ 06 ] — Pengurus
-          </span>
-          <h2 className="text-2xl font-medium text-[#171717]">Struktur Organisasi</h2>
+        <div className="mb-10 text-center max-w-xl mx-auto">
+          <h2 className="text-3xl font-bold tracking-tight text-slate-900">Pengurus Organisasi</h2>
+          <p className="text-slate-500 text-sm mt-1">Pemuda-pemudi aktif penggerak kegiatan di Pakal Residence.</p>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 sm:grid-cols-4 gap-6">
           {pengurusList.map((p, idx) => (
-            <div key={idx} className="bg-white p-3 border border-[#E5E5E5] rounded text-center">
-              <img src={p.foto} alt={p.nama} className="w-20 h-20 rounded-full object-cover mx-auto mb-2" />
-              <h4 className="font-medium text-xs text-[#171717]">{p.nama}</h4>
-              <p className="text-[11px] text-[#737373]">{p.jabatan}</p>
+            <div key={idx} className="bg-white p-6 rounded-3xl border border-slate-200 text-center hover:border-slate-400 transition">
+              <img src={p.foto} alt={p.nama} className="w-24 h-24 rounded-full object-cover mx-auto mb-4 border border-slate-200" />
+              <h4 className="font-bold text-slate-900 text-base">{p.nama}</h4>
+              <p className="text-xs text-slate-500 font-medium mt-1">{p.jabatan}</p>
             </div>
           ))}
         </div>
