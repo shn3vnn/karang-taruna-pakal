@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Navbar from './components/Navbar';
 import Pengurus from './components/Pengurus';
 import FiturWarga from './components/FiturWarga';
@@ -28,9 +28,9 @@ const heroPhotos = [
   "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=800"
 ];
 
-const agendaList = [
+const agendaListStatic = [
   {
-    id: 1,
+    id: 'default-1',
     judul: "Kerja Bakti Masal & Penghijauan",
     kategori: "Sosial & Lingkungan",
     tglHari: "10",
@@ -49,7 +49,7 @@ const agendaList = [
     foto: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600"
   },
   {
-    id: 2,
+    id: 'default-2',
     judul: "Turnamen Bulutangkis Antar RT",
     kategori: "Olahraga Warga",
     tglHari: "20",
@@ -80,6 +80,43 @@ export default function App() {
   const [isDaftarUmkmOpen, setIsDaftarUmkmOpen] = useState(false);
   const [isAdminLoggedIn, setIsAdminLoggedIn] = useState(false);
   const [openFaq, setOpenFaq] = useState(null);
+
+  // --- INTEGRASI KEGIATAN SUPABASE ---
+  const [agendas, setAgendas] = useState(agendaListStatic);
+
+  useEffect(() => {
+    fetchKegiatan();
+  }, []);
+
+  const fetchKegiatan = async () => {
+    const { data, error } = await supabase
+      .from('kegiatan')
+      .select('*')
+      .order('id', { ascending: false });
+
+    if (!error && data && data.length > 0) {
+      const formattedData = data.map((item) => {
+        const parts = item.tanggal ? item.tanggal.split(' ') : [];
+        return {
+          id: item.id,
+          judul: item.judul,
+          kategori: "Kegiatan Warga",
+          tglHari: parts[0] || "10",
+          tglBulan: parts[1] || "SEPT",
+          tahun: parts[2] || "2026",
+          jam: "Sesuai Jadwal",
+          lokasi: item.lokasi,
+          deskripsiRingkas: "Kegiatan rutin Karang Taruna Pakal Residence.",
+          deskripsiLengkap: `Mari meramaikan acara ${item.judul} yang dilaksanakan di ${item.lokasi}.`,
+          panitia: [{ peran: "Pengurus", nama: "Admin Karang Taruna" }],
+          waPJ: "6285739439137",
+          foto: item.foto || "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600"
+        };
+      });
+      setAgendas([...formattedData, ...agendaListStatic]);
+    }
+  };
+  // ------------------------------------
 
   const noPengurus = "6285739439137";
 
@@ -200,7 +237,7 @@ export default function App() {
         </div>
       </section>
 
-      {/* ABOUT US & STATS SECTION (ID DIPERBAIKI MENJADI id="tentang") */}
+      {/* ABOUT US & STATS SECTION */}
       <section id="tentang" className="py-12 bg-[#F4F4F5] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -242,7 +279,7 @@ export default function App() {
       {/* FITUR KAS & SUMMARY */}
       <FiturWarga />
 
-      {/* AGENDA KEGIATAN */}
+      {/* AGENDA KEGIATAN (MENGGUNAKAN DATA SUPABASE) */}
       <section id="agenda" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -252,7 +289,7 @@ export default function App() {
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            {agendaList.map((item) => (
+            {agendas.map((item) => (
               <div key={item.id} className="group">
                 <div className="relative h-64 rounded-2xl overflow-hidden bg-slate-100 border border-slate-200 mb-4">
                   <img src={item.foto} alt={item.judul} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
@@ -287,7 +324,7 @@ export default function App() {
       {/* TRANSPARANSI KAS & GALERI */}
       <TransparansiGaleri />
 
-      {/* SEKSI VISI & MISI (ID DIPERBAIKI MENJADI id="visi-misi") */}
+      {/* SEKSI VISI & MISI */}
       <section id="visi-misi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
