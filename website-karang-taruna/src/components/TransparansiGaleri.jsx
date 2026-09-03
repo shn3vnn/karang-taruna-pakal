@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Wallet, ArrowUpRight, ArrowDownRight } from 'lucide-react';
+import { supabase } from '../supabaseClient';
 
-const galeriPhotos = [
+const defaultGaleriPhotos = [
   { id: 1, judul: "Lomba 17 Agustus", tgl: "Agustus 2026", kat: "HUT RI", img: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&q=80&w=600" },
   { id: 2, judul: "Kerja Bakti Blok B", tgl: "Juli 2026", kat: "Sosial", img: "https://images.unsplash.com/photo-1511632765486-a01980e01a18?auto=format&fit=crop&q=80&w=600" },
   { id: 3, judul: "Malam Keakraban Pemuda", tgl: "Juni 2026", kat: "Sosial", img: "https://images.unsplash.com/photo-1543269865-cbf427effbad?auto=format&fit=crop&q=80&w=600" },
@@ -10,6 +11,39 @@ const galeriPhotos = [
 
 export default function TransparansiGaleri() {
   const [filterGaleri, setFilterGaleri] = useState('Semua');
+  const [kasData, setKasData] = useState({ saldo: 0, pemasukan: 0, pengeluaran: 0 });
+  const [galeriPhotos, setGaleriPhotos] = useState(defaultGaleriPhotos);
+
+  useEffect(() => {
+    fetchKas();
+    fetchGaleri();
+  }, []);
+
+  const fetchKas = async () => {
+    const { data, error } = await supabase.from('kas').select('*');
+    if (!error && data && data.length > 0) {
+      const pemasukan = data
+        .filter(item => item.tipe === 'Pemasukan' || item.jenis === 'Pemasukan' || item.kategori === 'Pemasukan')
+        .reduce((acc, curr) => acc + (Number(curr.jumlah) || Number(curr.nominal) || 0), 0);
+      
+      const pengeluaran = data
+        .filter(item => item.tipe === 'Pengeluaran' || item.jenis === 'Pengeluaran' || item.kategori === 'Pengeluaran')
+        .reduce((acc, curr) => acc + (Number(curr.jumlah) || Number(curr.nominal) || 0), 0);
+
+      setKasData({
+        pemasukan,
+        pengeluaran,
+        saldo: pemasukan - pengeluaran
+      });
+    }
+  };
+
+  const fetchGaleri = async () => {
+    const { data, error } = await supabase.from('galeri').select('*');
+    if (!error && data && data.length > 0) {
+      setGaleriPhotos(data);
+    }
+  };
 
   const filteredGaleri = galeriPhotos.filter(p => filterGaleri === 'Semua' || p.kat === filterGaleri);
 
@@ -30,8 +64,10 @@ export default function TransparansiGaleri() {
                 <span>TOTAL SALDO</span>
                 <Wallet size={16} className="text-slate-900" />
               </div>
-              <div className="text-3xl font-extrabold text-slate-900">Rp 2.000.000</div>
-              <span className="text-[11px] text-slate-500 font-medium mt-2 block">Diupdate September 2026</span>
+              <div className="text-3xl font-extrabold text-slate-900">
+                Rp {kasData.saldo.toLocaleString('id-ID')}
+              </div>
+              <span className="text-[11px] text-slate-500 font-medium mt-2 block">Real-time update Supabase</span>
             </div>
 
             <div className="bg-[#F4F4F5] p-6 rounded-3xl border border-slate-200">
@@ -39,7 +75,9 @@ export default function TransparansiGaleri() {
                 <span>PEMASUKAN</span>
                 <ArrowUpRight size={16} className="text-emerald-600" />
               </div>
-              <div className="text-3xl font-extrabold text-emerald-600">+ Rp 2.000.000</div>
+              <div className="text-3xl font-extrabold text-emerald-600">
+                + Rp {kasData.pemasukan.toLocaleString('id-ID')}
+              </div>
               <span className="text-[11px] text-slate-500 mt-2 block">Iuran warga & donatur</span>
             </div>
 
@@ -48,7 +86,9 @@ export default function TransparansiGaleri() {
                 <span>PENGELUARAN</span>
                 <ArrowDownRight size={16} className="text-rose-600" />
               </div>
-              <div className="text-3xl font-extrabold text-rose-600">- Rp 0</div>
+              <div className="text-3xl font-extrabold text-rose-600">
+                - Rp {kasData.pengeluaran.toLocaleString('id-ID')}
+              </div>
               <span className="text-[11px] text-slate-500 mt-2 block">Operasional & kegiatan</span>
             </div>
           </div>
@@ -81,14 +121,14 @@ export default function TransparansiGaleri() {
             {filteredGaleri.map((photo) => (
               <div key={photo.id} className="bg-[#F4F4F5] rounded-2xl border border-slate-200 overflow-hidden group">
                 <div className="h-44 overflow-hidden relative">
-                  <img src={photo.img} alt={photo.judul} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
+                  <img src={photo.img || photo.foto} alt={photo.judul} className="w-full h-full object-cover group-hover:scale-105 transition duration-300" />
                   <span className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-xs text-slate-900 text-[10px] font-bold rounded-full">
-                    {photo.kat}
+                    {photo.kat || photo.kategori || 'Umum'}
                   </span>
                 </div>
                 <div className="p-4">
                   <h4 className="font-bold text-slate-900 text-sm">{photo.judul}</h4>
-                  <p className="text-[11px] text-slate-500 mt-0.5">{photo.tgl}</p>
+                  <p className="text-[11px] text-slate-500 mt-0.5">{photo.tgl || photo.tanggal || ''}</p>
                 </div>
               </div>
             ))}
