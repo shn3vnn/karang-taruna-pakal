@@ -3,9 +3,9 @@ import { Search, Plus, MessageCircle } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 const defaultUmkm = [
-  { id: 1, nama: "Dapur Mama Maya", kategori: "Kuliner", wa: "6285739439137", deskripsi: "Menerima pesanan Nasi Kotak, Kue Basah, dan Snack Box untuk acara warga.", foto: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=600", status: "Approved" },
-  { id: 2, nama: "Laundry Kilat Blok C", kategori: "Jasa", wa: "6285739439137", deskripsi: "Cuci bersih, wangi, dan rapi. Antar jemput gratis khusus area perumahan.", foto: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=600", status: "Approved" },
-  { id: 3, nama: "Kopi Seduh Tetangga", kategori: "Minuman", wa: "6285739439137", deskripsi: "Kopi susu kekinian dan aneka minuman segar. Buka setiap sore.", foto: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=600", status: "Approved" }
+  { id: 1, nama: "Dapur Mama Maya", kategori: "Kuliner", wa: "6285739439137", deskripsi: "Menerima pesanan Nasi Kotak, Kue Basah, dan Snack Box untuk acara warga.", foto: "https://images.unsplash.com/photo-1555396273-367ea4eb4db5?auto=format&fit=crop&q=80&w=600", status: "Disetujui" },
+  { id: 2, nama: "Laundry Kilat Blok C", kategori: "Jasa", wa: "6285739439137", deskripsi: "Cuci bersih, wangi, dan rapi. Antar jemput gratis khusus area perumahan.", foto: "https://images.unsplash.com/photo-1517677208171-0bc6725a3e60?auto=format&fit=crop&q=80&w=600", status: "Disetujui" },
+  { id: 3, nama: "Kopi Seduh Tetangga", kategori: "Minuman", wa: "6285739439137", deskripsi: "Kopi susu kekinian dan aneka minuman segar. Buka setiap sore.", foto: "https://images.unsplash.com/photo-1509042239860-f550ce710b93?auto=format&fit=crop&q=80&w=600", status: "Disetujui" }
 ];
 
 export default function Umkm({ onOpenDaftarUmkm }) {
@@ -18,20 +18,13 @@ export default function Umkm({ onOpenDaftarUmkm }) {
   }, []);
 
   const fetchApprovedUmkm = async () => {
-    // Ambil data dari Supabase
-    const { data: supabaseData, error } = await supabase
-      .from('umkm')
-      .select('*')
-      .eq('status', 'Approved');
-
-    // Ambil juga dari LocalStorage (jika ada simpanan lokal)
-    const localData = JSON.parse(localStorage.getItem('umkm_karta')) || [];
-    const approvedLocal = localData.filter(i => i.status === 'Approved');
-
-    if (!error && supabaseData && supabaseData.length > 0) {
-      setUmkmList([...defaultUmkm, ...supabaseData, ...approvedLocal]);
-    } else if (approvedLocal.length > 0) {
-      setUmkmList([...defaultUmkm, ...approvedLocal]);
+    const { data, error } = await supabase.from('umkm').select('*');
+    if (!error && data) {
+      // Filter status 'Disetujui' atau 'Approved'
+      const approved = data.filter(i => i.status === 'Disetujui' || i.status === 'Approved');
+      if (approved.length > 0) {
+        setUmkmList([...defaultUmkm, ...approved]);
+      }
     }
   };
 
