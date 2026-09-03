@@ -13,10 +13,7 @@ export default function Admin({ onLogout }) {
   const [pendaftar, setPendaftar] = useState([]);
   const [umkmList, setUmkmList] = useState([]);
   const [transaksiKas, setTransaksiKas] = useState([]);
-  const [kegiatanList, setKegiatanList] = useState([
-    { id: 'k-1', judul: "Kerja Bakti Masal & Penghijauan", tanggal: "10 Sept 2026", lokasi: "Lapangan Utama & Taman Blok A" },
-    { id: 'k-2', judul: "Turnamen Bulutangkis Antar RT", tanggal: "20 Sept 2026", lokasi: "Lapangan Serbaguna Perumahan" }
-  ]);
+  const [kegiatanList, setKegiatanList] = useState([]);
 
   // Load Data dari Supabase Cloud
   const loadData = async () => {
@@ -28,6 +25,9 @@ export default function Admin({ onLogout }) {
 
     const resKas = await supabase.from('kas').select('*').order('id', { ascending: false });
     if (resKas.data) setTransaksiKas(resKas.data);
+
+    const resKegiatan = await supabase.from('kegiatan').select('*').order('id', { ascending: false });
+    if (resKegiatan.data) setKegiatanList(resKegiatan.data);
   };
 
   useEffect(() => {
@@ -110,6 +110,35 @@ export default function Admin({ onLogout }) {
 
   const handleDeleteUmkm = async (id) => {
     await supabase.from('umkm').delete().eq('id', id);
+    loadData();
+  };
+
+  // --- KELOLA KEGIATAN SUPABASE ---
+  const handleAddKegiatan = async (e) => {
+    e.preventDefault();
+    const judul = e.target.judul.value;
+    const tanggal = e.target.tanggal.value;
+    const lokasi = e.target.lokasi.value;
+
+    const { error } = await supabase.from('kegiatan').insert([
+      { 
+        judul, 
+        tanggal, 
+        lokasi,
+        foto: "https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=600"
+      }
+    ]);
+
+    if (error) {
+      alert('Gagal menambah kegiatan: ' + error.message);
+    } else {
+      loadData();
+      e.target.reset();
+    }
+  };
+
+  const handleDeleteKegiatan = async (id) => {
+    await supabase.from('kegiatan').delete().eq('id', id);
     loadData();
   };
 
@@ -352,16 +381,35 @@ export default function Admin({ onLogout }) {
             <div className="space-y-6">
               <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
                 <h3 className="text-lg font-bold mb-4">Tambah Kegiatan Acara Baru</h3>
-                <form className="grid grid-cols-1 sm:grid-cols-3 gap-4" onSubmit={(e) => {
-                  e.preventDefault();
-                  setKegiatanList([...kegiatanList, { id: Date.now(), judul: e.target.judul.value, tanggal: e.target.tanggal.value, lokasi: e.target.lokasi.value }]);
-                  e.target.reset();
-                }}>
+                <form className="grid grid-cols-1 sm:grid-cols-3 gap-4" onSubmit={handleAddKegiatan}>
                   <input name="judul" required type="text" placeholder="Nama Kegiatan" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
-                  <input name="tanggal" required type="text" placeholder="Tanggal" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
+                  <input name="tanggal" required type="text" placeholder="Tanggal (Contoh: 10 Sept 2026)" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
                   <input name="lokasi" required type="text" placeholder="Lokasi Kegiatan" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-sm" />
-                  <button type="submit" className="sm:col-span-3 bg-[#039088] text-white font-bold py-3 rounded-xl text-sm">Tambahkan Kegiatan</button>
+                  <button type="submit" className="sm:col-span-3 bg-[#039088] text-white font-bold py-3 rounded-xl text-sm shadow-md">
+                    Tambahkan Kegiatan ke Supabase
+                  </button>
                 </form>
+              </div>
+
+              <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 className="text-lg font-bold mb-4">Daftar Kegiatan Terdaftar</h3>
+                <div className="space-y-3">
+                  {kegiatanList.length === 0 ? (
+                    <p className="text-xs text-slate-400">Belum ada kegiatan yang tersimpan di database.</p>
+                  ) : (
+                    kegiatanList.map((k) => (
+                      <div key={k.id} className="p-4 bg-slate-50 border border-slate-200 rounded-2xl flex justify-between items-center">
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900">{k.judul}</h4>
+                          <p className="text-xs text-slate-500 mt-0.5">{k.tanggal} • {k.lokasi}</p>
+                        </div>
+                        <button onClick={() => handleDeleteKegiatan(k.id)} className="text-slate-400 hover:text-rose-600 transition p-1.5">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                    ))
+                  )}
+                </div>
               </div>
             </div>
           )}
