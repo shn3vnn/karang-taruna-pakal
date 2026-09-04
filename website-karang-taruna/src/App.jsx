@@ -237,24 +237,24 @@ export default function App() {
         </div>
       </section>
 
-      {/* ABOUT US & STATS SECTION */}
+      {/* ABOUT US & STATS SECTION (RESPONSIF MOBILE CENTERED) */}
       <section id="tentang" className="py-12 bg-[#F4F4F5] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid md:grid-cols-12 gap-10 items-start">
+          <div className="grid md:grid-cols-12 gap-10 items-center">
             
-            <div className="md:col-span-6 space-y-4">
+            <div className="md:col-span-6 space-y-4 text-center md:text-left">
               <h2 className="text-3xl font-bold tracking-tight text-slate-900">
                 Tentang Karang Taruna
               </h2>
-              <p className="text-slate-600 text-sm leading-relaxed max-w-lg">
+              <p className="text-slate-600 text-sm leading-relaxed max-w-lg mx-auto md:mx-0">
                 Karang Taruna Pakal Residence berdiri sebagai sarana pengembangan generasi muda yang berkarakter, mandiri, dan berjiwa sosial. Kami secara aktif menyelenggarakan kegiatan gotong royong, olahraga, keagamaan, serta menjadi wadah promosi UMKM lokal perumahan.
               </p>
             </div>
 
-            <div className="md:col-span-6 grid grid-cols-2 gap-8">
+            <div className="md:col-span-6 grid grid-cols-2 gap-8 text-center md:text-left">
               <div>
-                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">20+</div>
+                <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">20</div>
                 <p className="text-xs text-slate-500 font-medium mt-1">Pemuda Terdaftar</p>
               </div>
               <div>
@@ -446,9 +446,9 @@ export default function App() {
       <section id="lokasi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid md:grid-cols-12 gap-8 items-center">
-            <div className="md:col-span-5 space-y-3">
+            <div className="md:col-span-5 space-y-3 text-center md:text-left">
               <h2 className="text-3xl font-bold text-slate-900">Sekretariat Karang Taruna</h2>
-              <p className="text-xs text-slate-500 leading-relaxed">
+              <p className="text-xs text-slate-500 leading-relaxed max-w-sm mx-auto md:mx-0">
                 Pusat kegiatan, koordinasi, dan balai serbaguna warga perumahan Pakal Residence, Surabaya.
               </p>
               <div className="text-xs text-slate-800 space-y-1 pt-2 font-medium">
