@@ -237,14 +237,15 @@ export default function App() {
         </div>
       </section>
 
-      {/* ABOUT US & STATS SECTION (RESPONSIF MOBILE CENTERED) */}
-      <section id="tentang" className="py-12 bg-[#F4F4F5] border-b border-slate-200">
+      {/* ABOUT US & STATS SECTION (PERBAIKAN CENTER DESKTOP & MOBILE) */}
+      <section id="tentang" className="py-16 bg-[#F4F4F5] border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid md:grid-cols-12 gap-10 items-center">
+          <div className="grid md:grid-cols-12 gap-8 lg:gap-16 items-center">
             
-            <div className="md:col-span-6 space-y-4 text-center md:text-left">
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+            {/* Sisi Kiri: Deskripsi Singkat (Terpusat secara Vertikal di Desktop) */}
+            <div className="md:col-span-6 space-y-4 text-center md:text-left flex flex-col justify-center">
+              <h2 className="text-3xl sm:text-4xl font-bold tracking-tight text-slate-900 leading-tight">
                 Tentang Karang Taruna
               </h2>
               <p className="text-slate-600 text-sm leading-relaxed max-w-lg mx-auto md:mx-0">
@@ -252,22 +253,23 @@ export default function App() {
               </p>
             </div>
 
-            <div className="md:col-span-6 grid grid-cols-2 gap-8 text-center md:text-left">
-              <div>
+            {/* Sisi Kanan: Grid Statistik (Rapi, Simetris & Center di Desktop) */}
+            <div className="md:col-span-6 grid grid-cols-2 gap-8 text-center md:text-left md:pl-4">
+              <div className="space-y-1">
                 <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">20</div>
-                <p className="text-xs text-slate-500 font-medium mt-1">Pemuda Terdaftar</p>
+                <p className="text-xs text-slate-500 font-medium">Pemuda Terdaftar</p>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">12+</div>
-                <p className="text-xs text-slate-500 font-medium mt-1">Program / Tahun</p>
+                <p className="text-xs text-slate-500 font-medium">Program / Tahun</p>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">100%</div>
-                <p className="text-xs text-slate-500 font-medium mt-1">Kas Transparan</p>
+                <p className="text-xs text-slate-500 font-medium">Kas Transparan</p>
               </div>
-              <div>
+              <div className="space-y-1">
                 <div className="text-4xl sm:text-5xl font-extrabold tracking-tight text-slate-900">20+</div>
-                <p className="text-xs text-slate-500 font-medium mt-1">UMKM Terdaftar</p>
+                <p className="text-xs text-slate-500 font-medium">UMKM Terdaftar</p>
               </div>
             </div>
 
