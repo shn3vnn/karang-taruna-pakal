@@ -37,7 +37,7 @@ const galeriFoto = [
   }
 ];
 
-// Helper dideklarasikan di luar komponen agar bebas error scope
+// Helper konversi angka aman dari nilai NaN
 const parseNominal = (item) => {
   if (!item) return 0;
   const rawVal = item.jumlah ?? item.nominal ?? item.total ?? 0;
@@ -45,14 +45,15 @@ const parseNominal = (item) => {
   return isNaN(parsed) ? 0 : parsed;
 };
 
+// Helper pencari tipe transaksi (fleksibel mendeteksi string 'PENGELUARAN' dan 'PEMASUKAN')
 const isPemasukan = (tipe) => {
   const val = String(tipe || '').toLowerCase().trim();
-  return val === 'masuk' || val === 'pemasukan' || val === 'in';
+  return val.includes('masuk') || val.includes('in');
 };
 
 const isPengeluaran = (tipe) => {
   const val = String(tipe || '').toLowerCase().trim();
-  return val === 'keluar' || val === 'pengeluaran' || val === 'out';
+  return val.includes('keluar') || val.includes('pengeluaran') || val.includes('out');
 };
 
 export default function TransparansiGaleri() {
