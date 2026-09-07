@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Users, Store, Calendar, CheckCircle, XCircle, ArrowLeft, Trash2, Plus, Lock, LogOut, Wallet } from 'lucide-react';
+import { Users, Store, Calendar, CheckCircle, XCircle, ArrowLeft, Trash2, Plus, Lock, LogOut, Wallet, Image as ImageIcon, Upload, Loader2 } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 export default function Admin({ onLogout }) {
@@ -15,6 +15,11 @@ export default function Admin({ onLogout }) {
   const [transaksiKas, setTransaksiKas] = useState([]);
   const [kegiatanList, setKegiatanList] = useState([]);
 
+  // State Kelola Galeri
+  const [galeriList, setGaleriList] = useState([]);
+  const [uploadingGaleri, setUploadingGaleri] = useState(false);
+  const [selectedGaleriFile, setSelectedGaleriFile] = useState(null);
+
   // Load Data dari Supabase Cloud
   const loadData = async () => {
     const resPendaftar = await supabase.from('pendaftar').select('*').order('id', { ascending: false });
@@ -28,6 +33,9 @@ export default function Admin({ onLogout }) {
 
     const resKegiatan = await supabase.from('kegiatan').select('*').order('id', { ascending: false });
     if (resKegiatan.data) setKegiatanList(resKegiatan.data);
+
+    const resGaleri = await supabase.from('galeri').select('*').order('id', { ascending: false });
+    if (resGaleri.data) setGaleriList(resGaleri.data);
   };
 
   useEffect(() => {
@@ -142,6 +150,74 @@ export default function Admin({ onLogout }) {
     loadData();
   };
 
+  // --- KELOLA GALERI FOTO ---
+  const handleAddGaleri = async (e) => {
+    e.preventDefault();
+    const judul = e.target.judul.value;
+    const kategori = e.target.kategori.value;
+    const tanggal = e.target.tanggal.value;
+    const deskripsi = e.target.deskripsi.value;
+    let urlInput = e.target.url_foto ? e.target.url_foto.value : '';
+
+    setUploadingGaleri(true);
+
+    try {
+      let finalSrc = urlInput;
+
+      // Upload file jika ada yang dipilih
+      if (selectedGaleriFile) {
+        const fileExt = selectedGaleriFile.name.split('.').pop();
+        const fileName = `${Date.now()}-${Math.random().toString(36).substring(2)}.${fileExt}`;
+        const filePath = `galeri/${fileName}`;
+
+        const { error: uploadError } = await supabase.storage
+          .from('kegiatan')
+          .upload(filePath, selectedGaleriFile);
+
+        if (uploadError) throw uploadError;
+
+        const { data: publicUrlData } = supabase.storage
+          .from('kegiatan')
+          .getPublicUrl(filePath);
+
+        finalSrc = publicUrlData.publicUrl;
+      }
+
+      if (!finalSrc) {
+        alert('Harap unggah file foto atau masukkan URL gambar!');
+        setUploadingGaleri(false);
+        return;
+      }
+
+      const { error } = await supabase.from('galeri').insert([
+        {
+          judul,
+          kategori,
+          tanggal: tanggal || 'Terbaru',
+          deskripsi,
+          src: finalSrc
+        }
+      ]);
+
+      if (error) {
+        alert('Gagal menambah galeri: ' + error.message);
+      } else {
+        loadData();
+        e.target.reset();
+        setSelectedGaleriFile(null);
+      }
+    } catch (err) {
+      alert('Terjadi kesalahan: ' + (err.message || err));
+    } finally {
+      setUploadingGaleri(false);
+    }
+  };
+
+  const handleDeleteGaleri = async (id) => {
+    await supabase.from('galeri').delete().eq('id', id);
+    loadData();
+  };
+
   if (!isAuthenticated) {
     return (
       <div className="min-h-screen bg-slate-900 flex items-center justify-center p-4">
@@ -221,6 +297,10 @@ export default function Admin({ onLogout }) {
 
           <button onClick={() => setActiveTab('kegiatan')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition ${activeTab === 'kegiatan' ? 'bg-[#039088] text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-200'}`}>
             <Calendar size={18} /> Kelola Kegiatan
+          </button>
+
+          <button onClick={() => setActiveTab('galeri')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition ${activeTab === 'galeri' ? 'bg-[#039088] text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-200'}`}>
+            <ImageIcon size={18} /> Kelola Galeri Foto
           </button>
         </div>
 
@@ -410,6 +490,96 @@ export default function Admin({ onLogout }) {
                     ))
                   )}
                 </div>
+              </div>
+            </div>
+          )}
+
+          {/* TAB 5: KELOLA GALERI FOTO */}
+          {activeTab === 'galeri' && (
+            <div className="space-y-6">
+              <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 className="text-lg font-bold mb-4">Tambah Foto Galeri Kegiatan</h3>
+                <form className="space-y-4 text-xs sm:text-sm" onSubmit={handleAddGaleri}>
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input name="judul" required type="text" placeholder="Judul Kegiatan / Foto" className="bg-slate-50 border border-slate-200 p-3 rounded-xl" />
+                    <select name="kategori" className="bg-slate-50 border border-slate-200 p-3 rounded-xl">
+                      <option value="Olahraga">Olahraga</option>
+                      <option value="Organisasi">Organisasi</option>
+                      <option value="Edukasi">Edukasi</option>
+                      <option value="Sosial">Sosial</option>
+                      <option value="Lainnya">Lainnya</option>
+                    </select>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                    <input name="tanggal" type="text" placeholder="Tanggal / Bulan (Contoh: Agustus 2026)" className="bg-slate-50 border border-slate-200 p-3 rounded-xl" />
+                    <div>
+                      <label className="block text-[11px] text-slate-500 font-semibold mb-1">Pilih File Foto (Upload Storage):</label>
+                      <input 
+                        type="file" 
+                        accept="image/*"
+                        onChange={(e) => setSelectedGaleriFile(e.target.files[0])}
+                        className="w-full text-slate-500 file:mr-3 file:py-1.5 file:px-3 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-[#E6F4F3] file:text-[#039088] hover:file:bg-[#d5eee8] cursor-pointer"
+                      />
+                    </div>
+                  </div>
+
+                  <div>
+                    <input name="url_foto" type="url" placeholder="Atau masukkan URL Gambar langsung (https://...)" className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs" />
+                  </div>
+
+                  <div>
+                    <textarea name="deskripsi" rows="2" placeholder="Deskripsi singkat mengenai foto kegiatan ini..." className="w-full bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs"></textarea>
+                  </div>
+
+                  <button 
+                    type="submit" 
+                    disabled={uploadingGaleri}
+                    className="w-full bg-[#039088] text-white font-bold py-3.5 rounded-xl flex items-center justify-center gap-2 text-xs shadow-md disabled:opacity-50"
+                  >
+                    {uploadingGaleri ? (
+                      <>
+                        <Loader2 className="animate-spin" size={16} /> Mengunggah Gambar...
+                      </>
+                    ) : (
+                      <>
+                        <Upload size={16} /> Simpan foto ke Galeri Supabase
+                      </>
+                    )}
+                  </button>
+                </form>
+              </div>
+
+              <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+                <h3 className="text-lg font-bold mb-4">Daftar Foto Galeri Terdaftar</h3>
+                {galeriList.length === 0 ? (
+                  <p className="text-xs text-slate-400">Belum ada foto yang tersimpan di galeri database.</p>
+                ) : (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                    {galeriList.map((g) => (
+                      <div key={g.id} className="border border-slate-200 rounded-2xl overflow-hidden bg-slate-50 flex flex-col justify-between">
+                        <div className="h-36 bg-slate-900 relative">
+                          <img src={g.src} alt={g.judul} className="w-full h-full object-cover" />
+                          <span className="absolute top-2 left-2 px-2 py-0.5 bg-white/90 text-slate-900 font-bold text-[10px] rounded-md">
+                            {g.kategori}
+                          </span>
+                        </div>
+                        <div className="p-3.5 flex-grow flex flex-col justify-between">
+                          <div>
+                            <h4 className="font-bold text-slate-900 text-xs line-clamp-1">{g.judul}</h4>
+                            <p className="text-[11px] text-slate-500 mt-0.5 line-clamp-2">{g.deskripsi || '-'}</p>
+                          </div>
+                          <div className="flex items-center justify-between mt-3 pt-2 border-t border-slate-200 text-[10px]">
+                            <span className="text-slate-400 font-medium">{g.tanggal}</span>
+                            <button onClick={() => handleDeleteGaleri(g.id)} className="text-rose-600 hover:text-rose-700 font-bold flex items-center gap-1">
+                              <Trash2 size={13} /> Hapus
+                            </button>
+                          </div>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           )}
