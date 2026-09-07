@@ -1,41 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { Calendar, TrendingUp, TrendingDown, Wallet, FileText } from 'lucide-react';
+import { Calendar, TrendingUp, TrendingDown, Wallet, FileText, Image as ImageIcon } from 'lucide-react';
 import { supabase } from '../supabaseClient';
-
-const galeriFoto = [
-  {
-    id: 1,
-    judul: "Lomba 17 Agustus 2026",
-    kategori: "Olahraga",
-    tanggal: "Agustus 2026",
-    src: "/kegiatan-1.jpg",
-    deskripsi: "Aktivitas olahraga rutin dan persiapan lomba pemuda di lapangan perumahan."
-  },
-  {
-    id: 2,
-    judul: "Forum Diskusi & Brainstorming",
-    kategori: "Organisasi",
-    tanggal: "Agustus 2026",
-    src: "/kegiatan-2.jpeg",
-    deskripsi: "Sesi diskusi kelompok pemuda untuk merancang program kerja Karang Taruna."
-  },
-  {
-    id: 3,
-    judul: "Pelatihan Leadership & Pemuda",
-    kategori: "Edukasi",
-    tanggal: "Agustus 2026",
-    src: "/kegiatan-3.jpeg",
-    deskripsi: "Penyampaian materi kepemimpinan dan pengembangan karakter organisasi."
-  },
-  {
-    id: 4,
-    judul: "Malam Tirakatan Warga",
-    kategori: "Sosial",
-    tanggal: "Agustus 2026",
-    src: "/kegiatan-4.jpg",
-    deskripsi: "Acara kumpul dan nonton bersama seluruh warga perumahan Pakal Residence."
-  }
-];
 
 // Helper konversi angka aman dari nilai NaN / String
 const parseNominal = (item) => {
@@ -58,13 +23,12 @@ const isPengeluaran = (item) => {
   return val.includes('keluar') || val.includes('pengeluaran') || val === 'out';
 };
 
-// Helper pembaca tanggal dari berbagai nama kolom Supabase
+// Helper pembaca tanggal
 const parseTanggal = (item) => {
   if (!item) return '-';
   const rawTgl = item.tanggal || item.tgl || item.created_at || item.date;
   if (!rawTgl) return '-';
   
-  // Format tanggal jika merupakan ISO Timestamp dari Supabase (misal created_at)
   if (String(rawTgl).includes('T')) {
     return new Date(rawTgl).toLocaleDateString('id-ID', {
       day: '2-digit',
@@ -80,10 +44,16 @@ export default function TransparansiGaleri() {
   const [kasList, setKasList] = useState([]);
   const [loadingKas, setLoadingKas] = useState(true);
 
+  // State untuk Data Galeri Dinamis dari Supabase
+  const [galeriList, setGaleriList] = useState([]);
+  const [loadingGaleri, setLoadingGaleri] = useState(true);
+
   useEffect(() => {
     fetchKas();
+    fetchGaleri();
   }, []);
 
+  // Fetch Data Kas
   const fetchKas = async () => {
     setLoadingKas(true);
     const { data, error } = await supabase
@@ -97,7 +67,21 @@ export default function TransparansiGaleri() {
     setLoadingKas(false);
   };
 
-  // Kalkulasi Total Saldo
+  // Fetch Data Galeri dari Supabase
+  const fetchGaleri = async () => {
+    setLoadingGaleri(true);
+    const { data, error } = await supabase
+      .from('galeri')
+      .select('*')
+      .order('id', { ascending: false });
+
+    if (!error && data) {
+      setGaleriList(data);
+    }
+    setLoadingGaleri(false);
+  };
+
+  // Kalkulasi Total Saldo Kas
   const totalPemasukan = kasList
     .filter(item => isPemasukan(item))
     .reduce((acc, curr) => acc + parseNominal(curr), 0);
@@ -228,7 +212,7 @@ export default function TransparansiGaleri() {
         </div>
       </section>
 
-      {/* SEKSI 2: GALERI KEGIATAN WARGA */}
+      {/* SEKSI 2: GALERI KEGIATAN WARGA (DINAMIS DARI SUPABASE) */}
       <section id="galeri" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -246,40 +230,49 @@ export default function TransparansiGaleri() {
             </div>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {galeriFoto.map((item) => (
-              <div 
-                key={item.id}
-                onClick={() => setActivePhoto(item)}
-                className="group cursor-pointer bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
-              >
-                <div className="relative h-56 overflow-hidden bg-slate-900">
-                  <img 
-                    src={item.src} 
-                    alt={item.judul}
-                    className="w-full h-full object-cover group-hover:scale-110 transition duration-500" 
-                  />
-                  <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition"></div>
-                  <span className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] font-bold rounded-full border border-slate-200">
-                    {item.kategori}
-                  </span>
-                </div>
+          {loadingGaleri ? (
+            <div className="text-center py-12 text-slate-400 text-xs">Memuat galeri foto...</div>
+          ) : galeriList.length === 0 ? (
+            <div className="text-center py-12 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
+              <ImageIcon className="mx-auto text-slate-300 mb-2" size={32} />
+              <p className="text-xs text-slate-500 font-medium">Belum ada dokumentasi foto kegiatan.</p>
+            </div>
+          ) : (
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+              {galeriList.map((item) => (
+                <div 
+                  key={item.id}
+                  onClick={() => setActivePhoto(item)}
+                  className="group cursor-pointer bg-slate-50 rounded-3xl overflow-hidden border border-slate-200/80 hover:shadow-xl transition-all duration-300 transform hover:-translate-y-1"
+                >
+                  <div className="relative h-56 overflow-hidden bg-slate-900">
+                    <img 
+                      src={item.src} 
+                      alt={item.judul}
+                      className="w-full h-full object-cover group-hover:scale-110 transition duration-500" 
+                    />
+                    <div className="absolute inset-0 bg-slate-950/20 group-hover:bg-slate-950/40 transition"></div>
+                    <span className="absolute top-3 left-3 px-3 py-1 bg-white/90 backdrop-blur-md text-slate-900 text-[11px] font-bold rounded-full border border-slate-200">
+                      {item.kategori || 'Kegiatan'}
+                    </span>
+                  </div>
 
-                <div className="p-5">
-                  <h3 className="font-bold text-slate-900 text-base group-hover:text-emerald-600 transition line-clamp-1">
-                    {item.judul}
-                  </h3>
-                  <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
-                    {item.deskripsi}
-                  </p>
-                  <div className="flex items-center gap-1 text-[11px] text-slate-400 font-medium mt-4">
-                    <Calendar size={13} />
-                    <span>{item.tanggal}</span>
+                  <div className="p-5">
+                    <h3 className="font-bold text-slate-900 text-base group-hover:text-emerald-600 transition line-clamp-1">
+                      {item.judul}
+                    </h3>
+                    <p className="text-xs text-slate-500 mt-1 line-clamp-2 leading-relaxed">
+                      {item.deskripsi || '-'}
+                    </p>
+                    <div className="flex items-center gap-1 text-[11px] text-slate-400 font-medium mt-4">
+                      <Calendar size={13} />
+                      <span>{item.tanggal || parseTanggal(item)}</span>
+                    </div>
                   </div>
                 </div>
-              </div>
-            ))}
-          </div>
+              ))}
+            </div>
+          )}
 
         </div>
 
@@ -302,13 +295,13 @@ export default function TransparansiGaleri() {
               </div>
               <div className="p-6">
                 <span className="text-xs font-bold text-emerald-600 uppercase tracking-wider">
-                  {activePhoto.kategori}
+                  {activePhoto.kategori || 'Kegiatan'}
                 </span>
                 <h3 className="text-xl font-bold text-slate-900 mt-1">
                   {activePhoto.judul}
                 </h3>
                 <p className="text-slate-600 text-xs leading-relaxed mt-2">
-                  {activePhoto.deskripsi}
+                  {activePhoto.deskripsi || '-'}
                 </p>
                 <button 
                   onClick={() => setActivePhoto(null)}
