@@ -44,7 +44,7 @@ export default function TransparansiGaleri() {
   const [kasList, setKasList] = useState([]);
   const [loadingKas, setLoadingKas] = useState(true);
 
-  // State untuk Data Galeri Dinamis dari Supabase
+  // State Galeri Foto Dinamis
   const [galeriList, setGaleriList] = useState([]);
   const [loadingGaleri, setLoadingGaleri] = useState(true);
 
@@ -53,7 +53,7 @@ export default function TransparansiGaleri() {
     fetchGaleri();
   }, []);
 
-  // Fetch Data Kas
+  // Fetch Data Kas dari Supabase
   const fetchKas = async () => {
     setLoadingKas(true);
     const { data, error } = await supabase
@@ -216,26 +216,25 @@ export default function TransparansiGaleri() {
       <section id="galeri" className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4">
-            <div>
-              <span className="text-xs font-bold tracking-widest text-slate-400 uppercase block mb-1">
-                Dokumentasi
-              </span>
-              <h2 className="text-3xl font-bold tracking-tight text-slate-900">
-                Galeri Kegiatan Warga
-              </h2>
-              <p className="text-slate-500 text-sm mt-1">
-                Momen kebersamaan, aksi sosial, dan dinamika kegiatan Karang Taruna Pakal Residence.
-              </p>
-            </div>
+          <div className="mb-10">
+            <span className="text-xs font-bold tracking-widest text-slate-400 uppercase block mb-1">
+              Dokumentasi
+            </span>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">
+              Galeri Kegiatan Warga
+            </h2>
+            <p className="text-slate-500 text-sm mt-1">
+              Momen kebersamaan, aksi sosial, dan dinamika kegiatan Karang Taruna Pakal Residence.
+            </p>
           </div>
 
           {loadingGaleri ? (
             <div className="text-center py-12 text-slate-400 text-xs">Memuat galeri foto...</div>
           ) : galeriList.length === 0 ? (
-            <div className="text-center py-12 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
-              <ImageIcon className="mx-auto text-slate-300 mb-2" size={32} />
-              <p className="text-xs text-slate-500 font-medium">Belum ada dokumentasi foto kegiatan.</p>
+            <div className="text-center py-16 bg-slate-50 rounded-3xl border border-dashed border-slate-200">
+              <ImageIcon className="mx-auto text-slate-300 mb-3" size={36} />
+              <p className="text-sm text-slate-600 font-semibold">Belum ada foto kegiatan</p>
+              <p className="text-xs text-slate-400 mt-1">Foto kegiatan yang ditambahkan admin via Supabase akan muncul di sini.</p>
             </div>
           ) : (
             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
@@ -276,7 +275,7 @@ export default function TransparansiGaleri() {
 
         </div>
 
-        {/* Modal Lightbox Foto */}
+        {/* MODAL LIGHTBOX PREVIEW FOTO */}
         {activePhoto && (
           <div 
             className="fixed inset-0 z-50 bg-slate-950/80 backdrop-blur-md flex items-center justify-center p-4"
