@@ -4,7 +4,7 @@ import { Image, Calendar, Tag } from 'lucide-react';
 const galeriFoto = [
   {
     id: 1,
-    judul: "Turnamen & Olahraga Pemuda",
+    judul: "Lomba 17 Agustus 2026",
     kategori: "Olahraga",
     tanggal: "Agustus 2026",
     src: "/kegiatan-1.jpg",
@@ -28,7 +28,7 @@ const galeriFoto = [
   },
   {
     id: 4,
-    judul: "Malam Kebersamaan & Guyub Warga",
+    judul: "Malam Kebersamaan Tirakatan Warga",
     kategori: "Sosial",
     tanggal: "Agustus 2026",
     src: "/kegiatan-4.jpg",
