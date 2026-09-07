@@ -7,7 +7,7 @@ const galeriFoto = [
     judul: "Turnamen & Olahraga Pemuda",
     kategori: "Olahraga",
     tanggal: "Agustus 2026",
-    src: "/galeri/kegiatan-1.jpg",
+    src: "/kegiatan-1.jpg",
     deskripsi: "Aktivitas olahraga rutin dan persiapan lomba pemuda di lapangan perumahan."
   },
   {
@@ -15,7 +15,7 @@ const galeriFoto = [
     judul: "Forum Diskusi & Brainstorming",
     kategori: "Organisasi",
     tanggal: "Agustus 2026",
-    src: "/galeri/kegiatan-2.jpg",
+    src: "/kegiatan-2.jpeg",
     deskripsi: "Sesi diskusi kelompok pemuda untuk merancang program kerja Karang Taruna."
   },
   {
@@ -23,7 +23,7 @@ const galeriFoto = [
     judul: "Pelatihan Leadership & Pemuda",
     kategori: "Edukasi",
     tanggal: "Agustus 2026",
-    src: "/galeri/kegiatan-3.jpg",
+    src: "/kegiatan-3.jpeg",
     deskripsi: "Penyampaian materi kepemimpinan dan pengembangan karakter organisasi."
   },
   {
@@ -31,7 +31,7 @@ const galeriFoto = [
     judul: "Malam Kebersamaan & Guyub Warga",
     kategori: "Sosial",
     tanggal: "Agustus 2026",
-    src: "/galeri/kegiatan-4.jpg",
+    src: "/kegiatan-4.jpg",
     deskripsi: "Acara kumpul dan nonton bersama seluruh warga perumahan Pakal Residence."
   }
 ];
