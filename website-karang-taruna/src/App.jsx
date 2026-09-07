@@ -204,34 +204,48 @@ export default function App() {
       {/* NAVBAR */}
       <Navbar onOpenDaftar={() => setIsDaftarOpen(true)} />
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION WITH CUSTOM BACKGROUND */}
       <section id="beranda" className="pt-6 pb-12">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="relative rounded-3xl overflow-hidden min-h-[420px] sm:min-h-[500px] flex items-end p-8 sm:p-14 bg-slate-900 border border-slate-200">
+          <div className="relative rounded-3xl overflow-hidden min-h-[440px] sm:min-h-[520px] flex items-end p-8 sm:p-14 bg-slate-950 border border-slate-800 shadow-2xl">
+            
+            {/* Foto Background Baru dengan Penyesuaian Warna (Blend & Darken) */}
             <img 
-              src={heroPhotos[0]} 
-              alt="Karang Taruna Pakal Residence" 
-              className="absolute inset-0 w-full h-full object-cover opacity-40 mix-blend-luminosity" 
+              src="/hero-bg.jpg" 
+              alt="Anggota Karang Taruna Pakal Residence" 
+              className="absolute inset-0 w-full h-full object-cover object-center opacity-30 mix-blend-luminosity scale-105 transition-transform duration-700" 
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent"></div>
+            
+            {/* Layer Lapisan Gradasi Warna agar Teks Tetap Jelas & Menyambung dengan Theme */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/70 to-slate-950/30"></div>
+            <div className="absolute inset-0 bg-slate-900/40 mix-blend-multiply"></div>
 
+            {/* Konten Teks Hero */}
             <div className="relative z-10 max-w-2xl text-white space-y-6">
+              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/20 text-xs font-semibold text-emerald-400">
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                Official Website Pemuda
+              </div>
+
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.12]">
                 Gerakan Pemuda Pakal Residence
               </h1>
+
               <p className="text-slate-300 text-sm sm:text-base leading-relaxed max-w-xl font-normal">
                 Wadahnya generasi muda untuk berkolaborasi, mengelola kegiatan sosial, mempublikasikan kas terbuka, serta memberdayakan ekonomi warga perumahan.
               </p>
+
               <div className="pt-2">
                 <button 
                   onClick={() => setIsDaftarOpen(true)}
-                  className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-900 px-7 py-3.5 rounded-full font-bold text-sm transition shadow-sm"
+                  className="inline-flex items-center gap-2 bg-white hover:bg-slate-100 text-slate-900 px-7 py-3.5 rounded-full font-bold text-sm transition shadow-lg hover:shadow-xl hover:-translate-y-0.5 transform duration-200"
                 >
                   Gabung Anggota <ArrowRight size={16} />
                 </button>
               </div>
             </div>
+
           </div>
 
         </div>
