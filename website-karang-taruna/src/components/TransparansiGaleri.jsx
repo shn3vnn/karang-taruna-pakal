@@ -45,7 +45,7 @@ const parseNominal = (item) => {
   return isNaN(parsed) ? 0 : Math.abs(parsed);
 };
 
-// Helper pencari tipe transaksi fleksibel (Mengecek kolom 'tipe', 'jenis', 'kategori', maupun 'status')
+// Helper pencari tipe transaksi
 const isPemasukan = (item) => {
   if (!item) return false;
   const val = String(item.tipe || item.jenis || item.kategori || item.status || '').toLowerCase().trim();
@@ -56,6 +56,23 @@ const isPengeluaran = (item) => {
   if (!item) return false;
   const val = String(item.tipe || item.jenis || item.kategori || item.status || '').toLowerCase().trim();
   return val.includes('keluar') || val.includes('pengeluaran') || val === 'out';
+};
+
+// Helper pembaca tanggal dari berbagai nama kolom Supabase
+const parseTanggal = (item) => {
+  if (!item) return '-';
+  const rawTgl = item.tanggal || item.tgl || item.created_at || item.date;
+  if (!rawTgl) return '-';
+  
+  // Format tanggal jika merupakan ISO Timestamp dari Supabase (misal created_at)
+  if (String(rawTgl).includes('T')) {
+    return new Date(rawTgl).toLocaleDateString('id-ID', {
+      day: '2-digit',
+      month: 'short',
+      year: 'numeric'
+    });
+  }
+  return String(rawTgl);
 };
 
 export default function TransparansiGaleri() {
@@ -181,7 +198,9 @@ export default function TransparansiGaleri() {
 
                       return (
                         <tr key={item.id} className="hover:bg-slate-50 transition">
-                          <td className="px-6 py-3.5 font-medium whitespace-nowrap text-slate-500">{item.tanggal || '-'}</td>
+                          <td className="px-6 py-3.5 font-medium whitespace-nowrap text-slate-500">
+                            {parseTanggal(item)}
+                          </td>
                           <td className="px-6 py-3.5 font-semibold text-slate-900">{item.keterangan}</td>
                           <td className="px-6 py-3.5 whitespace-nowrap">
                             <span className={`px-2.5 py-1 rounded-full font-bold text-[10px] uppercase ${
