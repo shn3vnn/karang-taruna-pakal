@@ -142,11 +142,10 @@ export default function App() {
     const nama = e.target.nama.value;
     const blok = e.target.blok.value;
     const umur = Number(e.target.umur.value);
-    const minat = e.target.minat.value;
 
     const { error } = await supabase
       .from('pendaftar')
-      .insert([{ nama, blok, umur, minat, status: 'Pending' }]);
+      .insert([{ nama, blok, umur, status: 'Pending' }]);
 
     if (error) {
       alert('Gagal mengirim pendaftaran: ' + error.message);
@@ -548,7 +547,7 @@ export default function App() {
         )}
       </AnimatePresence>
 
-      {/* MODAL ANGGOTA */}
+      {/* MODAL ANGGOTA (TANPA DIVISI) */}
       <AnimatePresence>
         {isDaftarOpen && (
           <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-950/60 backdrop-blur-xs">
@@ -561,11 +560,6 @@ export default function App() {
                 <input name="nama" type="text" required placeholder="Nama Lengkap" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
                 <input name="blok" type="text" required placeholder="Blok / Nomor Rumah" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
                 <input name="umur" type="number" required placeholder="Usia (Tahun)" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900" />
-                <select name="minat" className="w-full bg-slate-50 border border-slate-200 rounded-xl px-4 py-3 text-xs focus:outline-none focus:border-slate-900">
-                  <option value="Humas & Medsos">Divisi Humas & Medsos</option>
-                  <option value="Olahraga & Seni">Divisi Olahraga & Seni</option>
-                  <option value="Lingkungan & Sosial">Divisi Lingkungan & Sosial</option>
-                </select>
                 <button type="submit" className="w-full bg-slate-900 hover:bg-slate-800 text-white font-bold py-3.5 rounded-full text-xs transition mt-2">
                   Kirim Pendaftaran
                 </button>
