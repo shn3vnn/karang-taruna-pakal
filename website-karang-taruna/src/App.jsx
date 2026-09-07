@@ -143,9 +143,10 @@ export default function App() {
     const blok = e.target.blok.value;
     const umur = Number(e.target.umur.value);
 
+    // Mengirim nilai default 'Umum' untuk memenuhi syarat NOT NULL
     const { error } = await supabase
       .from('pendaftar')
-      .insert([{ nama, blok, umur, status: 'Pending' }]);
+      .insert([{ nama, blok, umur, minat: 'Umum', status: 'Pending' }]);
 
     if (error) {
       alert('Gagal mengirim pendaftaran: ' + error.message);
