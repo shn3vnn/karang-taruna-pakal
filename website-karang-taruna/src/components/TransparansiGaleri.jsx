@@ -37,23 +37,25 @@ const galeriFoto = [
   }
 ];
 
-// Helper konversi angka aman dari nilai NaN
+// Helper konversi angka aman dari nilai NaN / String
 const parseNominal = (item) => {
   if (!item) return 0;
-  const rawVal = item.jumlah ?? item.nominal ?? item.total ?? 0;
+  const rawVal = item.jumlah ?? item.nominal ?? item.total ?? item.kredit ?? item.debit ?? 0;
   const parsed = typeof rawVal === 'number' ? rawVal : parseFloat(String(rawVal).replace(/[^0-9.-]+/g, ""));
-  return isNaN(parsed) ? 0 : parsed;
+  return isNaN(parsed) ? 0 : Math.abs(parsed);
 };
 
-// Helper pencari tipe transaksi (fleksibel mendeteksi string 'PENGELUARAN' dan 'PEMASUKAN')
-const isPemasukan = (tipe) => {
-  const val = String(tipe || '').toLowerCase().trim();
-  return val.includes('masuk') || val.includes('in');
+// Helper pencari tipe transaksi fleksibel (Mengecek kolom 'tipe', 'jenis', 'kategori', maupun 'status')
+const isPemasukan = (item) => {
+  if (!item) return false;
+  const val = String(item.tipe || item.jenis || item.kategori || item.status || '').toLowerCase().trim();
+  return val.includes('masuk') || val.includes('pemasukan') || val === 'in';
 };
 
-const isPengeluaran = (tipe) => {
-  const val = String(tipe || '').toLowerCase().trim();
-  return val.includes('keluar') || val.includes('pengeluaran') || val.includes('out');
+const isPengeluaran = (item) => {
+  if (!item) return false;
+  const val = String(item.tipe || item.jenis || item.kategori || item.status || '').toLowerCase().trim();
+  return val.includes('keluar') || val.includes('pengeluaran') || val === 'out';
 };
 
 export default function TransparansiGaleri() {
@@ -80,11 +82,11 @@ export default function TransparansiGaleri() {
 
   // Kalkulasi Total Saldo
   const totalPemasukan = kasList
-    .filter(item => isPemasukan(item.tipe))
+    .filter(item => isPemasukan(item))
     .reduce((acc, curr) => acc + parseNominal(curr), 0);
 
   const totalPengeluaran = kasList
-    .filter(item => isPengeluaran(item.tipe))
+    .filter(item => isPengeluaran(item))
     .reduce((acc, curr) => acc + parseNominal(curr), 0);
 
   const saldoAkhir = totalPemasukan - totalPengeluaran;
@@ -175,7 +177,7 @@ export default function TransparansiGaleri() {
                   ) : (
                     kasList.map((item) => {
                       const nominal = parseNominal(item);
-                      const masuk = isPemasukan(item.tipe);
+                      const masuk = isPemasukan(item);
 
                       return (
                         <tr key={item.id} className="hover:bg-slate-50 transition">
