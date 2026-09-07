@@ -59,20 +59,31 @@ export default function TransparansiGaleri() {
     setLoadingKas(false);
   };
 
-  // Helper aman untuk mengonversi angka agar bebas bug NaN
+  // Helper konversi angka aman dari nilai NaN
   const parseNominal = (item) => {
     const rawVal = item.jumlah ?? item.nominal ?? item.total ?? 0;
     const parsed = typeof rawVal === 'number' ? rawVal : parseFloat(String(rawVal).replace(/[^0-9.-]+/g, ""));
     return isNaN(parsed) ? 0 : parsed;
   };
 
+  // Helper pengecekan tipe transaksi (fleksibel huruf besar/kecil)
+  const isPemasukan = (tipe) => {
+    const val = String(tipe || '').toLowerCase();
+    return val.includes('masuk') || val.includes('pemasukan') || val === 'in';
+  };
+
+  const isPengeluaran = (tipe) => {
+    const val = String(tipe || '').toLowerCase();
+    return val.includes('keluar') || val.includes('pengeluaran') || val === 'out';
+  };
+
   // Kalkulasi Total Saldo
   const totalPemasukan = kasList
-    .filter(item => String(item.tipe).toLowerCase() === 'masuk')
+    .filter(item => isPemasukan(item.tipe))
     .reduce((acc, curr) => acc + parseNominal(curr), 0);
 
   const totalPengeluaran = kasList
-    .filter(item => String(item.tipe).toLowerCase() === 'keluar')
+    .filter(item => isPengeluaran(item.tipe))
     .reduce((acc, curr) => acc + parseNominal(curr), 0);
 
   const saldoAkhir = totalPemasukan - totalPengeluaran;
@@ -163,7 +174,7 @@ export default function TransparansiGaleri() {
                   ) : (
                     kasList.map((item) => {
                       const nominal = parseNominal(item);
-                      const isMasuk = String(item.tipe).toLowerCase() === 'masuk';
+                      const masuk = isPemasukan(item.tipe);
 
                       return (
                         <tr key={item.id} className="hover:bg-slate-50 transition">
@@ -171,17 +182,17 @@ export default function TransparansiGaleri() {
                           <td className="px-6 py-3.5 font-semibold text-slate-900">{item.keterangan}</td>
                           <td className="px-6 py-3.5 whitespace-nowrap">
                             <span className={`px-2.5 py-1 rounded-full font-bold text-[10px] uppercase ${
-                              isMasuk 
+                              masuk 
                                 ? 'bg-emerald-100 text-emerald-800' 
                                 : 'bg-rose-100 text-rose-800'
                             }`}>
-                              {isMasuk ? 'Pemasukan' : 'Pengeluaran'}
+                              {masuk ? 'Pemasukan' : 'Pengeluaran'}
                             </span>
                           </td>
                           <td className={`px-6 py-3.5 text-right font-bold whitespace-nowrap ${
-                            isMasuk ? 'text-emerald-600' : 'text-rose-600'
+                            masuk ? 'text-emerald-600' : 'text-rose-600'
                           }`}>
-                            {isMasuk ? '+' : '-'} Rp {nominal.toLocaleString('id-ID')}
+                            {masuk ? '+' : '-'} Rp {nominal.toLocaleString('id-ID')}
                           </td>
                         </tr>
                       );
