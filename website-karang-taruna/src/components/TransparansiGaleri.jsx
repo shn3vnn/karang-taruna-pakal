@@ -59,22 +59,15 @@ export default function TransparansiGaleri() {
     setLoadingKas(false);
   };
 
-  // Helper konversi angka aman dari nilai NaN
-  const parseNominal = (item) => {
-    const rawVal = item.jumlah ?? item.nominal ?? item.total ?? 0;
-    const parsed = typeof rawVal === 'number' ? rawVal : parseFloat(String(rawVal).replace(/[^0-9.-]+/g, ""));
-    return isNaN(parsed) ? 0 : parsed;
-  };
-
-  // Helper pengecekan tipe transaksi (fleksibel huruf besar/kecil)
+  // Helper pengecekan tipe transaksi (fleksibel huruf besar/kecil & variasi kata)
   const isPemasukan = (tipe) => {
-    const val = String(tipe || '').toLowerCase();
-    return val.includes('masuk') || val.includes('pemasukan') || val === 'in';
+    const val = String(tipe || '').toLowerCase().trim();
+    return val === 'masuk' || val === 'pemasukan' || val === 'in';
   };
 
   const isPengeluaran = (tipe) => {
-    const val = String(tipe || '').toLowerCase();
-    return val.includes('keluar') || val.includes('pengeluaran') || val === 'out';
+    const val = String(tipe || '').toLowerCase().trim();
+    return val === 'keluar' || val === 'pengeluaran' || val === 'out';
   };
 
   // Kalkulasi Total Saldo
