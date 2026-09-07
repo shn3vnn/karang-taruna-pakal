@@ -37,6 +37,24 @@ const galeriFoto = [
   }
 ];
 
+// Helper dideklarasikan di luar komponen agar bebas error scope
+const parseNominal = (item) => {
+  if (!item) return 0;
+  const rawVal = item.jumlah ?? item.nominal ?? item.total ?? 0;
+  const parsed = typeof rawVal === 'number' ? rawVal : parseFloat(String(rawVal).replace(/[^0-9.-]+/g, ""));
+  return isNaN(parsed) ? 0 : parsed;
+};
+
+const isPemasukan = (tipe) => {
+  const val = String(tipe || '').toLowerCase().trim();
+  return val === 'masuk' || val === 'pemasukan' || val === 'in';
+};
+
+const isPengeluaran = (tipe) => {
+  const val = String(tipe || '').toLowerCase().trim();
+  return val === 'keluar' || val === 'pengeluaran' || val === 'out';
+};
+
 export default function TransparansiGaleri() {
   const [activePhoto, setActivePhoto] = useState(null);
   const [kasList, setKasList] = useState([]);
@@ -57,17 +75,6 @@ export default function TransparansiGaleri() {
       setKasList(data);
     }
     setLoadingKas(false);
-  };
-
-  // Helper pengecekan tipe transaksi (fleksibel huruf besar/kecil & variasi kata)
-  const isPemasukan = (tipe) => {
-    const val = String(tipe || '').toLowerCase().trim();
-    return val === 'masuk' || val === 'pemasukan' || val === 'in';
-  };
-
-  const isPengeluaran = (tipe) => {
-    const val = String(tipe || '').toLowerCase().trim();
-    return val === 'keluar' || val === 'pengeluaran' || val === 'out';
   };
 
   // Kalkulasi Total Saldo
