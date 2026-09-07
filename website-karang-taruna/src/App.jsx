@@ -20,8 +20,7 @@ import {
   Search, 
   CheckCircle, 
   FileText, 
-  Users,
-  HeartHandshake
+  Users 
 } from 'lucide-react';
 
 const heroPhotos = [
@@ -338,98 +337,83 @@ export default function App() {
       {/* TRANSPARANSI KAS & GALERI */}
       <TransparansiGaleri />
 
-      {/* SEKSI VISI & MISI (DESAIN GAMBAR KEBERBAMAAN + POIN MISI) */}
+      {/* SEKSI VISI & MISI (LAYOUT ASLI DENGAN FOTO BARU) */}
       <section id="visi-misi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+          <div className="mb-10">
+            <span className="text-xs font-bold tracking-widest text-slate-400 uppercase block mb-1">Pilar Organisasi</span>
+            <h2 className="text-3xl font-bold tracking-tight text-slate-900">Visi & Misi Kami</h2>
+            <p className="text-slate-500 text-sm mt-1">Arah gerak dan komitmen Karang Taruna Pakal Residence untuk kemajuan perumahan.</p>
+          </div>
+
+          <div className="grid md:grid-cols-12 gap-10 items-stretch">
             
-            {/* KOLOM KIRI: Foto Kebersamaan Warga/Pengurus */}
-            <div className="lg:col-span-6">
-              <div className="relative group">
-                <div className="absolute -inset-1 bg-gradient-to-r from-emerald-600 to-slate-900 rounded-3xl blur-sm opacity-25 group-hover:opacity-40 transition duration-300"></div>
-                <div className="relative rounded-3xl overflow-hidden border border-slate-200/80 bg-slate-900 shadow-xl">
-                  <img 
-                    src="/kegiatan-visi.jpg" 
-                    alt="Kebersamaan Warga Karang Taruna Pakal Residence" 
-                    className="w-full h-[380px] sm:h-[440px] object-cover group-hover:scale-105 transition duration-500"
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-950/70 via-slate-950/20 to-transparent"></div>
-                  
-                  {/* Badge Overlay */}
-                  <div className="absolute bottom-4 left-4 right-4 p-4 bg-white/90 backdrop-blur-md rounded-2xl border border-white/20 shadow-md">
-                    <p className="text-xs font-bold text-slate-900 flex items-center gap-1.5">
-                      <HeartHandshake className="text-emerald-600" size={16} /> 
-                      Karang Taruna Pakal Residence
-                    </p>
-                    <p className="text-[11px] text-slate-500 mt-0.5">
-                      Semangat kebersamaan dan aksi nyata pemuda untuk lingkungan perumahan.
-                    </p>
-                  </div>
-                </div>
+            {/* Foto Kiri Melengkung (Asli Tampilan Lama) */}
+            <div className="md:col-span-5 min-h-[380px] rounded-3xl overflow-hidden bg-slate-900 relative border border-slate-200">
+              <img 
+                src="/kegiatan-visi.jpeg"
+                alt="Kebersamaan Karang Taruna Pakal Residence" 
+                className="w-full h-full object-cover opacity-60" 
+              />
+              <div className="absolute inset-0 bg-slate-950/40 p-8 flex flex-col justify-center items-center text-center text-white">
+                <span className="text-[11px] font-bold tracking-widest uppercase text-emerald-400 mb-2 px-3 py-1 bg-emerald-950/50 rounded-full border border-emerald-500/30">
+                  Visi Utama
+                </span>
+                <p className="text-lg sm:text-xl font-bold leading-relaxed max-w-sm">
+                  "Mewujudkan Generasi Muda Pakal Residence yang Mandiri, Solid, Kreatif, dan Bermanfaat bagi Lingkungan Warga."
+                </p>
               </div>
             </div>
 
-            {/* KOLOM KANAN: Penjelasan Visi & Misi Organisasi */}
-            <div className="lg:col-span-6 flex flex-col justify-center">
-              <span className="text-xs font-bold tracking-widest text-slate-400 uppercase block mb-1">
-                Arah Langkah & Komitmen
-              </span>
-              <h2 className="text-3xl font-extrabold tracking-tight text-slate-900 mb-4">
-                Visi & Misi Kami
-              </h2>
-              <p className="text-sm text-slate-500 leading-relaxed mb-6">
-                Landasan utama Karang Taruna Pakal Residence dalam membangun lingkungan perumahan yang harmonis, aktif, dan berdaya saing melalui kolaborasi pemuda.
-              </p>
-
-              {/* List Poin Misi */}
-              <div className="space-y-4">
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 flex items-start gap-3.5 hover:border-emerald-300 hover:bg-emerald-50/20 transition duration-200">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                    01
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm">Mempererat Silaturahmi & Solidaritas</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed mt-0.5">
-                      Membangun wadah komunikasi yang positif dan inklusif bagi seluruh pemuda/i di setiap blok perumahan.
-                    </p>
-                  </div>
+            {/* List Kanan (Misi Organisasi Asli Tampilan Lama) */}
+            <div className="md:col-span-7 flex flex-col justify-center space-y-6">
+              
+              <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  01
                 </div>
-
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 flex items-start gap-3.5 hover:border-emerald-300 hover:bg-emerald-50/20 transition duration-200">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                    02
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm">Pemberdayaan Ekonomi & UMKM Lokal</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed mt-0.5">
-                      Mendukung perkembangan usaha mikro milik warga perumahan melalui media promosi digital gratis.
-                    </p>
-                  </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 text-base">Mempererat Silaturahmi & Solidaritas Pemuda</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Membangun wadah komunikasi yang positif dan inklusif bagi seluruh pemuda/i di setiap blok perumahan Pakal Residence.
+                  </p>
                 </div>
+              </div>
 
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 flex items-start gap-3.5 hover:border-emerald-300 hover:bg-emerald-50/20 transition duration-200">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                    03
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm">Transparansi Keuangan & Tata Kelola</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed mt-0.5">
-                      Menjaga kepercayaan warga dengan menyajikan laporan mutasi kas secara terbuka dan akuntabel.
-                    </p>
-                  </div>
+              <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  02
                 </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 text-base">Pemberdayaan Ekonomi & UMKM Lokal</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Mendukung perkembangan usaha mikro milik warga perumahan melalui media promosi digital yang terintegrasi dan gratis.
+                  </p>
+                </div>
+              </div>
 
-                <div className="bg-slate-50 p-4 rounded-2xl border border-slate-200/80 flex items-start gap-3.5 hover:border-emerald-300 hover:bg-emerald-50/20 transition duration-200">
-                  <div className="w-8 h-8 rounded-xl bg-emerald-100 text-emerald-800 flex items-center justify-center font-bold text-xs shrink-0 mt-0.5">
-                    04
-                  </div>
-                  <div>
-                    <h4 className="font-bold text-slate-900 text-sm">Kepedulian Sosial & Tanggap Lingkungan</h4>
-                    <p className="text-xs text-slate-500 leading-relaxed mt-0.5">
-                      Menggalakkan aksi gotong royong rutin, olahraga warga, serta penanganan masalah lingkungan.
-                    </p>
-                  </div>
+              <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  03
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 text-base">Transparansi Keuangan & Tata Kelola Organisasi</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Menjaga kepercayaan warga dengan menyajikan laporan mutasi kas secara terbuka, akuntabel, dan dapat diakses kapan saja.
+                  </p>
+                </div>
+              </div>
+
+              <div className="flex gap-4 items-start">
+                <div className="w-10 h-10 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-sm shrink-0">
+                  04
+                </div>
+                <div>
+                  <h4 className="font-bold text-slate-900 text-base">Kepedulian Sosial & Tanggap Lingkungan</h4>
+                  <p className="text-xs text-slate-500 leading-relaxed mt-1">
+                    Menggalakkan aksi gotong royong rutin, kegiatan olahraga warga, serta penanganan masalah sosial di lingkungan perumahan.
+                  </p>
                 </div>
               </div>
 
