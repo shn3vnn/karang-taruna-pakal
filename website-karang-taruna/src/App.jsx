@@ -220,12 +220,8 @@ export default function App() {
             {/* Gradasi Overlay Gelap */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
 
-            {/* Konten Teks Hero */}
+            {/* Konten Teks Hero (Badge Hijau Dihapus) */}
             <div className="relative z-10 max-w-2xl text-white space-y-6">
-              <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-900/80 backdrop-blur-md border border-white/10 text-xs font-semibold text-emerald-400">
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-                Official Website Pemuda
-              </div>
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.12]">
                 Gerakan Pemuda Pakal Residence
@@ -337,7 +333,7 @@ export default function App() {
       {/* TRANSPARANSI KAS & GALERI */}
       <TransparansiGaleri />
 
-      {/* SEKSI VISI & MISI (LAYOUT ASLI DENGAN FOTO BARU) */}
+      {/* SEKSI VISI & MISI */}
       <section id="visi-misi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -349,7 +345,7 @@ export default function App() {
 
           <div className="grid md:grid-cols-12 gap-10 items-stretch">
             
-            {/* Foto Kiri Melengkung (Asli Tampilan Lama) */}
+            {/* Foto Kiri Melengkung */}
             <div className="md:col-span-5 min-h-[380px] rounded-3xl overflow-hidden bg-slate-900 relative border border-slate-200">
               <img 
                 src="/kegiatan-visi.jpeg"
@@ -366,7 +362,7 @@ export default function App() {
               </div>
             </div>
 
-            {/* List Kanan (Misi Organisasi Asli Tampilan Lama) */}
+            {/* List Kanan (Misi Organisasi) */}
             <div className="md:col-span-7 flex flex-col justify-center space-y-6">
               
               <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
