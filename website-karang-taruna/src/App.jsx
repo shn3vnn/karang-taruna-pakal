@@ -220,7 +220,7 @@ export default function App() {
             {/* Gradasi Overlay Gelap */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/60 to-transparent"></div>
 
-            {/* Konten Teks Hero (Badge Hijau Dihapus) */}
+            {/* Konten Teks Hero */}
             <div className="relative z-10 max-w-2xl text-white space-y-6">
 
               <h1 className="text-3xl sm:text-5xl lg:text-6xl font-bold tracking-tight leading-[1.12]">
@@ -333,7 +333,7 @@ export default function App() {
       {/* TRANSPARANSI KAS & GALERI */}
       <TransparansiGaleri />
 
-      {/* SEKSI VISI & MISI */}
+      {/* SEKSI VISI & MISI (DESAIN AWAL + TEKS HIJAU DIHILANGKAN) */}
       <section id="visi-misi" className="py-16 bg-white border-b border-slate-200">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
@@ -345,7 +345,7 @@ export default function App() {
 
           <div className="grid md:grid-cols-12 gap-10 items-stretch">
             
-            {/* Foto Kiri Melengkung */}
+            {/* Foto Kiri Melengkung (Desain Awal) */}
             <div className="md:col-span-5 min-h-[380px] rounded-3xl overflow-hidden bg-slate-900 relative border border-slate-200">
               <img 
                 src="/kegiatan-visi.jpeg"
@@ -353,16 +353,13 @@ export default function App() {
                 className="w-full h-full object-cover opacity-60" 
               />
               <div className="absolute inset-0 bg-slate-950/40 p-8 flex flex-col justify-center items-center text-center text-white">
-                <span className="text-[11px] font-bold tracking-widest uppercase text-emerald-400 mb-2 px-3 py-1 bg-emerald-950/50 rounded-full border border-emerald-500/30">
-                  Visi Utama
-                </span>
                 <p className="text-lg sm:text-xl font-bold leading-relaxed max-w-sm">
                   "Mewujudkan Generasi Muda Pakal Residence yang Mandiri, Solid, Kreatif, dan Bermanfaat bagi Lingkungan Warga."
                 </p>
               </div>
             </div>
 
-            {/* List Kanan (Misi Organisasi) */}
+            {/* List Kanan (Misi Organisasi - Desain Awal) */}
             <div className="md:col-span-7 flex flex-col justify-center space-y-6">
               
               <div className="flex gap-4 items-start pb-5 border-b border-slate-200">
