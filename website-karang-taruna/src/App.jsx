@@ -128,13 +128,19 @@ export default function App() {
     );
   }
 
-  const handleSubmitAspirasi = (e) => {
+  const handleSubmitAspirasi = async (e) => {
     e.preventDefault();
     const nama = e.target.nama.value;
     const wa = e.target.wa.value;
     const pesan = e.target.pesan.value;
-    const textPesan = encodeURIComponent(`Halo Admin Karang Taruna,\n\nSaya ingin menyampaikan aspirasi:\n- Nama / Blok: ${nama}\n- No. WA: ${wa || '-'}\n- Pesan: ${pesan}`);
-    window.location.href = `whatsapp://send?phone=${noPengurus}&text=${textPesan}`;
+
+    const { error } = await supabase.from('aspirasi').insert([{ nama, wa, pesan }]);
+    if (error) {
+      alert('Gagal mengirim pesan: ' + error.message);
+    } else {
+      alert('Pesan berhasil dikirim! Terima kasih atas masukan Anda.');
+      e.target.reset();
+    }
   };
 
   const handleSubmitDaftar = async (e) => {

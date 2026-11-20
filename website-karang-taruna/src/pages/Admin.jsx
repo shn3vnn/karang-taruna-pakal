@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Users, Store, Calendar, CheckCircle, XCircle, ArrowLeft, Trash2, Plus, Lock, LogOut, Wallet, Image as ImageIcon, Upload, Loader2 } from 'lucide-react';
+import { Users, Store, Calendar, CheckCircle, XCircle, ArrowLeft, Trash2, Plus, Lock, LogOut, Wallet, Image as ImageIcon, Upload, Loader2, MessageSquare } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 export default function Admin({ onLogout }) {
@@ -19,6 +19,7 @@ export default function Admin({ onLogout }) {
   const [galeriList, setGaleriList] = useState([]);
   const [uploadingGaleri, setUploadingGaleri] = useState(false);
   const [selectedGaleriFile, setSelectedGaleriFile] = useState(null);
+  const [aspirasiList, setAspirasiList] = useState([]);
 
   // Load Data dari Supabase Cloud
   const loadData = async () => {
@@ -36,6 +37,9 @@ export default function Admin({ onLogout }) {
 
     const resGaleri = await supabase.from('galeri').select('*').order('id', { ascending: false });
     if (resGaleri.data) setGaleriList(resGaleri.data);
+
+    const resAspirasi = await supabase.from('aspirasi').select('*').order('id', { ascending: false });
+    if (resAspirasi.data) setAspirasiList(resAspirasi.data);
   };
 
   useEffect(() => {
@@ -302,6 +306,10 @@ export default function Admin({ onLogout }) {
           <button onClick={() => setActiveTab('galeri')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition ${activeTab === 'galeri' ? 'bg-[#039088] text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-200'}`}>
             <ImageIcon size={18} /> Kelola Galeri Foto
           </button>
+
+          <button onClick={() => setActiveTab('aspirasi')} className={`w-full flex items-center gap-3 px-4 py-3 rounded-2xl text-sm font-bold transition ${activeTab === 'aspirasi' ? 'bg-[#039088] text-white shadow-md' : 'bg-white text-slate-600 hover:bg-slate-200'}`}>
+            <MessageSquare size={18} /> Aspirasi Warga
+          </button>
         </div>
 
         <div className="md:col-span-9">
@@ -491,6 +499,36 @@ export default function Admin({ onLogout }) {
                   )}
                 </div>
               </div>
+            </div>
+          )}
+
+          {/* TAB 6: ASPIRASI WARGA */}
+          {activeTab === 'aspirasi' && (
+            <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm">
+              <div className="flex items-center justify-between mb-6">
+                <h2 className="text-xl font-bold">Aspirasi & Masukan Warga</h2>
+                <span className="px-4 py-1.5 bg-slate-900 text-white rounded-full text-xs font-bold">{aspirasiList.length} Pesan</span>
+              </div>
+              {aspirasiList.length === 0 ? (
+                <p className="text-xs text-slate-400">Belum ada pesan masuk dari warga.</p>
+              ) : (
+                <div className="space-y-4">
+                  {aspirasiList.map((a) => (
+                    <div key={a.id} className="p-4 bg-slate-50 border border-slate-200 rounded-2xl">
+                      <div className="flex justify-between items-start">
+                        <div>
+                          <h4 className="font-bold text-sm text-slate-900">{a.nama}</h4>
+                          <p className="text-xs text-slate-500">{a.wa || 'Tanpa nomor WA'} • {new Date(a.created_at).toLocaleDateString('id-ID', { day: '2-digit', month: 'short', year: 'numeric' })}</p>
+                        </div>
+                        <button onClick={async () => { await supabase.from('aspirasi').delete().eq('id', a.id); loadData(); }} className="text-slate-400 hover:text-rose-600 transition p-1.5">
+                          <Trash2 size={16} />
+                        </button>
+                      </div>
+                      <p className="text-sm text-slate-700 mt-2 leading-relaxed">{a.pesan}</p>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 
