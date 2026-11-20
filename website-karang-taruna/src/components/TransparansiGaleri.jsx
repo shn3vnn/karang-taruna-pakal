@@ -6,7 +6,13 @@ import { supabase } from '../supabaseClient';
 const parseNominal = (item) => {
   if (!item) return 0;
   const rawVal = item.jumlah ?? item.nominal ?? item.total ?? item.kredit ?? item.debit ?? 0;
-  const parsed = typeof rawVal === 'number' ? rawVal : parseFloat(String(rawVal).replace(/[^0-9.-]+/g, ""));
+  if (typeof rawVal === 'number') return Math.abs(rawVal);
+  const str = String(rawVal).trim();
+  // Format Indonesia: titik sebagai pemisah ribuan (100.000), koma sebagai desimal
+  const normalized = str.includes(',') 
+    ? str.replace(/\./g, '').replace(',', '.')
+    : str.replace(/\./g, '');
+  const parsed = parseFloat(normalized.replace(/[^0-9.-]+/g, ''));
   return isNaN(parsed) ? 0 : Math.abs(parsed);
 };
 
