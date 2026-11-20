@@ -6,7 +6,7 @@ const pengurusStruktural = [
   { nama: "Al Evan Diamantoro", jabatan: "Ketua Karang Taruna", foto: "https://luzcoezufthxumngzktu.supabase.co/storage/v1/object/public/aseets/ketua.jpeg" },
   { nama: "Annabel Carrisa Anugrah", jabatan: "Wakil Ketua", foto: "https://luzcoezufthxumngzktu.supabase.co/storage/v1/object/public/aseets/wakil.jpeg" },
   { nama: "Budi Santoso", jabatan: "Sekretaris", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400" },
-  { nama: "Dira", jabatan: "Bendahara", foto: "https://luzcoezufthxumngzktu.supabase.co/storage/v1/object/public/aseets/Bendahara.jpeg" }
+  { nama: "Nadira Dzakia", jabatan: "Bendahara", foto: "https://luzcoezufthxumngzktu.supabase.co/storage/v1/object/public/aseets/Bendahara.jpeg" }
 ];
 
 export default function Pengurus() {
