@@ -3,7 +3,7 @@ import { UserCheck, ShieldCheck } from 'lucide-react';
 import { supabase } from '../supabaseClient';
 
 const pengurusStruktural = [
-  { nama: "Ahmad Rifai", jabatan: "Ketua Karang Taruna", foto: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&q=80&w=400" },
+  { nama: "Al Evan Diamantoro", jabatan: "Ketua Karang Taruna", foto: "https://luzcoezufthxumngzktu.supabase.co/storage/v1/object/public/aseets/ketua.jpeg" },
   { nama: "Siti Rahma", jabatan: "Wakil Ketua", foto: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?auto=format&fit=crop&q=80&w=400" },
   { nama: "Budi Santoso", jabatan: "Sekretaris", foto: "https://images.unsplash.com/photo-1500648767791-00dcc994a43e?auto=format&fit=crop&q=80&w=400" },
   { nama: "Dina Mariana", jabatan: "Bendahara", foto: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?auto=format&fit=crop&q=80&w=400" }
