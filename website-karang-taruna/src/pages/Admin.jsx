@@ -75,7 +75,7 @@ export default function Admin({ onLogout }) {
     const tgl = e.target.tgl.value;
     const jenis = e.target.jenis.value;
     const keterangan = e.target.keterangan.value;
-    const nominal = Number(e.target.nominal.value);
+    const nominal = Number(String(e.target.nominal.value).replace(/\./g, '').replace(',', '.'));
 
     const { error } = await supabase.from('kas').insert([{ tgl, jenis, keterangan, nominal }]);
     if (!error) {
@@ -317,7 +317,7 @@ export default function Admin({ onLogout }) {
                     <option value="masuk">Pemasukan (+)</option>
                     <option value="keluar">Pengeluaran (-)</option>
                   </select>
-                  <input name="nominal" type="number" required placeholder="Nominal (Rp)" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs" />
+                  <input name="nominal" type="text" required placeholder="Nominal (Rp), contoh: 100000" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs" />
                   <input name="keterangan" type="text" required placeholder="Keterangan transaksi" className="bg-slate-50 border border-slate-200 p-3 rounded-xl text-xs" />
                   
                   <button type="submit" className="sm:col-span-2 lg:col-span-4 bg-[#039088] text-white font-bold py-3 rounded-xl flex items-center justify-center gap-2 text-xs shadow-md">
